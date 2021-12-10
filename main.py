@@ -107,6 +107,21 @@ def get_data_from_file(filename):
         print("WARNING: alpha vantage was called but you filese are not found. Is get_alpha_data False? This should not be reached if get_alpha_data is True. maybe options fehlt für plot")
 
     return income_statement
+
+def calculate_quotient(list_dividend,list_divisor):
+
+    # convert to int
+    list_dividend = [int(x) for x in list_dividend[1]]
+
+    list_divisor = [int(x) for x in list_divisor[1]]
+
+    quotient_list = [(x / y) * 100 for x, y in zip(list_dividend, list_divisor)]
+
+    print(quotient_list)
+    return quotient_list
+
+
+
 def analyse_data_from_alpha_vantage(symbols : list):
     source = "alpha_vantage"
     print("------------------------")
@@ -115,9 +130,8 @@ def analyse_data_from_alpha_vantage(symbols : list):
     test = ["grossProfit", "ebit"]
 
     for s in symbols:
-        income_statement_filename = "income_statement_alpha_" + s + ".json"
 
-        income_statement = get_data_from_file(income_statement_filename)
+        income_statement = get_data_from_file("income_statement_alpha_" + s + ".json")
 
         annual_absolute_data_per_symbol = []
         quaterly_absolute_data_per_symbol = []
@@ -134,42 +148,27 @@ def analyse_data_from_alpha_vantage(symbols : list):
             except:
                 print("error in quaterly data {}".format(s))
 
-        for s in symbols:
-            balance_sheet_filename = "balance_sheet_alpha_" + s + ".json"
+    for s in symbols:
 
-            # TODO give these separate filenames and then read the json file oder enter the else
-            # cash_flow = request_cash_flow_from_alpha(s)
-            # earnings =request_earnings_from_alpha(s)
-            # overview = request_overiew_from_alpha(s)
-
-            if os.path.isfile(balance_sheet_filename):
-                with open(balance_sheet_filename) as json_file:
-                    balance_sheet = json.load(json_file)
-            else:
-                print(
-                    "WARNING: alpha vantage was called but you filese are not found. Is get_alpha_data False? This should not be reached if get_alpha_data is True. maybe options fehlt für plot")
-                calling_alpha_vantage_api(symbols)
+        balance_sheet = get_data_from_file("balance_sheet_alpha_" + s + ".json")
+        # TODO erweitere mit request_cash_flow_from_alpha(s),request_earnings_from_alpha(s), request_overiew_from_alpha(s)
 
         try:
             # quotient: research and development:
             research = get_quaterly_report_alpha(income_statement, "researchAndDevelopment", symbol=s)
             revenue = get_quaterly_report_alpha(income_statement, "totalRevenue", symbol=s)
+
+            calculated_quotient = calculate_quotient(research,revenue)
+
             res = []
             res.append(research[0])
+            res.append(calculated_quotient)
 
-            #convert to int
-            research = [int(x) for x in research[1]]
-
-            revenue = [int(x) for x in revenue[1]]
-
-            quotient = [(x / y)*100 for x, y in zip(research,revenue)]
-            res.append(quotient)
             res.append(s)
             res.append("researchAndDevelopment_to_totalRevenue")
 
             # format for res: [time_points, value_points, symbol, indicator]
             quaterly_relative_data_per_symbol.append(res)
-
 
         except:
             print("calculate quotient of two absolute indicators (research and developement to totalrevenue not working")
@@ -178,15 +177,13 @@ def analyse_data_from_alpha_vantage(symbols : list):
             # quotient: totalAssets to total Liabilites: - balance sheet
             totalLiabilities = get_quaterly_report_alpha(balance_sheet, "totalLiabilities", symbol=s)
             totalAssets = get_quaterly_report_alpha(balance_sheet, "totalAssets", symbol=s)
+
+            calculated_quotient = calculate_quotient(totalLiabilities, totalAssets)
+
             res = []
-            res.append(totalAssets[0])
+            res.append(totalLiabilities[0])
+            res.append(calculated_quotient)
 
-            #convert to int
-            totalLiabilities = [int(x) for x in totalLiabilities[1]]
-            totalAssets = [int(x) for x in totalAssets[1]]
-
-            quotient = [(x / y)*100 for x, y in zip(totalLiabilities,totalAssets)]
-            res.append(quotient)
             res.append(s)
             res.append("totalLiabilities_to_totalAssets")
 
