@@ -69,6 +69,10 @@ def option_operating_income():
     y_lim_bottom = 30 * 10 ** 9
     return y_lim_top, y_lim_bottom
 
+def option_total_revenue():
+    y_lim_top = 50 * 10 ** 9
+    y_lim_bottom = 30 * 10 ** 9
+    return y_lim_top, y_lim_bottom
 
 def option_color_gross_margin():
     return "navy"
@@ -116,3 +120,6 @@ def option_color_income_before_tax():
 
 def option_color_operating_income():
     return "green"
+
+def option_color_total_revenue():
+    return "orange"

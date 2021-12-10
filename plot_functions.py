@@ -14,7 +14,8 @@ options_for_plot_limit = {
     "ebit": option_ebit,
     "netIncome": option_net_income,
     "incomeBeforeTax": option_income_before_tax,
-    "operatingIncome": option_operating_income
+    "operatingIncome": option_operating_income,
+    "totalRevenue":option_total_revenue,
 }
 
 options_for_plot_color = {
@@ -29,7 +30,8 @@ options_for_plot_color = {
     "ebit": option_color_ebit,
     "netIncome": option_color_net_income,
     "incomeBeforeTax": option_color_income_before_tax,
-    "operatingIncome": option_color_operating_income
+    "operatingIncome": option_color_operating_income,
+    "totalRevenue": option_color_operating_income
 }
 
 
