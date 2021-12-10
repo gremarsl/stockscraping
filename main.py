@@ -20,11 +20,6 @@ class NoData(Exception): pass  # declare a label
 class NoEbitData(Exception):    pass
 
 
-class NoNetMarginData(object):
-    print("Known Except: No net margin data in fundamental Data for")
-    pass
-
-
 def filter_plot_data_list_per_symbol(data_list: list, relativeData: bool, data_is_from_platform: str):
     # hier:  all_data_list = [data_per_symbol_1]
     if relativeData and data_is_from_platform == "alpha_vantage":
@@ -57,7 +52,8 @@ def filter_plot_data_list_per_symbol(data_list: list, relativeData: bool, data_i
                 lambda x: (x[3] == "eps" or x[3] == "cashRatio" or x[3] == "currentRatio" or x[3] != "ebitPerShare" or
                            x[3] == "netMargin"), data_list))
 
-            stupid_plot_data_lists(eps_ebit_per_share_plot_data, data_is_from_platform)
+            # comment out because eps ebit per share is printed twice
+            #stupid_plot_data_lists(eps_ebit_per_share_plot_data, data_is_from_platform)
 
             try:
                 stupid_plot_data_lists(except_grossmargin_debt, data_is_from_platform)
@@ -127,14 +123,13 @@ def analyse_data_from_alpha_vantage(symbols: list):
     indicator_percentage_income_statement = ["researchAndDevelopment_to_totalRevenue"]
 
     indicator_percentage_balance_sheet = ["totalLiabilities_to_totalAssets"]
-    test = ["grossProfit", "ebit"]
+
+    quaterly_absolute_data_per_symbol = []
+    quaterly_relative_data_per_symbol = []
 
     for s in symbols:
 
         income_statement = get_data_from_file("income_statement_alpha_" + s + ".json")
-
-        quaterly_absolute_data_per_symbol = []
-        quaterly_relative_data_per_symbol = []
 
         for i in indicator_absolute_income_statement:
             try:
@@ -142,10 +137,7 @@ def analyse_data_from_alpha_vantage(symbols: list):
             except:
                 print("error in quaterly data {}".format(s))
 
-    for s in symbols:
-
         for i in indicator_percentage_income_statement:
-            # TODO erweitere mit request_cash_flow_from_alpha(s),request_earnings_from_alpha(s), request_overiew_from_alpha(s)
 
             try:
                 quaterly_relative_data_per_symbol.append(
@@ -154,8 +146,6 @@ def analyse_data_from_alpha_vantage(symbols: list):
             except:
                 print(
                     "calculate quotient of {} didint work".format(i))
-
-    for s in symbols:
 
         balance_sheet = get_data_from_file("balance_sheet_alpha_" + s + ".json")
 
@@ -180,8 +170,6 @@ def get_data_from_finnhub():
     all_plot_data = []
     all_plot_data_test = []
 
-    # TODO switch annual or quaterly
-    period = 'annual'
     period = 'quarterly'
 
     symbol_dax_stocks = ["BAS.DE",
@@ -202,7 +190,6 @@ def get_data_from_finnhub():
 
     for s in automotive_dax_stocks:
         data_per_symbol = []
-        print(s)
 
         fundamental_data_json = get_fundamental_data_from_finnhub(s)
 
@@ -236,23 +223,23 @@ def get_data_from_finnhub():
             except:
                 print("no {} data  for  {} ".format(i, s))
 
-        filter_plot_data_list_per_symbol(data_per_symbol, source)
+        filter_plot_data_list_per_symbol(data_per_symbol, relativeData =False,data_is_from_platform =source)
         all_plot_data.append(data_per_symbol)
 
 
 # SWITCHES:
-analyse_finnhub_data = False
-get_alpha_data = False
-analyse_alpha_data = True
-alpha_vantage_symbols = ["AVGO"]  # "IBM", "AAPL"
+analyse_finnhub_data = 1
+get_alpha_data = 0
+analyse_alpha_data = 0
+alpha_vantage_symbols = ["AVGO","PAH3.FRK"]  # "IBM", "AAPL"
 
 if __name__ == '__main__':
 
-    if analyse_finnhub_data:
+    if analyse_finnhub_data == 1:
         get_data_from_finnhub()
 
-    if get_alpha_data:
+    if get_alpha_data == 1:
         calling_alpha_vantage_api(alpha_vantage_symbols)
 
-    if analyse_alpha_data:
+    if analyse_alpha_data == 1:
         analyse_data_from_alpha_vantage(alpha_vantage_symbols)
