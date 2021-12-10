@@ -3,6 +3,7 @@ from time import strftime, gmtime
 import json
 import pandas as pd
 import requests
+import json
 
 from general_functions import write_to_file_in_json_format, reverse_lists
 import time
@@ -11,6 +12,8 @@ from keys import api_key_alpha
 
 
 def calling_alpha_vantage_api(symbols):
+    # 'https://finnhub.io/api/v1/stock/metric?symbol=DAI.DE&metric=all&token=buk3id748v6r2017iuog'
+
     for s in symbols:
         income_statement = request_income_statement_from_alpha(s)
         balance_sheets = request_balance_sheet_from_alpha(s)
@@ -256,10 +259,10 @@ def request_earnings_from_alpha(symbol):
 
 
 def get_annual_report_alpha(data_json: dict, indicator: str, symbol: str) -> list:
-    annual_reports = data_json['annualReports']
+    reports = data_json['annualReports']
     time_points = []
     value_points = []
-    for i in annual_reports:
+    for i in reports:
         # i ist ein  Array
         time_points.append(i['fiscalDateEnding'])
         value_points.append(i[indicator])
@@ -274,10 +277,10 @@ def get_annual_report_alpha(data_json: dict, indicator: str, symbol: str) -> lis
 
 
 def get_quaterly_report_alpha(data_json: dict, indicator: str, symbol: str) -> list:
-    annual_reports = data_json['quarterlyReports']
+    reports = data_json['quarterlyReports']
     time_points = []
     value_points = []
-    for i in annual_reports:
+    for i in reports:
         # i ist ein  Array
         time_points.append(i['fiscalDateEnding'])
         value_points.append(i[indicator])
