@@ -98,7 +98,15 @@ def filter_plot_data_list_per_symbol(data_list: list,relativeData:bool, data_is_
             print("no ebit data skip")
             pass
 
+def get_data_from_file(filename):
 
+    if os.path.isfile(filename):
+        with open(filename) as json_file:
+            income_statement = json.load(json_file)
+    else:
+        print("WARNING: alpha vantage was called but you filese are not found. Is get_alpha_data False? This should not be reached if get_alpha_data is True. maybe options fehlt für plot")
+
+    return income_statement
 def analyse_data_from_alpha_vantage(symbols : list):
     source = "alpha_vantage"
     print("------------------------")
@@ -109,12 +117,7 @@ def analyse_data_from_alpha_vantage(symbols : list):
     for s in symbols:
         income_statement_filename = "income_statement_alpha_" + s + ".json"
 
-        if os.path.isfile(income_statement_filename):
-            with open(income_statement_filename) as json_file:
-                income_statement = json.load(json_file)
-        else:
-            print("WARNING: alpha vantage was called but you filese are not found. Is get_alpha_data False? This should not be reached if get_alpha_data is True. maybe options fehlt für plot")
-            calling_alpha_vantage_api(symbols)
+        income_statement = get_data_from_file(income_statement_filename)
 
         annual_absolute_data_per_symbol = []
         quaterly_absolute_data_per_symbol = []
@@ -193,9 +196,10 @@ def analyse_data_from_alpha_vantage(symbols : list):
         except:
             print("calculate quotient of two absolute indicators total Assets / to total Liabilites not working")
         # filter_plot_data_list_per_symbol(annual_data_per_symbol, source)
+
+        filter_plot_data_list_per_symbol(quaterly_absolute_data_per_symbol,False, source)
         filter_plot_data_list_per_symbol(quaterly_relative_data_per_symbol, True,source)
 
-        #filter_plot_data_list_per_symbol(quaterly_absolute_data_per_symbol,False, source)
 
 
     pass
