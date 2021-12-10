@@ -36,66 +36,78 @@ class NoNetMarginData(object):
     pass
 
 
-def filter_plot_data_list_per_symbol(data_list: list, data_is_from_platform: str):
+def filter_plot_data_list_per_symbol(data_list: list,relativeData:bool, data_is_from_platform: str):
+
     # hier:  all_data_list = [data_per_symbol_1]
+    if relativeData and data_is_from_platform == "alpha_vantage":
+            try:
+                if len(data_list) == 0: raise NoData()
 
-    eps_ebit_per_share_plot_data = []
-    if data_is_from_platform == "finnhub":
-        except_grossmargin = list(filter(lambda x: (x[3] != "grossMargin"), data_list))
+                try:
+                    indicators = list(filter(
+                        lambda x: x[3] == "researchAndDevelopment_to_totalRevenue" or "totalLiabilities_to_totalAssets" ,
+                        data_list))
+                    stupid_plot_data_lists(indicators, data_is_from_platform)
+                except:
+                    print("no working indicators data")
 
-        except_grossmargin_debt = list(filter(lambda x: x[3] != "totalDebtToEquity", except_grossmargin))
+            except NoData:
+                print("no income data ")
+                pass
 
-        eps_ebit_per_share_plot_data = list(
-            filter(lambda x: x[3] == "eps" or x[3] == "ebitPerShare", data_list))
+    else:
+        eps_ebit_per_share_plot_data = []
+        if data_is_from_platform == "finnhub":
+            except_grossmargin = list(filter(lambda x: (x[3] != "grossMargin"), data_list))
 
-        ratios_eps_ebit_net_margin_data = list(filter(
-            lambda x: (x[3] == "eps" or x[3] == "cashRatio" or x[3] == "currentRatio" or x[3] != "ebitPerShare" or
-                       x[3] == "netMargin"), data_list))
+            except_grossmargin_debt = list(filter(lambda x: x[3] != "totalDebtToEquity", except_grossmargin))
 
-        stupid_plot_data_lists(eps_ebit_per_share_plot_data, data_is_from_platform)
+            eps_ebit_per_share_plot_data = list(
+                filter(lambda x: x[3] == "eps" or x[3] == "ebitPerShare", data_list))
 
-        try:
-            stupid_plot_data_lists(except_grossmargin_debt, data_is_from_platform)
-        except:
-            print("Not working to plot ratios_eps_ebit_net_margin_data data in one plot {}".format(data_list))
+            ratios_eps_ebit_net_margin_data = list(filter(
+                lambda x: (x[3] == "eps" or x[3] == "cashRatio" or x[3] == "currentRatio" or x[3] != "ebitPerShare" or
+                           x[3] == "netMargin"), data_list))
 
-    if data_is_from_platform == "alpha_vantage":
-        try:
-            if len(data_list) == 0: raise NoData()
+            stupid_plot_data_lists(eps_ebit_per_share_plot_data, data_is_from_platform)
 
             try:
-                indicators = list(filter(
-                    lambda x: x[3] == "grossProfit" or "totalRevenue" or "ebit" or "netIncome" or "operatingIncome" or "incomeBeforeTax" or "resarch&dev/totalRevenue",
-                    data_list))
-                stupid_plot_data_lists(indicators, data_is_from_platform)
+                stupid_plot_data_lists(except_grossmargin_debt, data_is_from_platform)
             except:
-                print("no working indicators data")
+                print("Not working to plot ratios_eps_ebit_net_margin_data data in one plot {}".format(data_list))
 
-        except NoData:
-            print("no income data ")
+        if data_is_from_platform == "alpha_vantage":
+            try:
+                if len(data_list) == 0: raise NoData()
+
+                try:
+                    indicators = list(filter(
+                        lambda x: x[3] == "grossProfit" or "totalRevenue" or "ebit" or "netIncome" or "operatingIncome" or "incomeBeforeTax",
+                        data_list))
+                    stupid_plot_data_lists(indicators, data_is_from_platform)
+                except:
+                    print("no working indicators data")
+
+            except NoData:
+                print("no income data ")
+                pass
+
+        try:
+            if len(eps_ebit_per_share_plot_data) == 0: raise NoEbitData()
+        except NoEbitData:
+            print("no ebit data skip")
             pass
-
-    try:
-        if len(eps_ebit_per_share_plot_data) == 0: raise NoEbitData()
-    except NoEbitData:
-        print("no ebit data skip")
-        pass
 
 
 def analyse_data_from_alpha_vantage(symbols : list):
     source = "alpha_vantage"
     print("------------------------")
     indicator_absolute_income_statement = ["grossProfit", "totalRevenue", "ebit", "netIncome", "incomeBeforeTax", "operatingIncome"]
+    indicator_percentage_income_statement = ["researchAndDevelopment_to_totalRevenue","totalLiabilities_to_totalAssets"]
     test = ["grossProfit", "ebit"]
 
     for s in symbols:
         income_statement_filename = "income_statement_alpha_" + s + ".json"
-
-        #TODO give these separate filenames and then read the json file oder enter the else
-        # balance_sheets = request_balance_sheet_from_alpha(s)
-        # cash_flow = request_cash_flow_from_alpha(s)
-        # earnings =request_earnings_from_alpha(s)
-        # overview = request_overiew_from_alpha(s)
 
         if os.path.isfile(income_statement_filename):
             with open(income_statement_filename) as json_file:
@@ -104,23 +116,39 @@ def analyse_data_from_alpha_vantage(symbols : list):
             print("WARNING: alpha vantage was called but you filese are not found. Is get_alpha_data False? This should not be reached if get_alpha_data is True. maybe options fehlt für plot")
             calling_alpha_vantage_api(symbols)
 
-        annual_data_per_symbol = []
-        quaterly_data_per_symbol = []
+        annual_absolute_data_per_symbol = []
+        quaterly_absolute_data_per_symbol = []
+        quaterly_relative_data_per_symbol =[]
 
         for i in indicator_absolute_income_statement:
             try:
-                annual_data_per_symbol.append(get_annual_report_alpha(income_statement, i, symbol=s))
+                annual_absolute_data_per_symbol.append(get_annual_report_alpha(income_statement, i, symbol=s))
             except:
                 print("error in annual data per symbol {}".format(s))
 
             try:
-                quaterly_data_per_symbol.append(get_quaterly_report_alpha(income_statement, i, symbol=s))
+                quaterly_absolute_data_per_symbol.append(get_quaterly_report_alpha(income_statement, i, symbol=s))
             except:
                 print("error in quaterly data {}".format(s))
 
+        for s in symbols:
+            balance_sheet_filename = "balance_sheet_alpha_" + s + ".json"
 
-        #calculate own quotient
+            # TODO give these separate filenames and then read the json file oder enter the else
+            # cash_flow = request_cash_flow_from_alpha(s)
+            # earnings =request_earnings_from_alpha(s)
+            # overview = request_overiew_from_alpha(s)
+
+            if os.path.isfile(balance_sheet_filename):
+                with open(balance_sheet_filename) as json_file:
+                    balance_sheet = json.load(json_file)
+            else:
+                print(
+                    "WARNING: alpha vantage was called but you filese are not found. Is get_alpha_data False? This should not be reached if get_alpha_data is True. maybe options fehlt für plot")
+                calling_alpha_vantage_api(symbols)
+
         try:
+            # quotient: research and development:
             research = get_quaterly_report_alpha(income_statement, "researchAndDevelopment", symbol=s)
             revenue = get_quaterly_report_alpha(income_statement, "totalRevenue", symbol=s)
             res = []
@@ -134,16 +162,41 @@ def analyse_data_from_alpha_vantage(symbols : list):
             quotient = [(x / y)*100 for x, y in zip(research,revenue)]
             res.append(quotient)
             res.append(s)
-            res.append("resarch&dev/totalRevenue")
+            res.append("researchAndDevelopment_to_totalRevenue")
 
             # format for res: [time_points, value_points, symbol, indicator]
-            quaterly_data_per_symbol.append(res)
+            quaterly_relative_data_per_symbol.append(res)
 
 
         except:
-            print("calculate quotient of two absolute indicators not working")
+            print("calculate quotient of two absolute indicators (research and developement to totalrevenue not working")
+
+        try:
+            # quotient: totalAssets to total Liabilites: - balance sheet
+            totalLiabilities = get_quaterly_report_alpha(balance_sheet, "totalLiabilities", symbol=s)
+            totalAssets = get_quaterly_report_alpha(balance_sheet, "totalAssets", symbol=s)
+            res = []
+            res.append(totalAssets[0])
+
+            #convert to int
+            totalLiabilities = [int(x) for x in totalLiabilities[1]]
+            totalAssets = [int(x) for x in totalAssets[1]]
+
+            quotient = [(x / y)*100 for x, y in zip(totalLiabilities,totalAssets)]
+            res.append(quotient)
+            res.append(s)
+            res.append("totalLiabilities_to_totalAssets")
+
+            quaterly_relative_data_per_symbol.append(res)
+
+
+        except:
+            print("calculate quotient of two absolute indicators total Assets / to total Liabilites not working")
         # filter_plot_data_list_per_symbol(annual_data_per_symbol, source)
-        filter_plot_data_list_per_symbol(quaterly_data_per_symbol, source)
+        filter_plot_data_list_per_symbol(quaterly_relative_data_per_symbol, True,source)
+
+        #filter_plot_data_list_per_symbol(quaterly_absolute_data_per_symbol,False, source)
+
 
     pass
 
@@ -229,5 +282,3 @@ if __name__ == '__main__':
 
     if analyse_alpha_data:
         analyse_data_from_alpha_vantage(alpha_vantage_symbols)
-
-    # TODO workflow erstellen wenn neues File auf neue Faktoren untersucht werden muss

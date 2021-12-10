@@ -15,6 +15,11 @@ def option_quotient_research_and_development_revenue():
     y_lim_bottom = 0
     return y_lim_top, y_lim_bottom
 
+def option_quotient_total_totalLiabilites_to_totalAssets():
+    y_lim_top = 2
+    y_lim_bottom = 0
+    return y_lim_top, y_lim_bottom
+
 
 def option_eps():
     y_lim_top = 20
@@ -26,6 +31,7 @@ def option_total_debt_to_equity():
     y_lim_top = 2
     y_lim_bottom = 0
     return y_lim_top, y_lim_bottom
+
 
 
 def option_ebit_per_share():
@@ -136,3 +142,6 @@ def option_color_total_revenue():
 
 def option_color_quotient_research_and_development_revenue():
     return "blue"
+
+def option_color_quotient_totalLiabilities_to_totalAssets():
+    return "green"
