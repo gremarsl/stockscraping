@@ -271,8 +271,6 @@ def get_annual_report_alpha(data_json: dict, indicator: str, symbol: str) -> lis
 
     data = [time_points, value_points, symbol, indicator]
 
-    # stupid_plot_data_list(data)
-
     return data
 
 

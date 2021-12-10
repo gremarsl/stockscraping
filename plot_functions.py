@@ -16,6 +16,7 @@ options_for_plot_limit = {
     "incomeBeforeTax": option_income_before_tax,
     "operatingIncome": option_operating_income,
     "totalRevenue":option_total_revenue,
+    "resarch&dev/totalRevenue":option_quotient_research_and_development_revenue
 }
 
 options_for_plot_color = {
@@ -31,7 +32,8 @@ options_for_plot_color = {
     "netIncome": option_color_net_income,
     "incomeBeforeTax": option_color_income_before_tax,
     "operatingIncome": option_color_operating_income,
-    "totalRevenue": option_color_operating_income
+    "totalRevenue": option_color_operating_income,
+    "resarch&dev/totalRevenue":option_color_quotient_research_and_development_revenue
 }
 
 

@@ -65,7 +65,7 @@ def filter_plot_data_list_per_symbol(data_list: list, data_is_from_platform: str
 
             try:
                 indicators = list(filter(
-                    lambda x: x[3] == "grossProfit" or "totalRevenue" or "ebit" or "netIncome" or "operatingIncome" or "incomeBeforeTax",
+                    lambda x: x[3] == "grossProfit" or "totalRevenue" or "ebit" or "netIncome" or "operatingIncome" or "incomeBeforeTax" or "resarch&dev/totalRevenue",
                     data_list))
                 stupid_plot_data_lists(indicators, data_is_from_platform)
             except:
@@ -101,12 +101,9 @@ def analyse_data_from_alpha_vantage(symbols : list):
             with open(income_statement_filename) as json_file:
                 income_statement = json.load(json_file)
         else:
-            print("WARNING: alpha vantage was called but you filese are not found. Is get_alpha_data False? This should not be reached if get_alpha_data is True")
+            print("WARNING: alpha vantage was called but you filese are not found. Is get_alpha_data False? This should not be reached if get_alpha_data is True. maybe options fehlt für plot")
             calling_alpha_vantage_api(symbols)
 
-
-        # long_term_data_get_ebitda(overview,s)
-        # long_term_data_get_price_to_earning_ratio(overview,s)
         annual_data_per_symbol = []
         quaterly_data_per_symbol = []
 
@@ -121,6 +118,30 @@ def analyse_data_from_alpha_vantage(symbols : list):
             except:
                 print("error in quaterly data {}".format(s))
 
+
+        #calculate own quotient
+        try:
+            research = get_quaterly_report_alpha(income_statement, "researchAndDevelopment", symbol=s)
+            revenue = get_quaterly_report_alpha(income_statement, "totalRevenue", symbol=s)
+            res = []
+            res.append(research[0])
+
+            #convert to int
+            research = [int(x) for x in research[1]]
+
+            revenue = [int(x) for x in revenue[1]]
+
+            quotient = [(x / y)*100 for x, y in zip(research,revenue)]
+            res.append(quotient)
+            res.append(s)
+            res.append("resarch&dev/totalRevenue")
+
+            # format for res: [time_points, value_points, symbol, indicator]
+            quaterly_data_per_symbol.append(res)
+
+
+        except:
+            print("calculate quotient of two absolute indicators not working")
         # filter_plot_data_list_per_symbol(annual_data_per_symbol, source)
         filter_plot_data_list_per_symbol(quaterly_data_per_symbol, source)
 
@@ -194,7 +215,7 @@ def get_data_from_finnhub():
 
 # SWITCHES:
 analyse_finnhub_data = False
-get_alpha_data = True
+get_alpha_data = False
 analyse_alpha_data = True
 alpha_vantage_symbols = ["AVGO"]  # "IBM", "AAPL"
 
