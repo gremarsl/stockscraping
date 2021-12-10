@@ -133,18 +133,10 @@ def analyse_data_from_alpha_vantage(symbols: list):
 
         income_statement = get_data_from_file("income_statement_alpha_" + s + ".json")
 
-
-        #TODO delete annaul
-        annual_absolute_data_per_symbol = []
         quaterly_absolute_data_per_symbol = []
         quaterly_relative_data_per_symbol = []
 
         for i in indicator_absolute_income_statement:
-            try:
-                annual_absolute_data_per_symbol.append(get_annual_report_alpha(income_statement, i, symbol=s))
-            except:
-                print("error in annual data per symbol {}".format(s))
-
             try:
                 quaterly_absolute_data_per_symbol.append(get_quaterly_report_alpha(income_statement, i, symbol=s))
             except:
@@ -177,8 +169,6 @@ def analyse_data_from_alpha_vantage(symbols: list):
                 print(
                     "calculate quotient of {} didint work".format(i))
 
-
-        # filter_plot_data_list_per_symbol(annual_data_per_symbol, source)
         filter_plot_data_list_per_symbol(quaterly_absolute_data_per_symbol, False, source)
         filter_plot_data_list_per_symbol(quaterly_relative_data_per_symbol, True, source)
 
