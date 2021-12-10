@@ -22,6 +22,18 @@ class NoEbitData(Exception):    pass
 
 def filter_plot_data_list_per_symbol(data_list: list, relativeData: bool, data_is_from_platform: str):
     # hier:  all_data_list = [data_per_symbol_1]
+
+    if data_is_from_platform == "excel":
+        try:
+
+            indicators = list(filter(
+                lambda x: x[3] == "totalRevenue",
+                data_list))
+            stupid_plot_data_lists(indicators, data_is_from_platform)
+        except:
+            print("no working indicators data")
+
+        pass
     if relativeData and data_is_from_platform == "alpha_vantage":
         try:
             if len(data_list) == 0: raise NoData()
@@ -90,7 +102,7 @@ def get_data_from_file(filename):
             income_statement = json.load(json_file)
     else:
         print(
-            "WARNING: alpha vantage was called but you filese are not found. Is get_alpha_data False? This should not be reached if get_alpha_data is True. maybe options fehlt für plot")
+            "WARNING: file not found - This should not be reached")
 
     return income_statement
 
@@ -228,12 +240,34 @@ def get_data_from_finnhub():
 
 
 # SWITCHES:
-analyse_finnhub_data = 1
+analyse_own_excel_data =1
+analyse_finnhub_data = 0
 get_alpha_data = 0
 analyse_alpha_data = 0
-alpha_vantage_symbols = ["AVGO","PAH3.FRK"]  # "IBM", "AAPL"
+alpha_vantage_symbols = ["AVGO"]  # "IBM", "AAPL"
+
+
+def get_data_from_local_json_file():
+    source = "excel"
+    #read data
+    filename= "D:\\Desktop\\Finanzreporte\\json\\testsymbol.json"
+    data = get_data_from_file(filename)
+
+    #extract quaterly data
+    a = get_quaterly_report_alpha(data_json=data,indicator="totalRevenue",symbol="TEST")
+
+
+    plotdata = []
+    plotdata.append(a)
+    #plotdata
+    filter_plot_data_list_per_symbol(plotdata, False, source)
+
+    pass
+
 
 if __name__ == '__main__':
+    if analyse_own_excel_data == 1:
+        get_data_from_local_json_file()
 
     if analyse_finnhub_data == 1:
         get_data_from_finnhub()
