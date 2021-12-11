@@ -4,6 +4,7 @@ import json
 import options
 from functions_for_finnhub import get_one_absolute_indicator_from_finnhub, get_fundamental_data_from_finnhub, \
     get_one_relative_indicator_from_finnhub, get_one_ratio_indicator_from_finnhub
+from general_functions import get_data_from_file
 from plot_functions import stupid_plot_data_lists
 from functions_for_alpha_vantage import \
     extract_quarterly_report_data_from_alpha, \
@@ -40,20 +41,6 @@ def filter_data(data_list, options):
         [unpack] = i
         indicators.append(unpack)
 
-    return indicators
-
-
-def filter_excel_data_origin(data_list, options):
-    indicators = list(filter(
-        lambda x: x[3] == "totalRevenue" or "netIncome",
-        data_list))
-    return indicators
-
-
-def filter_relative_alpha_vantage_data(data_list):
-    indicators = list(filter(
-        lambda x: x[3] == "researchAndDevelopment_to_totalRevenue" or "totalLiabilities_to_totalAssets",
-        data_list))
     return indicators
 
 
@@ -119,17 +106,6 @@ def processor_filter_plot_data(data_list: list, relativeData: bool, source: str)
 
             if len(eps_ebit_per_share_plot_data) == 0:
                 raise NoEbitData()
-
-
-def get_data_from_file(filename):
-    if os.path.isfile(filename):
-        with open(filename) as json_file:
-            data = json.load(json_file)
-    else:
-        print(
-            "WARNING: file not found - This should not be reached")
-
-    return data
 
 
 # TODO split - this func has two different purposes

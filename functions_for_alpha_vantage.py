@@ -11,6 +11,13 @@ import time
 from keys import api_key_alpha
 
 
+def filter_relative_alpha_vantage_data(data_list):
+    indicators = list(filter(
+        lambda x: x[3] == "researchAndDevelopment_to_totalRevenue" or "totalLiabilities_to_totalAssets",
+        data_list))
+    return indicators
+
+
 def calling_alpha_vantage_api(symbols):
     # 'https://finnhub.io/api/v1/stock/metric?symbol=DAI.DE&metric=all&token=buk3id748v6r2017iuog'
 

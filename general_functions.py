@@ -2,6 +2,18 @@
 import matplotlib.pyplot as plt
 import json
 
+
+def get_data_from_file(filename):
+    if os.path.isfile(filename):
+        with open(filename) as json_file:
+            data = json.load(json_file)
+    else:
+        print(
+            "WARNING: file not found - This should not be reached")
+
+    return data
+
+
 def only_plot(data, title):
     data.plot()
     plt.title(title)
