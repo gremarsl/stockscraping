@@ -4,6 +4,22 @@ import json
 import os
 
 
+def filter_data(data_list, options):
+    packed_indicators = []
+    indicators = []
+    for i in options:
+        indicator = filter(lambda x: x[3] == i, data_list)
+        indicator_list = list(indicator)
+        if (len(indicator_list) != 0):
+            packed_indicators.append(indicator_list)
+
+    # unpacking the list because with append to indicators - we have one list element to much - what we didnt have when doing list(filter(...))
+    for i in packed_indicators:
+        [unpack] = i
+        indicators.append(unpack)
+
+    return indicators
+
 def get_data_from_file(filename):
     if os.path.isfile(filename):
         with open(filename) as json_file:
