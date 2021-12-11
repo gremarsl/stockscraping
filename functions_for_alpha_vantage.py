@@ -274,7 +274,7 @@ def get_annual_report_alpha(data_json: dict, indicator: str, symbol: str) -> lis
     return data
 
 
-def get_quaterly_report_alpha(data_json: dict, indicator: str, symbol: str) -> list:
+def extract_quarterly_report_data_from_alpha(data_json: dict, indicator: str, symbol: str) -> list:
     reports = data_json['quarterlyReports']
     time_points = []
     value_points = []
