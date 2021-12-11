@@ -1,3 +1,34 @@
+
+options_test_indicator =[
+    "totalRevenue",
+    "netIncome"
+]
+
+options_abs_indicator =[
+    "grossMargin",
+    "netMargin",
+    "grossProfit",
+    "ebit",
+    "netIncome",
+    "incomeBeforeTax",
+    "operatingIncome",
+    "totalRevenue"
+]
+
+options_per_share_indicator =[
+    "eps",
+    "ebitPerShare"
+]
+
+options_rel_indicator =[
+    "totalDebtToEquity",
+    "cashRatio",
+    "currentRatio",
+    "researchAndDevelopment_to_totalRevenue",
+    "totalLiabilities_to_totalAssets"
+]
+
+
 def option_current_ratio():
     y_lim_top = 50
     y_lim_bottom = 0
