@@ -1,13 +1,10 @@
-
 import matplotlib.pyplot as plt
 import json
 import os
 
 
-def calculate_quotient(dividend_data,divisor_data, indicator, symbol):
-
+def calculate_quotient(dividend_data, divisor_data, indicator, symbol):
     dividend_str, divisor_str = split_indicator_in_two(indicator)
-
 
     quotient_list = [(x / y) * 100 for x, y in zip(dividend_data, divisor_data)]
 
@@ -36,6 +33,7 @@ def filter_data(data_list, options):
         indicators.append(unpack)
 
     return indicators
+
 
 def get_data_from_file(filename):
     if os.path.isfile(filename):
@@ -66,12 +64,14 @@ def write_to_file_in_json_format(data, name_of_file: str) -> None:
     f.write(str(json.dumps(data, indent=4)))
     f.close()
 
+
 def convert_list_elements_to_float(y):
     y_converted = []
     for x in y:
         x = float(x)
         y_converted.append(x)
     return y_converted
+
 
 def convert_list_elements_to_int(y):
     return [int(x) for x in y]

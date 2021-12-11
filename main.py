@@ -1,7 +1,7 @@
 import options
 from functions_for_finnhub import get_one_absolute_indicator_from_finnhub, get_fundamental_data_from_finnhub, \
     get_one_relative_indicator_from_finnhub, get_one_ratio_indicator_from_finnhub
-from functions_for_yahoo import get_last_price_for_symbol_from_yahoo_finance, get_market_cap_from_yahoo_finance
+from functions_for_yahoo import get_market_cap_from_yahoo_finance
 from general_functions import get_data_from_file, filter_data, convert_list_elements_to_int, split_indicator_in_two, \
     calculate_quotient
 from plot_functions import stupid_plot_data_lists
@@ -90,18 +90,17 @@ def processor_filter_plot_data(data_list: list, relativeData: bool, source: str)
                 raise NoEbitData()
 
 
-
 def get_data(input_data, indicator, symbol):
-
     # quotient: research and development:
     list_dividend = extract_quarterly_report_data_from_alpha(input_data, indicator, symbol=symbol)
 
     # convert to int
     list_dividend_converted = convert_list_elements_to_int(list_dividend[1])
 
-    data = [list_dividend[0],list_dividend_converted, symbol, indicator]
+    data = [list_dividend[0], list_dividend_converted, symbol, indicator]
 
     return data
+
 
 # TODO split - this func has two different purposes
 def get_data_calculate_quotient(input_data, indicator, symbol):
@@ -122,6 +121,7 @@ def get_data_calculate_quotient(input_data, indicator, symbol):
     data = [list_dividend[0], quotient_list, symbol, indicator]
 
     return data
+
 
 def analyse_data_from_alpha_vantage(symbols: list):
     source = "alpha_vantage"
@@ -245,7 +245,7 @@ def get_data_from_local_json_file():
     # my indicators I want to analyse from the json file
     my_abs_indicators = ["totalRevenue", "netIncome"]
     my_rel_indicators = ["researchAndDevelopment_to_totalRevenue", "totalLiabilities_to_totalAssets"]
-    my_rel_indicators_live =["totalRevenue_to_marketCap","totalAssets_to_marketCap"]
+    my_rel_indicators_live = ["totalRevenue_to_marketCap", "totalAssets_to_marketCap"]
 
     my_per_share_indicator = ["eps", "ebitPerShare"]
 
@@ -261,33 +261,30 @@ def get_data_from_local_json_file():
 
     marketCap = get_market_cap_from_yahoo_finance("DAI.DE")
 
-    rel_data_live =[]
+    rel_data_live = []
     for i in my_rel_indicators_live:
         dividend, divisor = split_indicator_in_two(i)
         dividend_data = get_data(data, indicator=dividend, symbol="TEST")
 
-        #wenn parameter vorhanden, dann hole dir aus file:
-        use_live_parameter=True
+        # wenn parameter vorhanden, dann hole dir aus file:
+        use_live_parameter = True
 
         if not use_live_parameter:
             return_data2 = get_data(data, indicator=divisor, symbol="TEST")
-            quotient = calculate_quotient(dividend_data[1],return_data2[1],i,symbol="TEST")
+            quotient = calculate_quotient(dividend_data[1], return_data2[1], i, symbol="TEST")
 
         if use_live_parameter:
             created_list = [marketCap] * len(dividend_data[1])
             converted_list = convert_list_elements_to_int(created_list)
 
-            quotient = calculate_quotient(dividend_data[1],converted_list,i,symbol="TEST")
+            quotient = calculate_quotient(dividend_data[1], converted_list, i, symbol="TEST")
 
-
-        #add another list around to make it work
-        temp_data = [dividend_data[0],quotient,"TEST", i]
+        # add another list around to make it work
+        temp_data = [dividend_data[0], quotient, "TEST", i]
 
         rel_data_live.append(temp_data)
 
-
     # plotdata
-
     processor_filter_plot_data(data_list=abs_data, relativeData=False, source=source)
     processor_filter_plot_data(data_list=rel_data, relativeData=True, source=source)
     processor_filter_plot_data(data_list=rel_data_live, relativeData=True, source=source)
@@ -304,7 +301,6 @@ alpha_vantage_symbols = ["AVGO"]  # "IBM", "AAPL"
 
 #TODO:
 # calculate ratio net income zu revenue
-# verhältnis goodwill zu marktkapitaliserung
 # verhältnis free cash flow zu revenue
 
 if __name__ == '__main__':
