@@ -1,11 +1,6 @@
 import yfinance as yf
 
-
-
-
 # get stock info
-
-
 
 symbol = "MSFT"
 

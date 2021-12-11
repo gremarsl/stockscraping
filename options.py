@@ -30,41 +30,20 @@ options_rel_indicator =[
 ]
 
 
-def option_current_ratio():
+def option_ratio_50_to_0():
     y_lim_top = 50
     y_lim_bottom = 0
     return y_lim_top, y_lim_bottom
 
 
-def option_cash_ratio():
-    y_lim_top = 50
-    y_lim_bottom = 0
-    return y_lim_top, y_lim_bottom
-
-
-def option_quotient_research_and_development_revenue():
-    y_lim_top = 50
-    y_lim_bottom = 0
-    return y_lim_top, y_lim_bottom
-
-def option_quotient_total_totalLiabilites_to_totalAssets():
+def option_quotient_2_to_0():
     y_lim_top = 2
     y_lim_bottom = 0
     return y_lim_top, y_lim_bottom
 
-def option_quotient_total_totalRevenue_to_marketCap():
-    y_lim_top = 2
-    y_lim_bottom = 0
-    return y_lim_top, y_lim_bottom
 
 def option_eps():
     y_lim_top = 20
-    y_lim_bottom = 0
-    return y_lim_top, y_lim_bottom
-
-
-def option_total_debt_to_equity():
-    y_lim_top = 2
     y_lim_bottom = 0
     return y_lim_top, y_lim_bottom
 

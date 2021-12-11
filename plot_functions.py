@@ -3,10 +3,10 @@ from general_functions import reverse_lists, convert_list_elements_to_float
 from options import *
 
 options_for_plot_limit = {
-    "totalDebtToEquity": option_total_debt_to_equity,
+    "totalDebtToEquity": option_quotient_2_to_0,
     "eps": option_eps,
-    "cashRatio": option_cash_ratio,
-    "currentRatio": option_current_ratio,
+    "cashRatio": option_ratio_50_to_0,
+    "currentRatio": option_ratio_50_to_0,
     "ebitPerShare": option_ebit_per_share,
     "grossMargin": option_gross_margin,
     "netMargin": option_net_margin,
@@ -16,9 +16,9 @@ options_for_plot_limit = {
     "incomeBeforeTax": option_income_before_tax,
     "operatingIncome": option_operating_income,
     "totalRevenue":option_total_revenue,
-    "researchAndDevelopment_to_totalRevenue":option_quotient_research_and_development_revenue,
-    "totalLiabilities_to_totalAssets": option_quotient_total_totalLiabilites_to_totalAssets,
-    "totalRevenue_to_marketCap": option_quotient_total_totalRevenue_to_marketCap
+    "researchAndDevelopment_to_totalRevenue":option_ratio_50_to_0,
+    "totalLiabilities_to_totalAssets": option_quotient_2_to_0,
+    "totalRevenue_to_marketCap": option_quotient_2_to_0
 }
 
 options_for_plot_color = {
