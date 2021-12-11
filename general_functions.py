@@ -3,6 +3,17 @@ import matplotlib.pyplot as plt
 import json
 import os
 
+
+def calculate_quotient(dividend_data,divisor_data, indicator, symbol):
+
+    dividend_str, divisor_str = split_indicator_in_two(indicator)
+
+
+    quotient_list = [(x / y) * 100 for x, y in zip(dividend_data, divisor_data)]
+
+    return quotient_list
+
+
 def split_indicator_in_two(indicator):
     dividend_str = indicator.split('_to_')[0]
     divisor_str = indicator.split('_to_')[1]
