@@ -4,7 +4,8 @@ import json
 import options
 from functions_for_finnhub import get_one_absolute_indicator_from_finnhub, get_fundamental_data_from_finnhub, \
     get_one_relative_indicator_from_finnhub, get_one_ratio_indicator_from_finnhub
-from general_functions import get_data_from_file
+from functions_for_yahoo import get_last_price_for_symbol_from_yahoo_finance, get_market_cap_from_yahoo_finance
+from general_functions import get_data_from_file, filter_data
 from plot_functions import stupid_plot_data_lists
 from functions_for_alpha_vantage import \
     extract_quarterly_report_data_from_alpha, \
@@ -26,22 +27,6 @@ class IncorrectAlphaData(Exception): pass
 
 class NoEbitData(Exception): pass
 
-
-def filter_data(data_list, options):
-    packed_indicators = []
-    indicators = []
-    for i in options:
-        indicator = filter(lambda x: x[3] == i, data_list)
-        indicator_list = list(indicator)
-        if (len(indicator_list) != 0):
-            packed_indicators.append(indicator_list)
-
-    # unpacking the list because with append to indicators - we have one list element to much - what we didnt have when doing list(filter(...))
-    for i in packed_indicators:
-        [unpack] = i
-        indicators.append(unpack)
-
-    return indicators
 
 
 def processor_filter_plot_data(data_list: list, relativeData: bool, source: str):
@@ -107,6 +92,38 @@ def processor_filter_plot_data(data_list: list, relativeData: bool, source: str)
             if len(eps_ebit_per_share_plot_data) == 0:
                 raise NoEbitData()
 
+def convert_list_elements_to_int(y):
+    return [int(x) for x in y]
+
+
+def split_indicator_in_two(indicator):
+    dividend_str = indicator.split('_to_')[0]
+    divisor_str = indicator.split('_to_')[1]
+
+    return dividend_str, divisor_str
+
+
+def calculate_quotient(dividend_data,divisor_data, indicator, symbol):
+
+    dividend_str, divisor_str = split_indicator_in_two(indicator)
+
+
+    quotient_list = [(x / y) * 100 for x, y in zip(dividend_data, divisor_data)]
+
+    return quotient_list
+
+# TODO split - this func has two different purposes
+def get_data(input_data, indicator, symbol):
+
+    # quotient: research and development:
+    list_dividend = extract_quarterly_report_data_from_alpha(input_data, indicator, symbol=symbol)
+
+    # convert to int
+    list_dividend_converted = convert_list_elements_to_int(list_dividend[1])
+
+    data = [list_dividend[0],list_dividend_converted, symbol, indicator]
+
+    return data
 
 # TODO split - this func has two different purposes
 def get_data_calculate_quotient(input_data, indicator, symbol):
@@ -127,7 +144,6 @@ def get_data_calculate_quotient(input_data, indicator, symbol):
     data = [list_dividend[0], quotient_list, symbol, indicator]
 
     return data
-
 
 def analyse_data_from_alpha_vantage(symbols: list):
     source = "alpha_vantage"
@@ -251,6 +267,8 @@ def get_data_from_local_json_file():
     # my indicators I want to analyse from the json file
     my_abs_indicators = ["totalRevenue", "netIncome"]
     my_rel_indicators = ["researchAndDevelopment_to_totalRevenue", "totalLiabilities_to_totalAssets"]
+    my_rel_indicators_live =["totalRevenue_to_marketCap"]
+
     my_per_share_indicator = ["eps", "ebitPerShare"]
 
     abs_data = []
@@ -261,14 +279,48 @@ def get_data_from_local_json_file():
     rel_data = []
     for i in my_rel_indicators:
         return_data = get_data_calculate_quotient(data, indicator=i, symbol="TEST")
-
         rel_data.append(return_data)
 
+    marketCap = get_market_cap_from_yahoo_finance("DAI.DE")
+
+    for i in my_rel_indicators_live:
+        dividend, divisor = split_indicator_in_two(i)
+        return_data1 = get_data(data, indicator=dividend, symbol="TEST")
+
+        #wenn parameter vorhanden, dann hole dir aus file:
+        use_live_parameter=True
+
+        if not use_live_parameter:
+            return_data2 = get_data(data, indicator=divisor, symbol="TEST")
+            quotient = calculate_quotient(return_data1[1],return_data2[1],i,symbol="TEST")
+
+        if use_live_parameter:
+            created_list = [marketCap] * len(return_data1[1])
+            converted_list = convert_list_elements_to_int(created_list)
+
+            quotient = calculate_quotient(return_data1[1],converted_list,i,symbol="TEST")
+
+
+        #add another list around to make it work
+        rel_data_live = [[return_data1[0],quotient,"TEST", i]]
+
+
     # plotdata
+
     processor_filter_plot_data(data_list=abs_data, relativeData=False, source=source)
     processor_filter_plot_data(data_list=rel_data, relativeData=True, source=source)
+    processor_filter_plot_data(data_list=rel_data_live, relativeData=True, source=source)
 
-    # TODO - live price of symbol - live marketkapitalisierung
+
+
+
+    #TODO:
+    # calculate ratio net income zu revenue
+    # verhältnis goodwill zu marktkapitaliserung
+    # verhältnis total assets zu marketkapitalisierung
+    # verhältnis asset zu liabilites
+    # verhältnis free cash flow zu revenue
+
     pass
 
 
