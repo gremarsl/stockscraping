@@ -3,6 +3,12 @@ import matplotlib.pyplot as plt
 import json
 import os
 
+def split_indicator_in_two(indicator):
+    dividend_str = indicator.split('_to_')[0]
+    divisor_str = indicator.split('_to_')[1]
+
+    return dividend_str, divisor_str
+
 
 def filter_data(data_list, options):
     packed_indicators = []
@@ -55,3 +61,6 @@ def convert_list_elements_to_float(y):
         x = float(x)
         y_converted.append(x)
     return y_converted
+
+def convert_list_elements_to_int(y):
+    return [int(x) for x in y]

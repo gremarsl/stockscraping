@@ -2,7 +2,7 @@ import options
 from functions_for_finnhub import get_one_absolute_indicator_from_finnhub, get_fundamental_data_from_finnhub, \
     get_one_relative_indicator_from_finnhub, get_one_ratio_indicator_from_finnhub
 from functions_for_yahoo import get_last_price_for_symbol_from_yahoo_finance, get_market_cap_from_yahoo_finance
-from general_functions import get_data_from_file, filter_data
+from general_functions import get_data_from_file, filter_data, convert_list_elements_to_int, split_indicator_in_two
 from plot_functions import stupid_plot_data_lists
 from functions_for_alpha_vantage import \
     extract_quarterly_report_data_from_alpha, \
@@ -87,16 +87,6 @@ def processor_filter_plot_data(data_list: list, relativeData: bool, source: str)
 
             if len(eps_ebit_per_share_plot_data) == 0:
                 raise NoEbitData()
-
-def convert_list_elements_to_int(y):
-    return [int(x) for x in y]
-
-
-def split_indicator_in_two(indicator):
-    dividend_str = indicator.split('_to_')[0]
-    divisor_str = indicator.split('_to_')[1]
-
-    return dividend_str, divisor_str
 
 
 def calculate_quotient(dividend_data,divisor_data, indicator, symbol):
