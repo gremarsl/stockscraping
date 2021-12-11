@@ -1,6 +1,7 @@
 import os
 import json
 
+import options
 from functions_for_finnhub import get_one_absolute_indicator_from_finnhub, get_fundamental_data_from_finnhub, \
     get_one_relative_indicator_from_finnhub, get_one_ratio_indicator_from_finnhub
 from plot_functions import stupid_plot_data_lists
@@ -25,7 +26,23 @@ class IncorrectAlphaData(Exception): pass
 class NoEbitData(Exception): pass
 
 
-def filter_excel_data(data_list):
+def filter_data(data_list,options):
+    packed_indicators = []
+    indicators = []
+    for i in options:
+        indicator = filter(lambda x: x[3] == i, data_list)
+        indicator_list = list(indicator)
+        if(len(indicator_list) !=0):
+            packed_indicators.append(indicator_list)
+
+    #unpacking the list because with append to indicators - we have one list element to much - what we didnt have when doing list(filter(...))
+    for i in packed_indicators:
+        [unpack] = i
+        indicators.append(unpack)
+
+    return indicators
+
+def filter_excel_data_origin(data_list,options):
     indicators = list(filter(
         lambda x: x[3] == "totalRevenue" or "netIncome",
         data_list))
@@ -49,7 +66,9 @@ def filter_plot_data_list_per_symbol(data_list: list, relativeData: bool, source
         if source == "excel":
             try:
                 # filter
-                indicators = filter_excel_data(data_list)
+                indicators_origin = filter_excel_data_origin(data_list,options.options_test_indicator)
+
+                indicators = filter_data(data_list,options.options_test_indicator)
                 # plot data
                 stupid_plot_data_lists(indicators, source)
 
@@ -59,7 +78,9 @@ def filter_plot_data_list_per_symbol(data_list: list, relativeData: bool, source
         if relativeData and source == "alpha_vantage":
 
             try:
-                stupid_plot_data_lists(filter_relative_alpha_vantage_data(data_list), source)
+                stupid_plot_data_lists(filter_data(data_list,options.options_rel_indicator), source)
+
+                #stupid_plot_data_lists(filter_relative_alpha_vantage_data(data_list), source)
             except IncorrectAlphaData:
                 print("analyzing alpha data failed")
 
@@ -238,12 +259,6 @@ def get_data_from_finnhub():
         all_plot_data.append(data_per_symbol)
 
 
-# SWITCHES:
-analyse_own_excel_data = 1
-analyse_finnhub_data = 0
-get_alpha_data = 0
-analyse_alpha_data = 0
-alpha_vantage_symbols = ["AVGO"]  # "IBM", "AAPL"
 
 
 def get_data_from_local_json_file():
@@ -267,6 +282,12 @@ def get_data_from_local_json_file():
     # TODO - live price of symbol - live marketkapitalisierung
     pass
 
+# SWITCHES:
+analyse_own_excel_data = 1
+analyse_finnhub_data = 0
+get_alpha_data = 0
+analyse_alpha_data = 1
+alpha_vantage_symbols = ["AVGO"]  # "IBM", "AAPL"
 
 if __name__ == '__main__':
     if analyse_own_excel_data == 1:
