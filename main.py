@@ -1,6 +1,3 @@
-import os
-import json
-
 import options
 from functions_for_finnhub import get_one_absolute_indicator_from_finnhub, get_fundamental_data_from_finnhub, \
     get_one_relative_indicator_from_finnhub, get_one_ratio_indicator_from_finnhub
@@ -26,7 +23,6 @@ class IncorrectAlphaData(Exception): pass
 
 
 class NoEbitData(Exception): pass
-
 
 
 def processor_filter_plot_data(data_list: list, relativeData: bool, source: str):
@@ -310,18 +306,9 @@ def get_data_from_local_json_file():
 
     # plotdata
 
-    #processor_filter_plot_data(data_list=abs_data, relativeData=False, source=source)
-    #processor_filter_plot_data(data_list=rel_data, relativeData=True, source=source)
+    processor_filter_plot_data(data_list=abs_data, relativeData=False, source=source)
+    processor_filter_plot_data(data_list=rel_data, relativeData=True, source=source)
     processor_filter_plot_data(data_list=rel_data_live, relativeData=True, source=source)
-
-
-
-
-    #TODO:
-    # calculate ratio net income zu revenue
-    # verhältnis goodwill zu marktkapitaliserung
-    # verhältnis total assets zu marketkapitalisierung
-    # verhältnis free cash flow zu revenue
 
     pass
 
@@ -332,6 +319,11 @@ analyse_finnhub_data = 0
 get_alpha_data = 0
 analyse_alpha_data = 0
 alpha_vantage_symbols = ["AVGO"]  # "IBM", "AAPL"
+
+#TODO:
+# calculate ratio net income zu revenue
+# verhältnis goodwill zu marktkapitaliserung
+# verhältnis free cash flow zu revenue
 
 if __name__ == '__main__':
     if analyse_own_excel_data == 1:
