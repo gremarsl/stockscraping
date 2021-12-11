@@ -267,7 +267,7 @@ def get_data_from_local_json_file():
     # my indicators I want to analyse from the json file
     my_abs_indicators = ["totalRevenue", "netIncome"]
     my_rel_indicators = ["researchAndDevelopment_to_totalRevenue", "totalLiabilities_to_totalAssets"]
-    my_rel_indicators_live =["totalRevenue_to_marketCap"]
+    my_rel_indicators_live =["totalRevenue_to_marketCap","totalAssets_to_marketCap"]
 
     my_per_share_indicator = ["eps", "ebitPerShare"]
 
@@ -283,32 +283,35 @@ def get_data_from_local_json_file():
 
     marketCap = get_market_cap_from_yahoo_finance("DAI.DE")
 
+    rel_data_live =[]
     for i in my_rel_indicators_live:
         dividend, divisor = split_indicator_in_two(i)
-        return_data1 = get_data(data, indicator=dividend, symbol="TEST")
+        dividend_data = get_data(data, indicator=dividend, symbol="TEST")
 
         #wenn parameter vorhanden, dann hole dir aus file:
         use_live_parameter=True
 
         if not use_live_parameter:
             return_data2 = get_data(data, indicator=divisor, symbol="TEST")
-            quotient = calculate_quotient(return_data1[1],return_data2[1],i,symbol="TEST")
+            quotient = calculate_quotient(dividend_data[1],return_data2[1],i,symbol="TEST")
 
         if use_live_parameter:
-            created_list = [marketCap] * len(return_data1[1])
+            created_list = [marketCap] * len(dividend_data[1])
             converted_list = convert_list_elements_to_int(created_list)
 
-            quotient = calculate_quotient(return_data1[1],converted_list,i,symbol="TEST")
+            quotient = calculate_quotient(dividend_data[1],converted_list,i,symbol="TEST")
 
 
         #add another list around to make it work
-        rel_data_live = [[return_data1[0],quotient,"TEST", i]]
+        temp_data = [dividend_data[0],quotient,"TEST", i]
+
+        rel_data_live.append(temp_data)
 
 
     # plotdata
 
-    processor_filter_plot_data(data_list=abs_data, relativeData=False, source=source)
-    processor_filter_plot_data(data_list=rel_data, relativeData=True, source=source)
+    #processor_filter_plot_data(data_list=abs_data, relativeData=False, source=source)
+    #processor_filter_plot_data(data_list=rel_data, relativeData=True, source=source)
     processor_filter_plot_data(data_list=rel_data_live, relativeData=True, source=source)
 
 
@@ -318,7 +321,6 @@ def get_data_from_local_json_file():
     # calculate ratio net income zu revenue
     # verhältnis goodwill zu marktkapitaliserung
     # verhältnis total assets zu marketkapitalisierung
-    # verhältnis asset zu liabilites
     # verhältnis free cash flow zu revenue
 
     pass
