@@ -48,8 +48,7 @@ def option_eps():
     return y_lim_top, y_lim_bottom
 
 
-
-def option_ebit_per_share():
+def option_per_share_30_to_minus_5():
     y_lim_top = 30
     y_lim_bottom = 0
     return y_lim_top, y_lim_bottom
@@ -61,43 +60,18 @@ def option_gross_margin():
     return y_lim_top, y_lim_bottom
 
 
-def option_net_margin():
-    y_lim_top = 30
-    y_lim_bottom = -5
-    return y_lim_top, y_lim_bottom
-
-
 def option_gross_profit():
     y_lim_top = 100 * 10 ** 9
     y_lim_bottom = 30 * 10 ** 9
     return y_lim_top, y_lim_bottom
 
 
-def option_ebit():
+def option_abs_50_to_30_billion():
     y_lim_top = 50 * 10 ** 9
     y_lim_bottom = 30 * 10 ** 9
     return y_lim_top, y_lim_bottom
-
-
-def option_net_income():
-    y_lim_top = 50 * 10 ** 9
-    y_lim_bottom = 30 * 10 ** 9
-    return y_lim_top, y_lim_bottom
-
-
-def option_income_before_tax():
-    y_lim_top = 50 * 10 ** 9
-    y_lim_bottom = 30 * 10 ** 9
-    return y_lim_top, y_lim_bottom
-
 
 def option_operating_income():
-    y_lim_top = 50 * 10 ** 9
-    y_lim_bottom = 30 * 10 ** 9
-    return y_lim_top, y_lim_bottom
-
-
-def option_total_revenue():
     y_lim_top = 50 * 10 ** 9
     y_lim_bottom = 30 * 10 ** 9
     return y_lim_top, y_lim_bottom
