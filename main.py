@@ -6,7 +6,6 @@ from functions_for_finnhub import get_one_absolute_indicator_from_finnhub, get_f
 from plot_functions import stupid_plot_data_lists
 from functions_for_alpha_vantage import \
     get_quaterly_report_alpha, \
-    get_annual_report_alpha, \
     calling_alpha_vantage_api
 
 
@@ -17,11 +16,11 @@ from functions_for_alpha_vantage import \
 class NoData(Exception): pass  # declare a label
 
 
-class NoEbitData(Exception):    pass
+class NoEbitData(Exception): pass
 
 
 def filter_plot_data_list_per_symbol(data_list: list, relativeData: bool, data_is_from_platform: str):
-    # hier:  all_data_list = [data_per_symbol_1]
+    # all_data_list = [data_per_symbol_1]
 
     if data_is_from_platform == "excel":
         try:
@@ -65,7 +64,7 @@ def filter_plot_data_list_per_symbol(data_list: list, relativeData: bool, data_i
                            x[3] == "netMargin"), data_list))
 
             # comment out because eps ebit per share is printed twice
-            #stupid_plot_data_lists(eps_ebit_per_share_plot_data, data_is_from_platform)
+            # stupid_plot_data_lists(eps_ebit_per_share_plot_data, data_is_from_platform)
 
             try:
                 stupid_plot_data_lists(except_grossmargin_debt, data_is_from_platform)
@@ -99,12 +98,12 @@ def filter_plot_data_list_per_symbol(data_list: list, relativeData: bool, data_i
 def get_data_from_file(filename):
     if os.path.isfile(filename):
         with open(filename) as json_file:
-            income_statement = json.load(json_file)
+            data = json.load(json_file)
     else:
         print(
             "WARNING: file not found - This should not be reached")
 
-    return income_statement
+    return data
 
 
 def get_data_calculate_quotient(data_origin, indicator, symbol):
@@ -235,12 +234,12 @@ def get_data_from_finnhub():
             except:
                 print("no {} data  for  {} ".format(i, s))
 
-        filter_plot_data_list_per_symbol(data_per_symbol, relativeData =False,data_is_from_platform =source)
+        filter_plot_data_list_per_symbol(data_per_symbol, relativeData=False, data_is_from_platform=source)
         all_plot_data.append(data_per_symbol)
 
 
 # SWITCHES:
-analyse_own_excel_data =1
+analyse_own_excel_data = 1
 analyse_finnhub_data = 0
 get_alpha_data = 0
 analyse_alpha_data = 0
@@ -249,23 +248,22 @@ alpha_vantage_symbols = ["AVGO"]  # "IBM", "AAPL"
 
 def get_data_from_local_json_file():
     source = "excel"
-    #read data
-    filename= "D:\\Desktop\\Finanzreporte\\json\\testsymbol.json"
+    # read data
+    filename = "D:\\Desktop\\Finanzreporte\\json\\testsymbol.json"
     data = get_data_from_file(filename)
 
     plotdata = []
 
-    #extract quaterly data
-    my_indicators = ["totalRevenue","netIncome"]
+    # extract quaterly data
+    my_indicators = ["totalRevenue", "netIncome"]
 
     for i in my_indicators:
-        a = get_quaterly_report_alpha(data_json=data,indicator=i,symbol="TEST")
+        a = get_quaterly_report_alpha(data_json=data, indicator=i, symbol="TEST")
         plotdata.append(a)
-    #plotdata
+    # plotdata
     filter_plot_data_list_per_symbol(plotdata, False, source)
 
-    #TODO - live price of symbol - live marketkapitalisierung
-    #
+    # TODO - live price of symbol - live marketkapitalisierung
     pass
 
 
