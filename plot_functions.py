@@ -17,7 +17,8 @@ options_for_plot_limit = {
     "operatingIncome": option_operating_income,
     "totalRevenue":option_total_revenue,
     "researchAndDevelopment_to_totalRevenue":option_quotient_research_and_development_revenue,
-    "totalLiabilities_to_totalAssets": option_quotient_total_totalLiabilites_to_totalAssets
+    "totalLiabilities_to_totalAssets": option_quotient_total_totalLiabilites_to_totalAssets,
+    "totalRevenue_to_marketCap": option_quotient_total_totalRevenue_to_marketCap
 }
 
 options_for_plot_color = {
@@ -35,7 +36,8 @@ options_for_plot_color = {
     "operatingIncome": option_color_operating_income,
     "totalRevenue": option_color_operating_income,
     "researchAndDevelopment_to_totalRevenue":option_color_quotient_research_and_development_revenue,
-    "totalLiabilities_to_totalAssets": option_color_quotient_totalLiabilities_to_totalAssets
+    "totalLiabilities_to_totalAssets": option_color_quotient_totalLiabilities_to_totalAssets,
+    "totalRevenue_to_marketCap": option_color_quotient_totalRevenue_to_marketCap
 }
 
 

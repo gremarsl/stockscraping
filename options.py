@@ -21,6 +21,7 @@ options_per_share_indicator =[
 ]
 
 options_rel_indicator =[
+    "totalRevenue_to_marketCap",
     "totalDebtToEquity",
     "cashRatio",
     "currentRatio",
@@ -51,6 +52,10 @@ def option_quotient_total_totalLiabilites_to_totalAssets():
     y_lim_bottom = 0
     return y_lim_top, y_lim_bottom
 
+def option_quotient_total_totalRevenue_to_marketCap():
+    y_lim_top = 2
+    y_lim_bottom = 0
+    return y_lim_top, y_lim_bottom
 
 def option_eps():
     y_lim_top = 20
@@ -176,3 +181,6 @@ def option_color_quotient_research_and_development_revenue():
 
 def option_color_quotient_totalLiabilities_to_totalAssets():
     return "green"
+
+def option_color_quotient_totalRevenue_to_marketCap():
+    return "red"
