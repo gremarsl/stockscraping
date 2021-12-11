@@ -16,42 +16,65 @@ from functions_for_alpha_vantage import \
 class NoData(Exception): pass  # declare a label
 
 
+class IncorrectExcelData(Exception): pass
+
+
+class IncorrectAlphaData(Exception): pass
+
+
 class NoEbitData(Exception): pass
 
 
-def filter_plot_data_list_per_symbol(data_list: list, relativeData: bool, data_is_from_platform: str):
+def filter_excel_data(data_list):
+    indicators = list(filter(
+        lambda x: x[3] == "totalRevenue" or "netIncome",
+        data_list))
+    return indicators
+
+
+def filter_relative_alpha_vantage_data(data_list):
+    indicators = list(filter(
+        lambda x: x[3] == "researchAndDevelopment_to_totalRevenue" or "totalLiabilities_to_totalAssets",
+        data_list))
+    return indicators
+
+
+def filter_plot_data_list_per_symbol(data_list: list, relativeData: bool, source: str):
     # all_data_list = [data_per_symbol_1]
 
-    if data_is_from_platform == "excel":
-        try:
+    if (len(data_list) == 0) or ((source != "alpha_vantage") and (source != "finnhub") and (source != "excel")):
+        raise Exception("No data or data is not from source alpha_vantage, finnhub or excel")
 
-            indicators = list(filter(
-                lambda x: x[3] == "totalRevenue" or "netIncome",
-                data_list))
-            stupid_plot_data_lists(indicators, data_is_from_platform)
-        except:
-            print("no working indicators data")
+    else:
+        if source == "excel":
+            try:
+                # filter
+                indicators = filter_excel_data(data_list)
+                # plot data
+                stupid_plot_data_lists(indicators, source)
 
-        pass
-    if relativeData and data_is_from_platform == "alpha_vantage":
-        try:
-            if len(data_list) == 0: raise NoData()
+            except IncorrectExcelData:
+                print("analyzing excel data failed")
+
+        if relativeData and source == "alpha_vantage":
+
+            try:
+                stupid_plot_data_lists(filter_relative_alpha_vantage_data(data_list), source)
+            except IncorrectAlphaData:
+                print("analyzing alpha data failed")
+
+        if relativeData == False and source == "alpha_vantage":
 
             try:
                 indicators = list(filter(
-                    lambda x: x[3] == "researchAndDevelopment_to_totalRevenue" or "totalLiabilities_to_totalAssets",
+                    lambda x: x[
+                                  3] == "grossProfit" or "totalRevenue" or "ebit" or "netIncome" or "operatingIncome" or "incomeBeforeTax",
                     data_list))
-                stupid_plot_data_lists(indicators, data_is_from_platform)
+                stupid_plot_data_lists(indicators, source)
             except:
                 print("no working indicators data")
 
-        except NoData:
-            print("no income data ")
-            pass
-
-    else:
-        eps_ebit_per_share_plot_data = []
-        if data_is_from_platform == "finnhub":
+        if relativeData == False and source == "finnhub":
             except_grossmargin = list(filter(lambda x: (x[3] != "grossMargin"), data_list))
 
             except_grossmargin_debt = list(filter(lambda x: x[3] != "totalDebtToEquity", except_grossmargin))
@@ -63,36 +86,13 @@ def filter_plot_data_list_per_symbol(data_list: list, relativeData: bool, data_i
                 lambda x: (x[3] == "eps" or x[3] == "cashRatio" or x[3] == "currentRatio" or x[3] != "ebitPerShare" or
                            x[3] == "netMargin"), data_list))
 
-            # comment out because eps ebit per share is printed twice
-            # stupid_plot_data_lists(eps_ebit_per_share_plot_data, data_is_from_platform)
-
             try:
-                stupid_plot_data_lists(except_grossmargin_debt, data_is_from_platform)
+                stupid_plot_data_lists(except_grossmargin_debt, source)
             except:
                 print("Not working to plot ratios_eps_ebit_net_margin_data data in one plot {}".format(data_list))
 
-        if data_is_from_platform == "alpha_vantage":
-            try:
-                if len(data_list) == 0: raise NoData()
-
-                try:
-                    indicators = list(filter(
-                        lambda x: x[
-                                      3] == "grossProfit" or "totalRevenue" or "ebit" or "netIncome" or "operatingIncome" or "incomeBeforeTax",
-                        data_list))
-                    stupid_plot_data_lists(indicators, data_is_from_platform)
-                except:
-                    print("no working indicators data")
-
-            except NoData:
-                print("no income data ")
-                pass
-
-        try:
-            if len(eps_ebit_per_share_plot_data) == 0: raise NoEbitData()
-        except NoEbitData:
-            print("no ebit data skip")
-            pass
+            if len(eps_ebit_per_share_plot_data) == 0:
+                raise NoEbitData()
 
 
 def get_data_from_file(filename):
@@ -234,7 +234,7 @@ def get_data_from_finnhub():
             except:
                 print("no {} data  for  {} ".format(i, s))
 
-        filter_plot_data_list_per_symbol(data_per_symbol, relativeData=False, data_is_from_platform=source)
+        filter_plot_data_list_per_symbol(data_per_symbol, relativeData=False, source=source)
         all_plot_data.append(data_per_symbol)
 
 
@@ -258,8 +258,9 @@ def get_data_from_local_json_file():
     my_indicators = ["totalRevenue", "netIncome"]
 
     for i in my_indicators:
-        a = get_quaterly_report_alpha(data_json=data, indicator=i, symbol="TEST")
-        plotdata.append(a)
+        return_data = get_quaterly_report_alpha(data_json=data, indicator=i, symbol="TEST")
+        plotdata.append(return_data)
+
     # plotdata
     filter_plot_data_list_per_symbol(plotdata, False, source)
 

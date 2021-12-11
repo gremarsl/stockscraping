@@ -61,14 +61,6 @@ def stupid_plot_data_lists(data_list: list, data_is_from_platform: str) -> None:
             else:
                 y_lim_top, y_lim_bottom = options_for_plot_limit[indicator]()
 
-            '''
-            # plt.ylim(top=y_lim_top)  # ymax is your value
-            # plt.ylim(bottom=y_lim_bottom)  # ymin is your value
-           
-            if data_is_from_platform == "alpha_vantage":
-                y = list(map(lambda i: i / 1000000000, y))
-                plt.ylabel("[[Mrd]]")
-            '''
             plt.plot(x, y, label=indicator, color=options_for_plot_color[indicator]())
             plt.scatter(x, y, color=options_for_plot_color[indicator]())
 
