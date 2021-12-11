@@ -6,7 +6,7 @@ from functions_for_finnhub import get_one_absolute_indicator_from_finnhub, get_f
     get_one_relative_indicator_from_finnhub, get_one_ratio_indicator_from_finnhub
 from plot_functions import stupid_plot_data_lists
 from functions_for_alpha_vantage import \
-    get_quaterly_report_alpha, \
+    extract_quarterly_report_data_from_alpha, \
     calling_alpha_vantage_api
 
 
@@ -26,23 +26,24 @@ class IncorrectAlphaData(Exception): pass
 class NoEbitData(Exception): pass
 
 
-def filter_data(data_list,options):
+def filter_data(data_list, options):
     packed_indicators = []
     indicators = []
     for i in options:
         indicator = filter(lambda x: x[3] == i, data_list)
         indicator_list = list(indicator)
-        if(len(indicator_list) !=0):
+        if (len(indicator_list) != 0):
             packed_indicators.append(indicator_list)
 
-    #unpacking the list because with append to indicators - we have one list element to much - what we didnt have when doing list(filter(...))
+    # unpacking the list because with append to indicators - we have one list element to much - what we didnt have when doing list(filter(...))
     for i in packed_indicators:
         [unpack] = i
         indicators.append(unpack)
 
     return indicators
 
-def filter_excel_data_origin(data_list,options):
+
+def filter_excel_data_origin(data_list, options):
     indicators = list(filter(
         lambda x: x[3] == "totalRevenue" or "netIncome",
         data_list))
@@ -56,19 +57,31 @@ def filter_relative_alpha_vantage_data(data_list):
     return indicators
 
 
-def filter_plot_data_list_per_symbol(data_list: list, relativeData: bool, source: str):
+def processor_filter_plot_data(data_list: list, relativeData: bool, source: str):
     # all_data_list = [data_per_symbol_1]
 
-    if (len(data_list) == 0) or ((source != "alpha_vantage") and (source != "finnhub") and (source != "excel")):
-        raise Exception("No data or data is not from source alpha_vantage, finnhub or excel")
+    if len(data_list) == 0:
+        raise Exception("No data")
+
+    if (source != "alpha_vantage") and (source != "finnhub") and (source != "excel"):
+        raise Exception("data is not from source alpha_vantage, finnhub or excel")
+
 
     else:
-        if source == "excel":
+        if (not relativeData) and source == "excel":
             try:
                 # filter
-                indicators_origin = filter_excel_data_origin(data_list,options.options_test_indicator)
+                indicators = filter_data(data_list, options.options_abs_indicator)
+                # plot data
+                stupid_plot_data_lists(indicators, source)
 
-                indicators = filter_data(data_list,options.options_test_indicator)
+            except IncorrectExcelData:
+                print("analyzing excel data failed")
+
+        if relativeData and source == "excel":
+            try:
+                # filter
+                indicators = filter_data(data_list, options.options_rel_indicator)
                 # plot data
                 stupid_plot_data_lists(indicators, source)
 
@@ -78,34 +91,26 @@ def filter_plot_data_list_per_symbol(data_list: list, relativeData: bool, source
         if relativeData and source == "alpha_vantage":
 
             try:
-                stupid_plot_data_lists(filter_data(data_list,options.options_rel_indicator), source)
+                stupid_plot_data_lists(filter_data(data_list, options.options_rel_indicator), source)
 
-                #stupid_plot_data_lists(filter_relative_alpha_vantage_data(data_list), source)
             except IncorrectAlphaData:
                 print("analyzing alpha data failed")
 
-        if relativeData == False and source == "alpha_vantage":
+        if (not relativeData) and source == "alpha_vantage":
 
             try:
-                indicators = list(filter(
-                    lambda x: x[
-                                  3] == "grossProfit" or "totalRevenue" or "ebit" or "netIncome" or "operatingIncome" or "incomeBeforeTax",
-                    data_list))
-                stupid_plot_data_lists(indicators, source)
+                stupid_plot_data_lists(filter_data(data_list, options.options_abs_indicator), source)
+
             except:
                 print("no working indicators data")
 
-        if relativeData == False and source == "finnhub":
+        if (not relativeData) and source == "finnhub":
             except_grossmargin = list(filter(lambda x: (x[3] != "grossMargin"), data_list))
 
             except_grossmargin_debt = list(filter(lambda x: x[3] != "totalDebtToEquity", except_grossmargin))
 
             eps_ebit_per_share_plot_data = list(
                 filter(lambda x: x[3] == "eps" or x[3] == "ebitPerShare", data_list))
-
-            ratios_eps_ebit_net_margin_data = list(filter(
-                lambda x: (x[3] == "eps" or x[3] == "cashRatio" or x[3] == "currentRatio" or x[3] != "ebitPerShare" or
-                           x[3] == "netMargin"), data_list))
 
             try:
                 stupid_plot_data_lists(except_grossmargin_debt, source)
@@ -127,13 +132,14 @@ def get_data_from_file(filename):
     return data
 
 
-def get_data_calculate_quotient(data_origin, indicator, symbol):
+# TODO split - this func has two different purposes
+def get_data_calculate_quotient(input_data, indicator, symbol):
     dividend_str = indicator.split('_to_')[0]
     divisor_str = indicator.split('_to_')[1]
 
     # quotient: research and development:
-    list_dividend = get_quaterly_report_alpha(data_origin, dividend_str, symbol=symbol)
-    list_divisor = get_quaterly_report_alpha(data_origin, divisor_str, symbol=symbol)
+    list_dividend = extract_quarterly_report_data_from_alpha(input_data, dividend_str, symbol=symbol)
+    list_divisor = extract_quarterly_report_data_from_alpha(input_data, divisor_str, symbol=symbol)
 
     # convert to int
     list_dividend_converted = [int(x) for x in list_dividend[1]]
@@ -165,7 +171,8 @@ def analyse_data_from_alpha_vantage(symbols: list):
 
         for i in indicator_absolute_income_statement:
             try:
-                quaterly_absolute_data_per_symbol.append(get_quaterly_report_alpha(income_statement, i, symbol=s))
+                quaterly_absolute_data_per_symbol.append(
+                    extract_quarterly_report_data_from_alpha(income_statement, i, symbol=s))
             except:
                 print("error in quaterly data {}".format(s))
 
@@ -191,8 +198,8 @@ def analyse_data_from_alpha_vantage(symbols: list):
                 print(
                     "calculate quotient of {} didint work".format(i))
 
-        filter_plot_data_list_per_symbol(quaterly_absolute_data_per_symbol, False, source)
-        filter_plot_data_list_per_symbol(quaterly_relative_data_per_symbol, True, source)
+        processor_filter_plot_data(quaterly_absolute_data_per_symbol, False, source)
+        processor_filter_plot_data(quaterly_relative_data_per_symbol, True, source)
 
     pass
 
@@ -255,10 +262,8 @@ def get_data_from_finnhub():
             except:
                 print("no {} data  for  {} ".format(i, s))
 
-        filter_plot_data_list_per_symbol(data_per_symbol, relativeData=False, source=source)
+        processor_filter_plot_data(data_per_symbol, relativeData=False, source=source)
         all_plot_data.append(data_per_symbol)
-
-
 
 
 def get_data_from_local_json_file():
@@ -267,26 +272,35 @@ def get_data_from_local_json_file():
     filename = "D:\\Desktop\\Finanzreporte\\json\\testsymbol.json"
     data = get_data_from_file(filename)
 
-    plotdata = []
+    # my indicators I want to analyse from the json file
+    my_abs_indicators = ["totalRevenue", "netIncome"]
+    my_rel_indicators = ["researchAndDevelopment_to_totalRevenue", "totalLiabilities_to_totalAssets"]
+    my_per_share_indicator = ["eps", "ebitPerShare"]
 
-    # extract quaterly data
-    my_indicators = ["totalRevenue", "netIncome"]
+    abs_data = []
+    for i in my_abs_indicators:
+        extracted_data = extract_quarterly_report_data_from_alpha(data_json=data, indicator=i, symbol="TEST")
+        abs_data.append(extracted_data)
 
-    for i in my_indicators:
-        return_data = get_quaterly_report_alpha(data_json=data, indicator=i, symbol="TEST")
-        plotdata.append(return_data)
+    rel_data = []
+    for i in my_rel_indicators:
+        return_data = get_data_calculate_quotient(data, indicator=i, symbol="TEST")
+
+        rel_data.append(return_data)
 
     # plotdata
-    filter_plot_data_list_per_symbol(plotdata, False, source)
+    processor_filter_plot_data(data_list=abs_data, relativeData=False, source=source)
+    processor_filter_plot_data(data_list=rel_data, relativeData=True, source=source)
 
     # TODO - live price of symbol - live marketkapitalisierung
     pass
+
 
 # SWITCHES:
 analyse_own_excel_data = 1
 analyse_finnhub_data = 0
 get_alpha_data = 0
-analyse_alpha_data = 1
+analyse_alpha_data = 0
 alpha_vantage_symbols = ["AVGO"]  # "IBM", "AAPL"
 
 if __name__ == '__main__':
