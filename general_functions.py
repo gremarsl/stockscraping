@@ -1,6 +1,7 @@
 
 import matplotlib.pyplot as plt
 import json
+import os
 
 
 def get_data_from_file(filename):
