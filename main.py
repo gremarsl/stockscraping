@@ -102,13 +102,12 @@ def get_data(input_data, indicator, symbol):
     return data
 
 
-
 def analyse_data_from_alpha_vantage(symbols: list):
     source = "alpha_vantage"
     print("------------------------")
     indicator_absolute_income_statement = ["grossProfit", "totalRevenue", "ebit", "netIncome", "incomeBeforeTax",
                                            "operatingIncome"]
-    indicator_percentage_income_statement = ["researchAndDevelopment_to_totalRevenue","netIncome_to_totalRevenue"]
+    indicator_percentage_income_statement = ["researchAndDevelopment_to_totalRevenue", "netIncome_to_totalRevenue"]
 
     indicator_percentage_balance_sheet = ["totalLiabilities_to_totalAssets"]
 
@@ -301,8 +300,7 @@ get_alpha_data = 0
 analyse_alpha_data = 1
 alpha_vantage_symbols = ["AVGO"]  # "IBM", "AAPL"
 
-#TODO:
-# verhältnis free cash flow zu revenue
+#TODO - verhältnis free cash flow zu revenue
 
 if __name__ == '__main__':
     if analyse_own_excel_data == 1:
