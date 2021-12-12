@@ -2,6 +2,7 @@ import options
 from general_functions import filter_data
 from plot_functions import stupid_plot_data_lists
 
+
 class NoData(Exception): pass  # declare a label
 
 
@@ -12,6 +13,7 @@ class IncorrectAlphaData(Exception): pass
 
 
 class NoEbitData(Exception): pass
+
 
 def processor_filter_plot_data(data_list: list, relativeData: bool, source: str):
     # all_data_list = [data_per_symbol_1]

@@ -15,45 +15,34 @@ from functions_for_alpha_vantage import \
 # object: {}
 # array : []
 
-class NoData(Exception): pass  # declare a label
-
-
-class IncorrectExcelData(Exception): pass
-
-
-class IncorrectAlphaData(Exception): pass
-
-
-class NoEbitData(Exception): pass
-
-
-
 
 
 def analyse_data_from_alpha_vantage(symbols: list):
-    source = "alpha_vantage"
-    print("------------------------")
-    indicator_absolute_income_statement = ["grossProfit", "totalRevenue", "ebit", "netIncome", "incomeBeforeTax",
+
+    #define the indicators you want to analyse with alpha vantage data:
+
+    indicator_absolute_with_income_statement = ["grossProfit", "totalRevenue", "ebit", "netIncome", "incomeBeforeTax",
                                            "operatingIncome"]
-    indicator_percentage_income_statement = ["researchAndDevelopment_to_totalRevenue", "netIncome_to_totalRevenue"]
+    indicator_percentage_with_income_statement = ["researchAndDevelopment_to_totalRevenue", "netIncome_to_totalRevenue"]
 
-    indicator_percentage_balance_sheet = ["totalLiabilities_to_totalAssets"]
-
-    quaterly_absolute_data_per_symbol = []
-    quaterly_relative_data_per_symbol = []
+    indicator_percentage_with_balance_sheet = ["totalLiabilities_to_totalAssets"]
 
     for s in symbols:
 
+        quaterly_absolute_data_per_symbol = []
+        quaterly_relative_data_per_symbol = []
         income_statement = get_data_from_file("income_statement_alpha_" + s + ".json")
 
-        for i in indicator_absolute_income_statement:
+
+        for i in indicator_absolute_with_income_statement:
             try:
                 quaterly_absolute_data_per_symbol.append(
                     extract_quarterly_report_data_from_alpha(income_statement, i, symbol=s))
             except:
                 print("error in quaterly data {}".format(s))
 
-        for i in indicator_percentage_income_statement:
+
+        for i in indicator_percentage_with_income_statement:
 
             try:
                 dividend, divisor = split_indicator_in_two(i)
@@ -72,7 +61,8 @@ def analyse_data_from_alpha_vantage(symbols: list):
 
         balance_sheet = get_data_from_file("balance_sheet_alpha_" + s + ".json")
 
-        for i in indicator_percentage_balance_sheet:
+
+        for i in indicator_percentage_with_balance_sheet:
 
             try:
                 dividend, divisor = split_indicator_in_two(i)
@@ -89,6 +79,7 @@ def analyse_data_from_alpha_vantage(symbols: list):
                 print(
                     "calculate quotient of {} didint work".format(i))
 
+        source = "alpha_vantage"
         processor_filter_plot_data(quaterly_relative_data_per_symbol, True, source)
         processor_filter_plot_data(quaterly_absolute_data_per_symbol, False, source)
 
@@ -226,7 +217,9 @@ analyse_own_excel_data = 1
 analyse_finnhub_data = 0
 get_alpha_data = 0
 analyse_alpha_data = 1
-alpha_vantage_symbols = ["AVGO"]  # "IBM", "AAPL"
+alpha_vantage_symbols = ["AVGO","AAPL"]  # "IBM", "AAPL"
+
+
 
 #TODO - verhältnis free cash flow zu revenue
 
