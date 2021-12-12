@@ -1,9 +1,10 @@
 import options
+from data_processor import processor_filter_plot_data
 from functions_for_finnhub import get_one_absolute_indicator_from_finnhub, get_fundamental_data_from_finnhub, \
     get_one_relative_indicator_from_finnhub, get_one_ratio_indicator_from_finnhub
 from functions_for_yahoo import get_market_cap_from_yahoo_finance
 from general_functions import get_data_from_file, filter_data, convert_list_elements_to_int, split_indicator_in_two, \
-    calculate_quotient
+    calculate_quotient, get_data
 from plot_functions import stupid_plot_data_lists
 from functions_for_alpha_vantage import \
     extract_quarterly_report_data_from_alpha, \
@@ -26,80 +27,7 @@ class IncorrectAlphaData(Exception): pass
 class NoEbitData(Exception): pass
 
 
-def processor_filter_plot_data(data_list: list, relativeData: bool, source: str):
-    # all_data_list = [data_per_symbol_1]
 
-    if len(data_list) == 0:
-        raise Exception("No data")
-
-    if (source != "alpha_vantage") and (source != "finnhub") and (source != "excel"):
-        raise Exception("data is not from source alpha_vantage, finnhub or excel")
-
-
-    else:
-        if (not relativeData) and source == "excel":
-            try:
-                # filter
-                indicators = filter_data(data_list, options.options_abs_indicator)
-                # plot data
-                stupid_plot_data_lists(indicators, source)
-
-            except IncorrectExcelData:
-                print("analyzing excel data failed")
-
-        if relativeData and source == "excel":
-            try:
-                # filter
-                indicators = filter_data(data_list, options.options_rel_indicator)
-                # plot data
-                stupid_plot_data_lists(indicators, source)
-
-            except IncorrectExcelData:
-                print("analyzing excel data failed")
-
-        if relativeData and source == "alpha_vantage":
-
-            try:
-                stupid_plot_data_lists(filter_data(data_list, options.options_rel_indicator), source)
-
-            except IncorrectAlphaData:
-                print("analyzing alpha data failed")
-
-        if (not relativeData) and source == "alpha_vantage":
-
-            try:
-                stupid_plot_data_lists(filter_data(data_list, options.options_abs_indicator), source)
-
-            except:
-                print("no working indicators data")
-
-        if (not relativeData) and source == "finnhub":
-            except_grossmargin = list(filter(lambda x: (x[3] != "grossMargin"), data_list))
-
-            except_grossmargin_debt = list(filter(lambda x: x[3] != "totalDebtToEquity", except_grossmargin))
-
-            eps_ebit_per_share_plot_data = list(
-                filter(lambda x: x[3] == "eps" or x[3] == "ebitPerShare", data_list))
-
-            try:
-                stupid_plot_data_lists(except_grossmargin_debt, source)
-            except:
-                print("Not working to plot ratios_eps_ebit_net_margin_data data in one plot {}".format(data_list))
-
-            if len(eps_ebit_per_share_plot_data) == 0:
-                raise NoEbitData()
-
-
-def get_data(input_data, indicator, symbol):
-    # quotient: research and development:
-    list_dividend = extract_quarterly_report_data_from_alpha(input_data, indicator, symbol=symbol)
-
-    # convert to int
-    list_dividend_converted = convert_list_elements_to_int(list_dividend[1])
-
-    data = [list_dividend[0], list_dividend_converted, symbol, indicator]
-
-    return data
 
 
 def analyse_data_from_alpha_vantage(symbols: list):

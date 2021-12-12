@@ -7,7 +7,6 @@ from general_functions import write_to_file_in_json_format, reverse_lists
 
 api_url = "https://finnhub.io/api/v1/stock/metric?"
 
-
 def get_fundamental_data_from_finnhub(symbol: str) -> Response:
     data = {
         "symbol": symbol,

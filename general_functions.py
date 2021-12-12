@@ -3,6 +3,36 @@ import json
 import os
 
 
+def extract_quarterly_report_data(data_json: dict, indicator: str, symbol: str) -> list:
+    #this function is a direct copy of extract_quarterly_report_data_from_alpha!! and based on the namings in alpha data
+    reports = data_json['quarterlyReports']
+    time_points = []
+    value_points = []
+    for i in reports:
+        # i ist ein  Array
+        try:
+            time_points.append(i['fiscalDateEnding'])
+            value_points.append(i[indicator])
+        except:
+            print("Appending data element to array didn´t work with indicator {}. Is the indicator in the data?".format(indicator))
+            exit()
+    value_points, time_points = reverse_lists(value_points, time_points)
+
+    data = [time_points, value_points, symbol, indicator]
+
+    return data
+
+def get_data(input_data, indicator, symbol):
+    # quotient: research and development:
+    list_dividend = extract_quarterly_report_data(input_data, indicator, symbol=symbol)
+
+    # convert to int
+    list_dividend_converted = convert_list_elements_to_int(list_dividend[1])
+
+    data = [list_dividend[0], list_dividend_converted, symbol, indicator]
+
+    return data
+
 def calculate_quotient(dividend_data, divisor_data, indicator, symbol):
     dividend_str, divisor_str = split_indicator_in_two(indicator)
 
