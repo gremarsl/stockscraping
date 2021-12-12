@@ -18,7 +18,8 @@ options_for_plot_limit = {
     "totalDebtToEquity": option_quotient_2_to_0,
     "totalLiabilities_to_totalAssets": option_quotient_2_to_0,
     "totalRevenue_to_marketCap": option_quotient_100_to_0,
-    "totalAssets_to_marketCap": option_quotient_100_to_0
+    "totalAssets_to_marketCap": option_quotient_100_to_0,
+    "netIncome_to_totalRevenue":option_quotient_100_to_0
 }
 
 
@@ -39,7 +40,8 @@ options_for_plot_color = {
     "researchAndDevelopment_to_totalRevenue":option_color_quotient_research_and_development_revenue,
     "totalLiabilities_to_totalAssets": option_color_quotient_totalLiabilities_to_totalAssets,
     "totalRevenue_to_marketCap": option_color_quotient_totalRevenue_to_marketCap,
-    "totalAssets_to_marketCap": option_color_quotient_totalAssets_to_marketCap
+    "totalAssets_to_marketCap": option_color_quotient_totalAssets_to_marketCap,
+    "netIncome_to_totalRevenue":option_color_quotient_netIncome_to_totalRevenue
 }
 
 

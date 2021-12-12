@@ -203,6 +203,7 @@ def request_balance_sheet_from_alpha(symbol):
         "symbol": symbol,
         "apikey": api_key_alpha}
 
+
     if os.path.isfile(filename):
         with open(filename) as json_file:
             balance_sheet = json.load(json_file)
@@ -287,9 +288,12 @@ def extract_quarterly_report_data_from_alpha(data_json: dict, indicator: str, sy
     value_points = []
     for i in reports:
         # i ist ein  Array
-        time_points.append(i['fiscalDateEnding'])
-        value_points.append(i[indicator])
-
+        try:
+            time_points.append(i['fiscalDateEnding'])
+            value_points.append(i[indicator])
+        except:
+            print("Appending data element to array didn´t work with indicator {}. Is the indicator in the data?".format(indicator))
+            exit()
     value_points, time_points = reverse_lists(value_points, time_points)
 
     data = [time_points, value_points, symbol, indicator]

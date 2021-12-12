@@ -27,7 +27,8 @@ options_rel_indicator =[
     "currentRatio",
     "researchAndDevelopment_to_totalRevenue",
     "totalLiabilities_to_totalAssets",
-    "totalAssets_to_marketCap"
+    "totalAssets_to_marketCap",
+    "netIncome_to_totalRevenue"
 ]
 
 
@@ -137,6 +138,10 @@ def option_color_total_revenue():
 def option_color_quotient_research_and_development_revenue():
     return "blue"
 
+def option_color_quotient_netIncome_to_totalRevenue():
+    return "orange"
+
+
 def option_color_quotient_totalLiabilities_to_totalAssets():
     return "green"
 
@@ -145,3 +150,6 @@ def option_color_quotient_totalRevenue_to_marketCap():
 
 def option_color_quotient_totalAssets_to_marketCap():
     return "orange"
+
+
+
