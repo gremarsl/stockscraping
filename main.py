@@ -175,7 +175,6 @@ def analyse_data_from_local_json_file():
 
         rel_data.append(temp_data)
 
-    marketCap = get_market_cap_from_yahoo_finance("DAI.DE")
 
     rel_data_live = []
     for i in my_rel_indicators_live:
@@ -190,6 +189,7 @@ def analyse_data_from_local_json_file():
             quotient = calculate_quotient(dividend_data[1], return_data2[1], i, symbol="TEST")
 
         if use_live_parameter:
+            marketCap = get_market_cap_from_yahoo_finance("DAI.DE")
             created_list = [marketCap] * len(dividend_data[1])
             converted_list = convert_list_elements_to_int(created_list)
 
@@ -218,7 +218,7 @@ alpha_vantage_symbols = ["AVGO","AAPL"]  # "IBM", "AAPL"
 
 
 
-#TODO - verhältnis free cash flow zu revenue
+#TODO - Improve my stock analysis in general / in total
 
 if __name__ == '__main__':
     if analyse_own_excel_data == 1:
