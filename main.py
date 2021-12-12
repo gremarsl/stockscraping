@@ -102,26 +102,6 @@ def get_data(input_data, indicator, symbol):
     return data
 
 
-# TODO split - this func has two different purposes
-def get_data_calculate_quotient(input_data, indicator, symbol):
-    dividend_str = indicator.split('_to_')[0]
-    divisor_str = indicator.split('_to_')[1]
-
-    # quotient: research and development:
-    list_dividend = extract_quarterly_report_data_from_alpha(input_data, dividend_str, symbol=symbol)
-    list_divisor = extract_quarterly_report_data_from_alpha(input_data, divisor_str, symbol=symbol)
-
-    # convert to int
-    list_dividend_converted = [int(x) for x in list_dividend[1]]
-
-    list_divisor_converted = [int(x) for x in list_divisor[1]]
-
-    quotient_list = [(x / y) * 100 for x, y in zip(list_dividend_converted, list_divisor_converted)]
-
-    data = [list_dividend[0], quotient_list, symbol, indicator]
-
-    return data
-
 
 def analyse_data_from_alpha_vantage(symbols: list):
     source = "alpha_vantage"
@@ -254,6 +234,7 @@ def get_data_from_local_json_file():
     source = "excel"
     # read data
     filename = "D:\\Desktop\\Finanzreporte\\json\\testsymbol.json"
+    s = "TEST"
     data = get_data_from_file(filename)
 
     # my indicators I want to analyse from the json file
@@ -270,8 +251,15 @@ def get_data_from_local_json_file():
 
     rel_data = []
     for i in my_rel_indicators:
-        return_data = get_data_calculate_quotient(data, indicator=i, symbol="TEST")
-        rel_data.append(return_data)
+        dividend, divisor = split_indicator_in_two(i)
+        dividend_data = get_data(data, indicator=dividend, symbol=s)
+
+        divisor_data = get_data(data, indicator=divisor, symbol=s)
+        quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
+
+        temp_data = [dividend_data[0], quotient, s, i]
+
+        rel_data.append(temp_data)
 
     marketCap = get_market_cap_from_yahoo_finance("DAI.DE")
 
@@ -307,14 +295,13 @@ def get_data_from_local_json_file():
 
 
 # SWITCHES:
-analyse_own_excel_data = 0
+analyse_own_excel_data = 1
 analyse_finnhub_data = 0
 get_alpha_data = 0
 analyse_alpha_data = 1
 alpha_vantage_symbols = ["AVGO"]  # "IBM", "AAPL"
 
 #TODO:
-# calculate ratio net income zu revenue
 # verhältnis free cash flow zu revenue
 
 if __name__ == '__main__':
