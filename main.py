@@ -148,9 +148,7 @@ def get_data_from_finnhub():
         all_plot_data.append(data_per_symbol)
 
 
-def get_data_from_local_json_file():
-    source = "excel"
-    # read data
+def analyse_data_from_local_json_file():
     filename = "D:\\Desktop\\Finanzreporte\\json\\testsymbol.json"
     s = "TEST"
     data = get_data_from_file(filename)
@@ -159,8 +157,6 @@ def get_data_from_local_json_file():
     my_abs_indicators = ["totalRevenue", "netIncome"]
     my_rel_indicators = ["researchAndDevelopment_to_totalRevenue", "totalLiabilities_to_totalAssets"]
     my_rel_indicators_live = ["totalRevenue_to_marketCap", "totalAssets_to_marketCap"]
-
-    my_per_share_indicator = ["eps", "ebitPerShare"]
 
     abs_data = []
     for i in my_abs_indicators:
@@ -205,6 +201,7 @@ def get_data_from_local_json_file():
         rel_data_live.append(temp_data)
 
     # plotdata
+    source = "excel"
     processor_filter_plot_data(data_list=abs_data, relativeData=False, source=source)
     processor_filter_plot_data(data_list=rel_data, relativeData=True, source=source)
     processor_filter_plot_data(data_list=rel_data_live, relativeData=True, source=source)
@@ -225,7 +222,7 @@ alpha_vantage_symbols = ["AVGO","AAPL"]  # "IBM", "AAPL"
 
 if __name__ == '__main__':
     if analyse_own_excel_data == 1:
-        get_data_from_local_json_file()
+        analyse_data_from_local_json_file()
 
     if analyse_finnhub_data == 1:
         get_data_from_finnhub()
