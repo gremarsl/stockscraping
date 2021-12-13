@@ -85,6 +85,9 @@ def stupid_plot_data_lists(data_list: list, data_is_from_platform: str) -> None:
     plt.xticks(data_list[0][0], rotation="vertical")
     plt.title('{}: '.format(symbol))
     plt.xlabel('Year')
+
+    # mng = plt.get_current_fig_manager()
+    # mng.full_screen_toggle()
     plt.legend()
 
     plt.show()
