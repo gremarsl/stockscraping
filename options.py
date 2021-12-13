@@ -120,7 +120,7 @@ def option_color_ebit():
 
 
 def option_color_net_income():
-    return "orange"
+    return "darkgreen"
 
 
 def option_color_income_before_tax():
@@ -128,7 +128,7 @@ def option_color_income_before_tax():
 
 
 def option_color_operating_income():
-    return "green"
+    return "purple"
 
 
 def option_color_total_revenue():

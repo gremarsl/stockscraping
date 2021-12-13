@@ -1,11 +1,9 @@
-import options
 from data_processor import processor_filter_plot_data
 from functions_for_finnhub import get_one_absolute_indicator_from_finnhub, get_fundamental_data_from_finnhub, \
     get_one_relative_indicator_from_finnhub, get_one_ratio_indicator_from_finnhub
 from functions_for_yahoo import get_market_cap_from_yahoo_finance
-from general_functions import get_data_from_file, filter_data, convert_list_elements_to_int, split_indicator_in_two, \
+from general_functions import get_data_from_file, convert_list_elements_to_int, split_indicator_in_two, \
     calculate_quotient, get_data
-from plot_functions import stupid_plot_data_lists
 from functions_for_alpha_vantage import \
     extract_quarterly_report_data_from_alpha, \
     calling_alpha_vantage_api
@@ -15,14 +13,11 @@ from functions_for_alpha_vantage import \
 # object: {}
 # array : []
 
-
-
 def analyse_data_from_alpha_vantage(symbols: list):
-
-    #define the indicators you want to analyse with alpha vantage data:
+    # define the indicators you want to analyse with alpha vantage data:
 
     indicator_absolute_with_income_statement = ["grossProfit", "totalRevenue", "ebit", "netIncome", "incomeBeforeTax",
-                                           "operatingIncome"]
+                                                "operatingIncome"]
     indicator_percentage_with_income_statement = ["researchAndDevelopment_to_totalRevenue", "netIncome_to_totalRevenue"]
 
     indicator_percentage_with_balance_sheet = ["totalLiabilities_to_totalAssets"]
@@ -33,14 +28,12 @@ def analyse_data_from_alpha_vantage(symbols: list):
         quaterly_relative_data_per_symbol = []
         income_statement = get_data_from_file("income_statement_alpha_" + s + ".json")
 
-
         for i in indicator_absolute_with_income_statement:
             try:
                 quaterly_absolute_data_per_symbol.append(
                     extract_quarterly_report_data_from_alpha(income_statement, i, symbol=s))
             except:
                 print("error in quaterly data {}".format(s))
-
 
         for i in indicator_percentage_with_income_statement:
 
@@ -60,7 +53,6 @@ def analyse_data_from_alpha_vantage(symbols: list):
                     "calculate quotient of {} didint work".format(i))
 
         balance_sheet = get_data_from_file("balance_sheet_alpha_" + s + ".json")
-
 
         for i in indicator_percentage_with_balance_sheet:
 
@@ -106,7 +98,8 @@ def get_data_from_finnhub():
 
     automotive_dax_stocks = ["DAI.DE",
                              "BMW.DE",
-                             "VOW.DE"]
+                             "VOW.DE",
+                             "PAH3.DE"]
     test_symbol = ["BAS.DE"]
 
     for s in automotive_dax_stocks:
@@ -175,7 +168,6 @@ def analyse_data_from_local_json_file():
 
         rel_data.append(temp_data)
 
-
     rel_data_live = []
     for i in my_rel_indicators_live:
         dividend, divisor = split_indicator_in_two(i)
@@ -213,12 +205,10 @@ def analyse_data_from_local_json_file():
 analyse_own_excel_data = 1
 analyse_finnhub_data = 0
 get_alpha_data = 0
-analyse_alpha_data = 1
-alpha_vantage_symbols = ["AVGO","AAPL"]  # "IBM", "AAPL"
-
-
-
-#TODO - Improve my stock analysis in general / in total
+analyse_alpha_data = 0
+alpha_vantage_symbols = ["AVGO", "AAPL"]  # "IBM", "AAPL"
+global plot_data_full_scren
+plot_data_full_scren = 1
 
 if __name__ == '__main__':
     if analyse_own_excel_data == 1:
