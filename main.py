@@ -207,8 +207,6 @@ analyse_finnhub_data = 0
 get_alpha_data = 0
 analyse_alpha_data = 0
 alpha_vantage_symbols = ["AVGO", "AAPL"]  # "IBM", "AAPL"
-global plot_data_full_scren
-plot_data_full_scren = 1
 
 if __name__ == '__main__':
     if analyse_own_excel_data == 1:

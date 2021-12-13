@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 from general_functions import convert_list_elements_to_float
-from main import plot_data_full_scren
 from options import *
 
 options_for_plot_limit = {
@@ -88,7 +87,4 @@ def stupid_plot_data_lists(data_list: list, data_is_from_platform: str) -> None:
     plt.xlabel('Year')
     plt.legend()
 
-    if plot_data_full_scren == 1:
-        mng = plt.get_current_fig_manager()
-        mng.full_screen_toggle()
     plt.show()
