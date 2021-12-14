@@ -1,9 +1,4 @@
 
-options_test_indicator =[
-    "totalRevenue",
-    "netIncome"
-]
-
 options_abs_indicator =[
     "grossMargin",
     "netMargin",
@@ -28,7 +23,8 @@ options_rel_indicator =[
     "researchAndDevelopment_to_totalRevenue",
     "totalLiabilities_to_totalAssets",
     "totalAssets_to_marketCap",
-    "netIncome_to_totalRevenue"
+    "netIncome_to_totalRevenue",
+    "totalCurrentLiabilities_to_totalCurrentAssets"
 ]
 
 
