@@ -7,26 +7,25 @@ from general_functions import write_to_file_in_json_format, reverse_lists
 
 api_url = "https://finnhub.io/api/v1/stock/metric?"
 
-def get_fundamental_data_from_finnhub(symbol: str) -> Response:
-    data = {
-        "symbol": symbol,
-        "metric": "all",
-        "token": api_key}
 
-    filename = "fundamental_data_finnhub_" + symbol + ".json"
+def calling_finnhub_api(symbols: str) -> Response:
+    # 'https://finnhub.io/api/v1/stock/metric?symbol=DAI.DE&metric=all&token=buk3id748v6r2017iuog'
 
-    if os.path.isfile(filename):
-        with open(filename) as json_file:
-            fundamental_data_response_json = json.load(json_file)
+    for s in symbols:
+        data = {
+            "symbol": s,
+            "metric": "all",
+            "token": api_key}
 
-    else:
+        filename = "fundamental_data_finnhub_" + s + ".json"
+
+
         fundamental_data_response = requests.get(api_url, data)
         fundamental_data_response_json: requests.models.Response = fundamental_data_response.json()  # maybe redundant
-        # 'https://finnhub.io/api/v1/stock/metric?symbol=DAI.DE&metric=all&token=buk3id748v6r2017iuog'
 
         write_to_file_in_json_format(fundamental_data_response_json, filename)
 
-    return fundamental_data_response_json
+    return
 
 
 def get_one_absolute_indicator_from_finnhub(data_json: dict,period :str, indicator: str, symbol: str) -> list:
