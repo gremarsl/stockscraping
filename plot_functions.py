@@ -12,6 +12,7 @@ options_for_plot_limit = {
     "eps": option_eps,
     "cashRatio": option_ratio_50_to_0,
     "currentRatio": option_ratio_50_to_0,
+    "totalCurrentLiabilities_to_totalCurrentAssets": option_ratio_50_to_0,
     "researchAndDevelopment_to_totalRevenue":option_ratio_50_to_0,
     "ebitPerShare": option_per_share_30_to_minus_5,
     "netMargin": option_per_share_30_to_minus_5,
@@ -39,6 +40,7 @@ options_for_plot_color = {
     "eps": option_color_eps,
     "cashRatio": option_color_cash_ratio,
     "currentRatio": option_color_current_ratio,
+    "totalCurrentLiabilities_to_totalCurrentAssets": option_color_current_ratio,
     "ebitPerShare": option_color_ebit_per_share,
     "grossMargin": option_color_gross_margin,
     "netMargin": option_color_net_margin,
@@ -51,7 +53,7 @@ options_for_plot_color = {
 }
 
 
-def stupid_plot_data_lists(data_list: list, data_is_from_platform: str) -> None:
+def stupid_plot_data_lists(data_list: list, source: str) -> None:
     # x: list, y: list, symbol: str, indicator: str
 
     # data_per_symbol = [[[x_1],[y_1],symbol_1,indicator_1],...,[x_i],[y_i],symbol_i,indicator_i]]
@@ -83,7 +85,7 @@ def stupid_plot_data_lists(data_list: list, data_is_from_platform: str) -> None:
     # show grid
     plt.grid(b=None, which='major', axis='both')
     plt.xticks(data_list[0][0], rotation="vertical")
-    plt.title('{}: '.format(symbol))
+    plt.title('{} source: {}'.format(symbol,source))
     plt.xlabel('Year')
 
     # mng = plt.get_current_fig_manager()
