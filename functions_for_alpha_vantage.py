@@ -21,6 +21,7 @@ def filter_relative_alpha_vantage_data(data_list):
 def calling_alpha_vantage_api(symbols):
     # 'https://finnhub.io/api/v1/stock/metric?symbol=DAI.DE&metric=all&token=buk3id748v6r2017iuog'
 
+    list_elem = len(symbols) - 1
     for s in symbols:
         income_statement = request_income_statement_from_alpha(s)
         balance_sheets = request_balance_sheet_from_alpha(s)
@@ -28,9 +29,13 @@ def calling_alpha_vantage_api(symbols):
         earnings = request_earnings_from_alpha(s)
         overview = request_overiew_from_alpha(s)
 
+        if symbols.index(s) == list_elem:
+            return
+
         print("Going to sleep for 60 Seconds now...")
         time.sleep(60)
 
+    return
 
 def request_overiew_from_alpha(symbol):
     API_URL = "https://www.alphavantage.co/query?"
