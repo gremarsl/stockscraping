@@ -1,6 +1,6 @@
 from data_processor import processor_filter_plot_data
-from functions_for_finnhub import get_one_absolute_indicator_from_finnhub, get_fundamental_data_from_finnhub, \
-    get_one_relative_indicator_from_finnhub, get_one_ratio_indicator_from_finnhub
+from functions_for_finnhub import get_one_absolute_indicator_from_finnhub, \
+    get_one_relative_indicator_from_finnhub, get_one_ratio_indicator_from_finnhub, calling_finnhub_api
 from functions_for_yahoo import get_market_cap_from_yahoo_finance
 from general_functions import get_data_from_file, convert_list_elements_to_int, split_indicator_in_two, \
     calculate_quotient, get_data
@@ -78,34 +78,17 @@ def analyse_data_from_alpha_vantage(symbols: list):
     pass
 
 
-def get_data_from_finnhub():
+def analyse_data_from_finnhub(symbols : list):
     source = "finnhub"
     all_plot_data = []
-    all_plot_data_test = []
 
     period = 'quarterly'
 
-    symbol_dax_stocks = ["BAS.DE",
-                         "SIE.DE",
-                         "BAYN.DE",
-                         "IFX.DE",
-                         "1COV.DE",
-                         "LIN.DE",
-                         "BEI.DE",
-                         "HEN3.DE",
-                         ]
-    # ALV.DE, "DBK.DE",
-
-    automotive_dax_stocks = ["DAI.DE",
-                             "BMW.DE",
-                             "VOW.DE",
-                             "PAH3.DE"]
-    test_symbol = ["BAS.DE"]
-
-    for s in automotive_dax_stocks:
+    for s in symbols:
         data_per_symbol = []
 
-        fundamental_data_json = get_fundamental_data_from_finnhub(s)
+        #new:
+        fundamental_data_json = get_data_from_file("fundamental_data_finnhub_" + s + ".json")
 
         indicator_absolute_list = ["grossMargin"]  # netMargin
         indicators_per_share = ["eps", "ebitPerShare"]
@@ -203,22 +186,39 @@ def analyse_data_from_local_json_file():
 
 # SWITCHES:
 analyse_own_excel_data = 0
-analyse_finnhub_data = 0
+get_finnhub_data = 0
+analyse_finnhub_data = 1
 get_alpha_data = 0
-analyse_alpha_data = 1
-alpha_vantage_symbols = ["MSFT","AVGO", "AAPL"]  # "IBM", "AAPL"
+analyse_alpha_data = 0
 
+analyse_finnhub_symbol_automotive = ["DAI.DE","BMW.DE","VOW.DE", "PAH3.DE"]
+
+get_finnhub_symbol_dax = ["BAS.DE","SIE.DE","BAYN.DE","IFX.DE","1COV.DE", "LIN.DE","BEI.DE","HEN3.DE"] # ALV.DE, "DBK.DE",
+get_finnhub_symbol_dax = ["BAS.DE"]
+analyse_finnhub_symbol_dax = ["DAI.DE","BMW.DE","VOW.DE", "PAH3.DE"] # ALV.DE, "DBK.DE",
+
+
+get_alpha_vantage_symbol_data = ["SNPS"]
+analyse_alpha_vantage_symbol_data = ["JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"]
+#get_symbol_data_alpha_vantage = ["SNPS","MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM"]  # "IBM", "AAPL"
+#symbols work: "JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"
+
+# a8b qci raus
+#funktioniert: JNJ - PRG - PFE -
 #TODO current ratio einbauen
 
 if __name__ == '__main__':
     if analyse_own_excel_data == 1:
         analyse_data_from_local_json_file()
 
+    if get_finnhub_data == 1:
+        calling_finnhub_api(get_finnhub_symbol_dax)
+
     if analyse_finnhub_data == 1:
-        get_data_from_finnhub()
+        analyse_data_from_finnhub(analyse_finnhub_symbol_dax)
 
     if get_alpha_data == 1:
-        calling_alpha_vantage_api(alpha_vantage_symbols)
+        calling_alpha_vantage_api(get_alpha_vantage_symbol_data)
 
     if analyse_alpha_data == 1:
-        analyse_data_from_alpha_vantage(alpha_vantage_symbols)
+        analyse_data_from_alpha_vantage(analyse_alpha_vantage_symbol_data)
