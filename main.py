@@ -20,7 +20,8 @@ def analyse_data_from_alpha_vantage(symbols: list):
                                                 "operatingIncome"]
     indicator_percentage_with_income_statement = ["researchAndDevelopment_to_totalRevenue", "netIncome_to_totalRevenue"]
 
-    indicator_percentage_with_balance_sheet = ["totalLiabilities_to_totalAssets"]
+    indicator_percentage_with_balance_sheet = ["totalLiabilities_to_totalAssets","totalCurrentLiabilities_to_totalCurrentAssets"]
+    # current Ratio = totalCurrentLiabilities / totalCurrentAssets
 
     for s in symbols:
 
@@ -189,17 +190,18 @@ analyse_own_excel_data = 0
 get_finnhub_data = 0
 analyse_finnhub_data = 1
 get_alpha_data = 0
-analyse_alpha_data = 0
+analyse_alpha_data = 1
 
-analyse_finnhub_symbol_automotive = ["DAI.DE","BMW.DE","VOW.DE", "PAH3.DE"]
-
-get_finnhub_symbol_dax = ["BAS.DE","SIE.DE","BAYN.DE","IFX.DE","1COV.DE", "LIN.DE","BEI.DE","HEN3.DE"] # ALV.DE, "DBK.DE",
-get_finnhub_symbol_dax = ["BAS.DE"]
-analyse_finnhub_symbol_dax = ["DAI.DE","BMW.DE","VOW.DE", "PAH3.DE"] # ALV.DE, "DBK.DE",
-
+# analyse_finnhub_symbol_automotive = ["DAI.DE","BMW.DE","VOW.DE", "PAH3.DE"]
+# dax_symbols = ["BAS.DE","SIE.DE","BAYN.DE","IFX.DE","1COV.DE", "LIN.DE","BEI.DE","HEN3.DE"] # ALV.DE, "DBK.DE",
+get_finnhub_symbol = ["MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM","JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"]
+analyse_finnhub_symbol = ["SNPS","MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM","JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"] # ALV.DE, "DBK.DE",
+analyse_finnhub_symbol = ["SNPS"] # ALV.DE, "DBK.DE",
 
 get_alpha_vantage_symbol_data = ["SNPS"]
-analyse_alpha_vantage_symbol_data = ["JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"]
+#analyse_alpha_vantage_symbol_data = ["SNPS","MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM","JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"]
+analyse_alpha_vantage_symbol_data = ["SNPS"]
+
 #get_symbol_data_alpha_vantage = ["SNPS","MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM"]  # "IBM", "AAPL"
 #symbols work: "JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"
 
@@ -212,10 +214,10 @@ if __name__ == '__main__':
         analyse_data_from_local_json_file()
 
     if get_finnhub_data == 1:
-        calling_finnhub_api(get_finnhub_symbol_dax)
+        calling_finnhub_api(get_finnhub_symbol)
 
     if analyse_finnhub_data == 1:
-        analyse_data_from_finnhub(analyse_finnhub_symbol_dax)
+        analyse_data_from_finnhub(analyse_finnhub_symbol)
 
     if get_alpha_data == 1:
         calling_alpha_vantage_api(get_alpha_vantage_symbol_data)
