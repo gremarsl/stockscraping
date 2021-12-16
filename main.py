@@ -21,6 +21,11 @@ def analyse_data_from_alpha_vantage(symbols: list):
     indicator_percentage_with_income_statement = ["researchAndDevelopment_to_totalRevenue", "netIncome_to_totalRevenue"]
 
     indicator_percentage_with_balance_sheet = ["totalLiabilities_to_totalAssets","totalCurrentLiabilities_to_totalCurrentAssets"]
+
+    indicator_live_with_income_statement = ["totalRevenue_to_marketCap"]
+    indicator_live_with_balance_sheet = ["totalAssets_to_marketCap"]
+
+
     # current Ratio = totalCurrentLiabilities / totalCurrentAssets
 
     for s in symbols:
@@ -72,6 +77,60 @@ def analyse_data_from_alpha_vantage(symbols: list):
                 print(
                     "calculate quotient of {} didint work".format(i))
 
+        for i in indicator_live_with_income_statement:
+
+            try:
+                dividend, divisor = split_indicator_in_two(i)
+                dividend_data = get_data(income_statement, indicator=dividend, symbol=s)
+
+                # wenn parameter vorhanden, dann hole dir aus file:
+                use_live_parameter = 1
+
+                if use_live_parameter ==1:
+                    marketCap = get_market_cap_from_yahoo_finance(s)
+                    created_list = [marketCap] * len(dividend_data[1])
+                    converted_list = convert_list_elements_to_int(created_list)
+
+                    quotient = calculate_quotient(dividend_data[1], converted_list, i, symbol="TEST")
+                else:
+                    divisor_data = get_data(income_statement, indicator=divisor, symbol=s)
+                    quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
+
+                temp_data = [dividend_data[0], quotient, s, i]
+
+                quaterly_relative_data_per_symbol.append(temp_data)
+
+            except:
+                print(
+                    "calculate quotient of {} didint work".format(i))
+
+        for i in indicator_live_with_balance_sheet:
+
+            try:
+                dividend, divisor = split_indicator_in_two(i)
+                dividend_data = get_data(balance_sheet, indicator=dividend, symbol=s)
+
+                # wenn parameter vorhanden, dann hole dir aus file:
+                use_live_parameter = 1
+
+                if use_live_parameter ==1:
+                    marketCap = get_market_cap_from_yahoo_finance(s)
+                    created_list = [marketCap] * len(dividend_data[1])
+                    converted_list = convert_list_elements_to_int(created_list)
+
+                    quotient = calculate_quotient(dividend_data[1], converted_list, i, symbol="TEST")
+                else:
+                    divisor_data = get_data(balance_sheet, indicator=divisor, symbol=s)
+                    quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
+
+                temp_data = [dividend_data[0], quotient, s, i]
+
+                quaterly_relative_data_per_symbol.append(temp_data)
+
+            except:
+                print(
+                    "calculate quotient of {} didint work".format(i))
+
         source = "alpha_vantage"
         processor_filter_plot_data(quaterly_relative_data_per_symbol, True, source)
         processor_filter_plot_data(quaterly_absolute_data_per_symbol, False, source)
@@ -95,6 +154,9 @@ def analyse_data_from_finnhub(symbols : list):
         indicators_per_share = ["eps", "ebitPerShare"]
         indicators_ratio = ["cashRatio", "currentRatio"]
         indicators_percentage = ["totalDebtToEquity"]
+        indicators_live = ["totalRevenue_to_marketCap", "totalAssets_to_marketCap"]
+
+
 
         for i in indicator_absolute_list:
             try:
@@ -188,26 +250,26 @@ def analyse_data_from_local_json_file():
 # SWITCHES:
 analyse_own_excel_data = 0
 get_finnhub_data = 0
-analyse_finnhub_data = 1
+analyse_finnhub_data = 0
 get_alpha_data = 0
 analyse_alpha_data = 1
 
 # analyse_finnhub_symbol_automotive = ["DAI.DE","BMW.DE","VOW.DE", "PAH3.DE"]
 # dax_symbols = ["BAS.DE","SIE.DE","BAYN.DE","IFX.DE","1COV.DE", "LIN.DE","BEI.DE","HEN3.DE"] # ALV.DE, "DBK.DE",
-get_finnhub_symbol = ["MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM","JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"]
-analyse_finnhub_symbol = ["SNPS","MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM","JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"] # ALV.DE, "DBK.DE",
-analyse_finnhub_symbol = ["SNPS"] # ALV.DE, "DBK.DE",
+# get_finnhub_symbol = ["MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM","JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"]
+get_finnhub_symbol = ["PYPL"]
 
-get_alpha_vantage_symbol_data = ["SNPS"]
-#analyse_alpha_vantage_symbol_data = ["SNPS","MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM","JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"]
-analyse_alpha_vantage_symbol_data = ["SNPS"]
+# analyse_finnhub_symbol = ["SNPS","MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM","JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"] # ALV.DE, "DBK.DE",
+analyse_finnhub_symbol = ["AMD"] # ALV.DE, "DBK.DE",
 
-#get_symbol_data_alpha_vantage = ["SNPS","MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM"]  # "IBM", "AAPL"
-#symbols work: "JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"
+analyse_finnhub_symbol = ["PYPL"] # ALV.DE, "DBK.DE",
 
-# a8b qci raus
-#funktioniert: JNJ - PRG - PFE -
-#TODO current ratio einbauen
+get_alpha_vantage_symbol_data = ["PYPL"]
+# analyse_alpha_vantage_symbol_data = ["SNPS","MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM","JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"]
+analyse_alpha_vantage_symbol_data = ["AMD"]
+
+# get_symbol_data_alpha_vantage = ["SNPS","MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM"]  # "IBM", "AAPL"
+# symbols work: "JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"
 
 if __name__ == '__main__':
     if analyse_own_excel_data == 1:
