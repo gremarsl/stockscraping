@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import json
 import os
+import datetime as dt
 
 
 def extract_quarterly_report_data(data_json: dict, indicator: str, symbol: str) -> list:
@@ -106,3 +107,10 @@ def convert_list_elements_to_float(y):
 
 def convert_list_elements_to_int(y):
     return [int(x) for x in y]
+
+
+def convert_list_elements_to_date_instance(dates_as_strings):
+
+    dates_as_dates= [dt.datetime.strptime(d, '%Y-%m-%d').date() for d in dates_as_strings]
+
+    return dates_as_dates
