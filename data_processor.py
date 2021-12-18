@@ -1,5 +1,5 @@
 import options
-from general_functions import filter_data, filter_data_all_symbols
+from general_functions import filter_data
 from plot_functions import stupid_plot_data_lists, plot_compare_symbols_one_indicator
 
 
