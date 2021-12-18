@@ -1,6 +1,6 @@
 import options
-from general_functions import filter_data
-from plot_functions import stupid_plot_data_lists
+from general_functions import filter_data, filter_data_all_symbols
+from plot_functions import stupid_plot_data_lists, plot_compare_symbols_one_indicator
 
 
 class NoData(Exception): pass  # declare a label
@@ -15,7 +15,7 @@ class IncorrectAlphaData(Exception): pass
 class NoEbitData(Exception): pass
 
 
-def processor_filter_plot_data(data_list: list, relativeData: bool, source: str):
+def processor_filter_plot_data(data_list: list, relativeData: bool,allSymbols:bool, source: str):
     # all_data_list = [data_per_symbol_1]
 
     if len(data_list) == 0:
@@ -46,10 +46,21 @@ def processor_filter_plot_data(data_list: list, relativeData: bool, source: str)
             except IncorrectExcelData:
                 print("analyzing excel data failed")
 
-        if relativeData and source == "alpha_vantage":
+
+        if relativeData and source == "alpha_vantage" and allSymbols ==False:
 
             try:
                 stupid_plot_data_lists(filter_data(data_list, options.options_rel_indicator), source)
+
+            except IncorrectAlphaData:
+                print("analyzing alpha data failed")
+
+        if relativeData and source == "alpha_vantage" and allSymbols ==True:
+
+            try:
+
+                #wstupid_plot_data_lists(filter_data_all_symbols(data_list, options.options_rel_indicator), source)
+                plot_compare_symbols_one_indicator(data_list, source)
 
             except IncorrectAlphaData:
                 print("analyzing alpha data failed")
@@ -58,6 +69,7 @@ def processor_filter_plot_data(data_list: list, relativeData: bool, source: str)
 
             try:
                 stupid_plot_data_lists(filter_data(data_list, options.options_abs_indicator), source)
+
 
             except:
                 print("no working indicators data")
