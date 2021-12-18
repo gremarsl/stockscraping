@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from general_functions import convert_list_elements_to_float
+from general_functions import convert_list_elements_to_float, convert_list_elements_to_date_instance
 from options import *
 
 options_for_plot_limit = {
@@ -53,6 +53,7 @@ options_for_plot_color = {
 }
 
 
+
 def stupid_plot_data_lists(data_list: list, source: str) -> None:
     # x: list, y: list, symbol: str, indicator: str
 
@@ -86,6 +87,43 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
     plt.grid(b=None, which='major', axis='both')
     plt.xticks(data_list[0][0], rotation="vertical")
     plt.title('{} source: {}'.format(symbol,source))
+    plt.xlabel('Year')
+
+    # mng = plt.get_current_fig_manager()
+    # mng.full_screen_toggle()
+    plt.legend()
+
+    plt.show()
+
+def plot_compare_symbols_one_indicator(data_list,source):
+    print(data_list)
+    # show grid
+    indicator = data_list[0][3]
+
+    for i in data_list:
+        x = i[0]
+        x = convert_list_elements_to_date_instance(x)
+        y = i[1]
+        y = convert_list_elements_to_float(y)
+        symbol = i[2]
+        indicator = i[3]
+
+        if len(x) == len(y):
+            if len(data_list) > 6:
+                y_lim_top = 200
+                y_lim_bottom = 0
+            else:
+                y_lim_top, y_lim_bottom = options_for_plot_limit[indicator]()
+
+            plt.plot(x, y, label=symbol)
+            plt.scatter(x, y)
+
+        else:
+            print("ERROR - Length of x is {} and length of y is {} - must be same".format(len(x), len(y)))
+
+    plt.grid(b=None, which='major', axis='both')
+    plt.xticks(data_list[0][0], rotation="vertical")
+    plt.title('{} source: {}'.format(indicator, source))
     plt.xlabel('Year')
 
     # mng = plt.get_current_fig_manager()
