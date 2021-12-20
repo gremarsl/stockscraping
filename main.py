@@ -15,11 +15,12 @@ from functions_for_alpha_vantage import \
 
 def analyse_data_from_alpha_vantage(symbols: list):
     # define the indicators you want to analyse with alpha vantage data:
-    absolute_income_statement = 0
+    absolute_income_statement = 1
     percentage_income_statement = 0
     percentage_balance_sheet = 0
-    live_with_income_statement = 1
-    live_with_balance_sheet = 1
+    live_with_income_statement = 0
+    live_with_balance_sheet = 0
+    only_all_companies = 1
 
     indicator_absolute_with_income_statement = ["grossProfit", "totalRevenue", "ebit", "netIncome", "incomeBeforeTax",
                                                 "operatingIncome"]
@@ -27,13 +28,18 @@ def analyse_data_from_alpha_vantage(symbols: list):
 
     indicator_percentage_with_balance_sheet = ["totalLiabilities_to_totalAssets",
                                                "totalCurrentLiabilities_to_totalCurrentAssets"]
-    # current Ratio = totalCurrentLiabilities / totalCurrentAssets
 
     indicator_live_with_income_statement = ["totalRevenue_to_marketCap"]
     indicator_live_with_balance_sheet = ["totalAssets_to_marketCap"]
 
-    quaterly_relative_live_data_all_symbols_income_statement = []
-    quaterly_relative_live_data_all_symbols_balance_sheet = []
+    all_symbols_quaterly_absolute_data_with_income_statement = []
+
+    all_symbols_quaterly_relative_percentage_with_balance_sheet = []
+    all_symbols_quaterly_relative_percentage_with_income_statement = []
+
+    all_symbols_quaterly_relative_live_data_with_income_statement = []
+    all_symbols_quaterly_relative_live_data_with_balance_sheet = []
+
     for s in symbols:
 
         quaterly_absolute_data_per_symbol = []
@@ -44,8 +50,9 @@ def analyse_data_from_alpha_vantage(symbols: list):
 
             for i in indicator_absolute_with_income_statement:
                 try:
-                    quaterly_absolute_data_per_symbol.append(
-                        extract_quarterly_report_data_from_alpha(income_statement, i, symbol=s))
+                    temp_data = extract_quarterly_report_data_from_alpha(income_statement, i, symbol=s)
+                    quaterly_absolute_data_per_symbol.append(temp_data)
+                    all_symbols_quaterly_absolute_data_with_income_statement.append(temp_data)
                 except:
                     print("error in quaterly data {}".format(s))
 
@@ -64,6 +71,8 @@ def analyse_data_from_alpha_vantage(symbols: list):
                     temp_data = [dividend_data[0], quotient, s, i]
 
                     quaterly_relative_data_per_symbol.append(temp_data)
+                    all_symbols_quaterly_relative_percentage_with_income_statement(temp_data)
+
 
                 except:
                     print(
@@ -83,6 +92,7 @@ def analyse_data_from_alpha_vantage(symbols: list):
                     temp_data = [dividend_data[0], quotient, s, i]
 
                     quaterly_relative_data_per_symbol.append(temp_data)
+                    all_symbols_quaterly_relative_percentage_with_balance_sheet(temp_data)
 
                 except:
                     print(
@@ -114,7 +124,7 @@ def analyse_data_from_alpha_vantage(symbols: list):
                     temp_data = [dividend_data[0], quotient, s, i]
 
                     quaterly_relative_live_data_per_symbol.append(temp_data)
-                    quaterly_relative_live_data_all_symbols_income_statement.append(temp_data)
+                    all_symbols_quaterly_relative_live_data_with_income_statement.append(temp_data)
 
 
                 except:
@@ -124,7 +134,6 @@ def analyse_data_from_alpha_vantage(symbols: list):
         if live_with_balance_sheet:
             balance_sheet = get_data_from_file("balance_sheet_alpha_" + s + ".json")
             for i in indicator_live_with_balance_sheet:
-
 
                 try:
                     dividend, divisor = split_indicator_in_two(i)
@@ -146,7 +155,7 @@ def analyse_data_from_alpha_vantage(symbols: list):
                     temp_data = [dividend_data[0], quotient, s, i]
 
                     quaterly_relative_live_data_per_symbol.append(temp_data)
-                    quaterly_relative_live_data_all_symbols_balance_sheet.append(temp_data)
+                    all_symbols_quaterly_relative_live_data_with_balance_sheet.append(temp_data)
 
                 except:
                     print(
@@ -154,16 +163,22 @@ def analyse_data_from_alpha_vantage(symbols: list):
 
         source = "alpha_vantage"
 
-        if len(quaterly_relative_data_per_symbol) != 0:
-            processor_filter_plot_data(quaterly_relative_data_per_symbol, True, False, source)
-        if len(quaterly_relative_data_per_symbol) != 0:
-            processor_filter_plot_data(quaterly_absolute_data_per_symbol, False, False, source)
-        if len(quaterly_relative_live_data_per_symbol) != 0:
-            processor_filter_plot_data(quaterly_relative_live_data_per_symbol, True, False, source)
+        if only_all_companies != 1:
+            if len(quaterly_relative_data_per_symbol) != 0:
+                processor_filter_plot_data(quaterly_relative_data_per_symbol, True, False, source)
+            if len(quaterly_relative_data_per_symbol) != 0:
+                processor_filter_plot_data(quaterly_absolute_data_per_symbol, False, False, source)
+            if len(quaterly_relative_live_data_per_symbol) != 0:
+                processor_filter_plot_data(quaterly_relative_live_data_per_symbol, True, False, source)
 
     source = "alpha_vantage"
-    processor_filter_plot_data(quaterly_relative_live_data_all_symbols_balance_sheet, True, True, source)
-    processor_filter_plot_data(quaterly_relative_live_data_all_symbols_income_statement, True, True, source)
+
+    if live_with_balance_sheet == 1 and only_all_companies ==1:
+        processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_balance_sheet, True, True, source)
+    if live_with_income_statement == 1 and only_all_companies == 1:
+        processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_income_statement, True, True, source)
+    if absolute_income_statement == 1 and only_all_companies == 1:
+        processor_filter_plot_data(all_symbols_quaterly_absolute_data_with_income_statement, False,True,source)
 
     pass
 
@@ -211,7 +226,7 @@ def analyse_data_from_finnhub(symbols: list):
             except:
                 print("no {} data  for  {} ".format(i, s))
 
-        processor_filter_plot_data(data_per_symbol, relativeData=False, allSymbols=False, source=source)
+        processor_filter_plot_data(data_per_symbol, relative_data=False, all_symbols=False, source=source)
         all_plot_data.append(data_per_symbol)
 
 
@@ -269,20 +284,20 @@ def analyse_data_from_local_json_file():
 
     # plotdata
     source = "excel"
-    processor_filter_plot_data(data_list=abs_data, relativeData=False, allSymbols=True, source=source)
-    processor_filter_plot_data(data_list=rel_data, relativeData=True, allSymbols=True, source=source)
-    processor_filter_plot_data(data_list=rel_data_live, relativeData=True, allSymbols=True, source=source)
+    processor_filter_plot_data(data_list=abs_data, relative_data=False, all_symbols=True, source=source)
+    processor_filter_plot_data(data_list=rel_data, relative_data=True, all_symbols=True, source=source)
+    processor_filter_plot_data(data_list=rel_data_live, relative_data=True, all_symbols=True, source=source)
 
     pass
 
 
 # SWITCHES:
 analyse_own_excel_data = 0
-get_finnhub_data = 1
-analyse_finnhub_data = 1
+get_finnhub_data = 0
+analyse_finnhub_data = 0
 get_alpha_data = 0
-analyse_alpha_data = 0
-analyse_alpha_data_compare_companies = 0
+analyse_alpha_data = 1
+analyse_alpha_data_compare_companies = 1
 
 # analyse_finnhub_symbol_automotive = ["DAI.DE","BMW.DE","VOW.DE", "PAH3.DE"]
 dax_symbols = ["BAS.DE", "SIE.DE", "BAYN.DE", "IFX.DE", "1COV.DE", "LIN.DE", "BEI.DE", "HEN3.DE"]  # a",
@@ -291,11 +306,10 @@ get_finnhub_symbol = ["PYPL"]
 
 # analyse_finnhub_symbol = ["SNPS","MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM","JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"] # ALV.DE, "DBK.DE",
 
-analyse_finnhub_symbol = ["BAS.DE", "SIE.DE", "BAYN.DE", "IFX.DE", "1COV.DE", "LIN.DE", "BEI.DE",
-                          "HEN3.DE"]  # ALV.DE, "DBK.DE",
+analyse_finnhub_symbol = ["BAS.DE"]  # ALV.DE, "DBK.DE",
 
 get_alpha_vantage_symbol_data = ["ALIZF", "BMWYY"]
-analyse_alpha_vantage_symbol_data = ["PYPL", "AMD", "SNPS", "MRVL", "AMBA", "QCOM", "ZS", "ASML", "NVDA", "TEAM"]
+analyse_alpha_vantage_symbol_data = ["PYPL", "AMD", "SNPS"] #"MRVL", "AMBA", "QCOM", "ZS", "ASML", "NVDA", "TEAM"
 # get_symbol_data_alpha_vantage = ["SNPS","MRVL","AMBA","QCOM","ZS","ASML","NVDA","TEAM"]  # "IBM", "AAPL"
 # symbols work: "JNJ","PRG","PFE","AMD","MSFT","AVGO", "AAPL"
 
