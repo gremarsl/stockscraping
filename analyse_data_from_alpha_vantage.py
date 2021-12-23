@@ -7,11 +7,11 @@ from general_functions import calculate_quotient, convert_list_elements_to_int, 
 
 def analyse_data_from_alpha_vantage(symbols: list):
     # define the indicators you want to analyse with alpha vantage data:
-    absolute_income_statement = 1
+    absolute_income_statement = 0
     percentage_income_statement = 0
     percentage_balance_sheet = 0
-    live_with_income_statement = 0
-    live_with_balance_sheet = 0
+    live_with_income_statement = 1
+    live_with_balance_sheet = 1
     only_all_companies = 1
 
     indicator_absolute_with_income_statement = ["grossProfit", "totalRevenue", "ebit", "netIncome", "incomeBeforeTax",
