@@ -3,7 +3,7 @@ from general_functions import convert_list_elements_to_float, convert_list_eleme
 from options import *
 
 options_for_plot_limit = {
-    "totalRevenue":option_abs_50_to_30_billion,
+    "totalRevenue": option_abs_50_to_30_billion,
     "grossProfit": option_gross_profit,
     "operatingIncome": option_operating_income,
     "incomeBeforeTax": option_abs_50_to_30_billion,
@@ -13,7 +13,7 @@ options_for_plot_limit = {
     "cashRatio": option_ratio_50_to_0,
     "currentRatio": option_ratio_50_to_0,
     "totalCurrentLiabilities_to_totalCurrentAssets": option_ratio_50_to_0,
-    "researchAndDevelopment_to_totalRevenue":option_ratio_50_to_0,
+    "researchAndDevelopment_to_totalRevenue": option_ratio_50_to_0,
     "ebitPerShare": option_per_share_30_to_minus_5,
     "netMargin": option_per_share_30_to_minus_5,
     "grossMargin": option_gross_margin,
@@ -21,21 +21,20 @@ options_for_plot_limit = {
     "totalLiabilities_to_totalAssets": option_quotient_2_to_0,
     "totalRevenue_to_marketCap": option_quotient_100_to_0,
     "totalAssets_to_marketCap": option_quotient_100_to_0,
-    "netIncome_to_totalRevenue":option_quotient_100_to_0, #ROS
+    "netIncome_to_totalRevenue": option_quotient_100_to_0,  # ROS
 }
-
 
 options_for_plot_color = {
     "totalRevenue": option_color_total_revenue,
-    #netSales
-    #-costofgoods
+    # netSales
+    # -costofgoods
     "grossProfit": option_color_gross_profit,
-    #-operating expenses
+    # -operating expenses
     "operatingIncome": option_color_operating_income,
     "incomeBeforeTax": option_color_income_before_tax,
-    #-interest expenes
+    # -interest expenes
     "ebit": option_color_ebit,
-    #-taxes
+    # -taxes
     "netIncome": option_color_net_income,
     "eps": option_color_eps,
     "cashRatio": option_color_cash_ratio,
@@ -45,13 +44,12 @@ options_for_plot_color = {
     "grossMargin": option_color_gross_margin,
     "netMargin": option_color_net_margin,
     "totalDebtToEquity": option_color_totalDebtToEquity,
-    "researchAndDevelopment_to_totalRevenue":option_color_quotient_research_and_development_revenue,
+    "researchAndDevelopment_to_totalRevenue": option_color_quotient_research_and_development_revenue,
     "totalLiabilities_to_totalAssets": option_color_quotient_totalLiabilities_to_totalAssets,
     "totalRevenue_to_marketCap": option_color_quotient_totalRevenue_to_marketCap,
     "totalAssets_to_marketCap": option_color_quotient_totalAssets_to_marketCap,
-    "netIncome_to_totalRevenue":option_color_quotient_netIncome_to_totalRevenue
+    "netIncome_to_totalRevenue": option_color_quotient_netIncome_to_totalRevenue
 }
-
 
 
 def stupid_plot_data_lists(data_list: list, source: str) -> None:
@@ -60,7 +58,6 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
     # data_per_symbol = [[[x_1],[y_1],symbol_1,indicator_1],...,[x_i],[y_i],symbol_i,indicator_i]]
 
     plt.figure()
-
 
     for i in data_list:
 
@@ -86,7 +83,7 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
     # show grid
     plt.grid(b=None, which='major', axis='both')
     plt.xticks(data_list[0][0], rotation="vertical")
-    plt.title('{} source: {}'.format(symbol,source))
+    plt.title('{} source: {}'.format(symbol, source))
     plt.xlabel('Year')
 
     # mng = plt.get_current_fig_manager()
@@ -95,8 +92,8 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
 
     plt.show()
 
-def plot_compare_symbols_one_indicator(data_list,source):
-    print(data_list)
+
+def plot_compare_symbols_one_indicator(data_list, source):
     # show grid
     indicator = data_list[0][3]
 

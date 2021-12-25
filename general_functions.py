@@ -13,6 +13,9 @@ def extract_quarterly_report_data(data_json: dict, indicator: str, symbol: str) 
         # i ist ein  Array
         try:
             time_points.append(i['fiscalDateEnding'])
+            value_point = i[indicator]
+            if value_point == "None":
+                print("Analyzing of {} not possible, since no data available - data == None".format(indicator))
             value_points.append(i[indicator])
         except:
             print("Appending data element to array didn´t work with indicator {}. Is the indicator in the data?".format(
@@ -27,13 +30,15 @@ def extract_quarterly_report_data(data_json: dict, indicator: str, symbol: str) 
 
 def get_data(input_data, indicator, symbol):
     # quotient: research and development:
-    list_dividend = extract_quarterly_report_data(input_data, indicator, symbol=symbol)
+    try:
+        list_dividend = extract_quarterly_report_data(input_data, indicator, symbol=symbol)
 
-    # convert to int
-    list_dividend_converted = convert_list_elements_to_int(list_dividend[1])
+        # convert to int
+        list_dividend_converted = convert_list_elements_to_int(list_dividend[1])
 
-    data = [list_dividend[0], list_dividend_converted, symbol, indicator]
-
+        data = [list_dividend[0], list_dividend_converted, symbol, indicator]
+    except:
+        print("function call: get data failed")
     return data
 
 
