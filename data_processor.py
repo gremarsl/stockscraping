@@ -37,27 +37,26 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
         raise Exception("data is not from source alpha_vantage, finnhub or excel")
 
     else:
-        if (not relative_data) and source == "excel":
+
+        if source == "alpha_vantage" and relative_data and all_symbols is True:
+
             try:
-                # filter
-                indicators = filter_data(data_list, options.options_abs_indicator)
-                # plot data
-                stupid_plot_data_lists(indicators, source)
 
-            except IncorrectExcelData:
-                print("analyzing excel data failed")
+                # stupid_plot_data_lists(filter_data_all_symbols(data_list, options.options_rel_indicator), source)
+                plot_compare_symbols_one_indicator(data_list, source)
 
-        if relative_data and source == "excel":
+            except IncorrectAlphaData:
+                print("analyzing alpha data failed")
+
+        if source == "alpha_vantage" and (not relative_data) and all_symbols is True:
+
             try:
-                # filter
-                indicators = filter_data(data_list, options.options_rel_indicator)
-                # plot data
-                stupid_plot_data_lists(indicators, source)
+                plot_compare_symbols_one_indicator(data_list, source)
 
-            except IncorrectExcelData:
-                print("analyzing excel data failed")
+            except IncorrectAlphaData:
+                print("analyzing alpha data failed")
 
-        if relative_data and source == "alpha_vantage" and all_symbols is False:
+        if source == "alpha_vantage" and relative_data and all_symbols is False:
 
             try:
                 stupid_plot_data_lists(filter_data(data_list, options.options_rel_indicator), source)
@@ -65,35 +64,16 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
             except IncorrectAlphaData:
                 print("analyzing alpha data failed")
 
-        if relative_data and source == "alpha_vantage" and all_symbols is True:
+        if source == "alpha_vantage" and (not relative_data) and all_symbols is False:
 
             try:
-
-                # stupid_plot_data_lists(filter_data_all_symbols(data_list, options.options_rel_indicator), source)
-                plot_compare_symbols_one_indicator(data_list, source)
-
-            except IncorrectAlphaData:
-                print("analyzing alpha data failed")
-
-        if (not relative_data) and source == "alpha_vantage" and all_symbols is True:
-
-            try:
-
-                # stupid_plot_data_lists(filter_data_all_symbols(data_list, options.options_rel_indicator), source)
-                plot_compare_symbols_one_indicator(data_list, source)
-
-            except IncorrectAlphaData:
-                print("analyzing alpha data failed")
-
-        if (not relative_data) and source == "alpha_vantage" and all_symbols is False:
-
-            try:
-                stupid_plot_data_lists(filter_data(data_list, options.options_abs_indicator), source)
+                temp_data = filter_data(data_list, options.options_abs_indicator)
+                stupid_plot_data_lists(temp_data, source)
 
             except NoWorkingIndicatorData:
                 print("no working indicators data")
 
-        if (not relative_data) and source == "finnhub":
+        if source == "finnhub" and (not relative_data):
             except_grossmargin = list(filter(lambda x: (x[3] != "grossMargin"), data_list))
 
             except_grossmargin_debt = list(filter(lambda x: x[3] != "totalDebtToEquity", except_grossmargin))
@@ -108,3 +88,23 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
 
             if len(eps_ebit_per_share_plot_data) == 0:
                 raise NoEbitData()
+
+        if source == "excel" and (not relative_data):
+            try:
+                # filter
+                indicators = filter_data(data_list, options.options_abs_indicator)
+                # plot data
+                stupid_plot_data_lists(indicators, source)
+
+            except IncorrectExcelData:
+                print("analyzing excel data failed")
+
+        if source == "excel" and relative_data:
+            try:
+                # filter
+                indicators = filter_data(data_list, options.options_rel_indicator)
+                # plot data
+                stupid_plot_data_lists(indicators, source)
+
+            except IncorrectExcelData:
+                print("analyzing excel data failed")
