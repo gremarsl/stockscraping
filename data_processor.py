@@ -28,6 +28,8 @@ class NotWorkingToPlot(Exception):
 
 
 def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols: bool, source: str):
+
+    print(data_list)
     # all_data_list = [data_per_symbol_1]
 
     if len(data_list) == 0:

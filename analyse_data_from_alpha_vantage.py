@@ -11,22 +11,21 @@ analyze_percentage_balance_sheet = 1
 analyze_live_with_income_statement = 1
 analyze_live_with_balance_sheet = 1
 
+indicator_absolute_with_income_statement = ["netIncome", "totalRevenue", "grossProfit", "ebit",
+                                            "incomeBeforeTax", "operatingIncome"]
+
+indicator_percentage_with_income_statement = [
+    "netIncome_to_totalRevenue"]  # "researchAndDevelopment_to_totalRevenue"
+
+indicator_percentage_with_balance_sheet = ["totalLiabilities_to_totalAssets",
+                                           "totalCurrentLiabilities_to_totalCurrentAssets"]
+
+indicator_live_with_income_statement = ["totalRevenue_to_marketCap"]
+
 
 def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: int):
     # TODO all symbols one indicator - in the list with more than one indicator -> e.g. 2 indicator -> I get 10
     #  graphs in the plot. Only one indicator is allowed -> need to be more modularized
-
-    # define the indicators you want to analyse with alpha vantage data:
-    indicator_absolute_with_income_statement = ["grossProfit", "totalRevenue", "ebit", "netIncome", "incomeBeforeTax",
-                                                "operatingIncome"]
-    indicator_percentage_with_income_statement = [
-        "netIncome_to_totalRevenue"]  # "researchAndDevelopment_to_totalRevenue"
-
-    indicator_percentage_with_balance_sheet = ["totalLiabilities_to_totalAssets",
-                                               "totalCurrentLiabilities_to_totalCurrentAssets"]
-
-    indicator_live_with_income_statement = ["totalRevenue_to_marketCap"]
-    indicator_live_with_balance_sheet = ["totalAssets_to_marketCap"]
 
     all_symbols_quaterly_absolute_data_with_income_statement = []
 
@@ -42,20 +41,25 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
         quaterly_relative_data_per_symbol = []
 
         if analyze_absolute_income_statement:
+
             income_statement = get_data_from_file("income_statement_alpha_" + s + ".json")
+
             counter = 0
             for i in indicator_absolute_with_income_statement:
                 try:
                     temp_data = extract_quarterly_report_data_from_alpha(income_statement, i, symbol=s)
                     quaterly_absolute_data_per_symbol.append(temp_data)
 
-                    if counter < 1:
-                        all_symbols_quaterly_absolute_data_with_income_statement.append(temp_data)
-                        counter = 1
+                    if analyze_only_all_companies == 1:
+                        if counter < 1:
+                            all_symbols_quaterly_absolute_data_with_income_statement.append(temp_data)
+                            counter = counter + 1
+
                 except:
                     print("error in quaterly data {}".format(s))
 
         if analyze_percentage_income_statement:
+
             income_statement = get_data_from_file("income_statement_alpha_" + s + ".json")
 
             counter = 0
@@ -79,9 +83,11 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
                     print("-{}- calculate quotient of {} didnt work for".format(s, i))
 
         if analyze_percentage_balance_sheet:
+
             balance_sheet = get_data_from_file("balance_sheet_alpha_" + s + ".json")
 
             counter = 0
+
             for i in indicator_percentage_with_balance_sheet:
 
                 try:
@@ -105,6 +111,7 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
         quaterly_relative_live_data_per_symbol = []
 
         if analyze_live_with_income_statement:
+
             income_statement = get_data_from_file("income_statement_alpha_" + s + ".json")
             counter = 0
             for i in indicator_live_with_income_statement:
@@ -139,6 +146,8 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
                     print("-{}- calculate quotient of {} didnt work".format(s, i))
 
         if analyze_live_with_balance_sheet:
+            indicator_live_with_balance_sheet = ["totalAssets_to_marketCap"]
+
             balance_sheet = get_data_from_file("balance_sheet_alpha_" + s + ".json")
             counter = 0
             for i in indicator_live_with_balance_sheet:

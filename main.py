@@ -13,7 +13,7 @@ analyse_own_excel_data = 0
 get_finnhub_data = 0
 analyse_finnhub_data = 0
 get_alpha_data = 0
-analyse_alpha_data = 1
+analyse_alpha_data = 0
 analyse_alpha_data_compare_companies = 1
 
 automotive_finnhub =  ["DAI.DE","BMW.DE","VOW.DE", "PAH3.DE"]
@@ -33,7 +33,7 @@ get_finnhub_symbol = semiconductor_nasdaq_alpha
 analyse_finnhub_symbol = semiconductor_finnhub
 
 get_alpha_vantage_symbol_data = semiconductor_nasdaq_alpha
-analyse_alpha_vantage_symbol_data = ["IBM","MSFT","AAPL"]
+analyse_alpha_vantage_symbol_data = ["IBM","MSFT","AAPL","AMD","ASML","NVDA","KLAC","TEAM","UMC","TSM"]
 
 if __name__ == '__main__':
     if analyse_own_excel_data == 1:
