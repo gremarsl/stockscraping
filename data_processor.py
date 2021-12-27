@@ -94,7 +94,14 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
             try:
                 plot_compare_symbols_one_indicator(data_list,source)
             except NotWorkingToPlot:
-                print("Not working to plot ratios_eps_ebit_net_margin_data data in one plot {}".format(data_list))
+                print("Not working to plot")
+
+        if source == "finnhub" and relative_data is True and all_symbols is True:
+
+            try:
+                plot_compare_symbols_one_indicator(data_list,source)
+            except NotWorkingToPlot:
+                print("Not working to plot")
 
         if source == "excel" and (not relative_data):
             try:
