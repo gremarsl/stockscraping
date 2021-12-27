@@ -77,7 +77,6 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
 
         if source == "finnhub" and (not relative_data):
             except_grossmargin = list(filter(lambda x: (x[3] != "grossMargin"), data_list))
-
             except_grossmargin_debt = list(filter(lambda x: x[3] != "totalDebtToEquity", except_grossmargin))
 
             eps_ebit_per_share_plot_data = list(

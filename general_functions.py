@@ -72,7 +72,7 @@ def filter_data(data_list, options):
     return indicators
 
 
-def get_data_from_file(filename):
+def read_data_from_file(filename):
     if os.path.isfile(filename):
         with open(filename) as json_file:
             data = json.load(json_file)

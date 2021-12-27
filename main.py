@@ -10,11 +10,11 @@ from functions_for_alpha_vantage import calling_alpha_vantage_api
 
 # SWITCHES:
 analyse_own_excel_data = 0
-get_finnhub_data = 0
-analyse_finnhub_data = 0
+get_finnhub_data = 1
+analyse_finnhub_data = 1
 get_alpha_data = 0
 analyse_alpha_data = 0
-analyse_alpha_data_compare_companies = 1
+analyse_alpha_data_compare_companies = 0
 
 automotive_finnhub =  ["DAI.DE","BMW.DE","VOW.DE", "PAH3.DE"]
 chemicals_finnhub = ["BAS.DE","BAYN.DE","LIN.DE","HEN3.DE","1COV.DE"]
@@ -29,11 +29,11 @@ mobility_alpha = ["BA"]
 pharma_companies_alpha = ["JNJ","PFE"]
 industry_finnhub = ["SIE.DE"]
 
-get_finnhub_symbol = semiconductor_nasdaq_alpha
-analyse_finnhub_symbol = semiconductor_finnhub
+get_finnhub_symbol = ["IFX.DE"]
+analyse_finnhub_symbol = ["IFX.DE"]
 
 get_alpha_vantage_symbol_data = semiconductor_nasdaq_alpha
-analyse_alpha_vantage_symbol_data = ["IBM","MSFT","AAPL","AMD","ASML","NVDA","KLAC","TEAM","UMC","TSM"]
+analyse_alpha_vantage_symbol_data = ["MSFT","AAPL","AMD"]
 
 if __name__ == '__main__':
     if analyse_own_excel_data == 1:

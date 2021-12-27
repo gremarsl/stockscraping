@@ -25,7 +25,7 @@ def calling_finnhub_api(symbols: list):
     pass
 
 
-def get_one_absolute_indicator_from_finnhub(data_json: dict, period: str, indicator: str, symbol: str) -> list:
+def get_one_indicator_from_finnhub(data_json: dict, period: str, indicator: str, symbol: str) -> list:
     data = data_json['series'][period][indicator]
     time_points = []
     value_points = []
@@ -41,6 +41,7 @@ def get_one_absolute_indicator_from_finnhub(data_json: dict, period: str, indica
     return data_list
 
 
+'''
 def get_one_ratio_indicator_from_finnhub(data_json: dict, period: str, indicator: str, symbol: str) -> list:
     data = data_json['series'][period][indicator]
     time_points = []
@@ -55,7 +56,7 @@ def get_one_ratio_indicator_from_finnhub(data_json: dict, period: str, indicator
     data_list = [time_points, value_points, symbol, indicator]
 
     return data_list
-
+'''
 
 def get_one_relative_indicator_from_finnhub(data_json: dict, period: str, indicator: str, symbol: str) -> list:
     data = data_json['series'][period][indicator]
