@@ -2,7 +2,7 @@ from data_processor import processor_filter_plot_data
 from functions_for_alpha_vantage import extract_quarterly_report_data_from_alpha
 from functions_for_yahoo import get_market_cap_from_yahoo_finance
 from general_functions import calculate_quotient, convert_list_elements_to_int, split_indicator_in_two, \
-    get_data_from_file, get_data
+    read_data_from_file, get_data
 
 # SWITCHES FOR ALPHA VANTAGE ANALYSIS
 analyze_absolute_income_statement = 1
@@ -42,7 +42,7 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
 
         if analyze_absolute_income_statement:
 
-            income_statement = get_data_from_file("income_statement_alpha_" + s + ".json")
+            income_statement = read_data_from_file("income_statement_alpha_" + s + ".json")
 
             counter = 0
             for i in indicator_absolute_with_income_statement:
@@ -60,7 +60,7 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
 
         if analyze_percentage_income_statement:
 
-            income_statement = get_data_from_file("income_statement_alpha_" + s + ".json")
+            income_statement = read_data_from_file("income_statement_alpha_" + s + ".json")
 
             counter = 0
             for i in indicator_percentage_with_income_statement:
@@ -84,7 +84,7 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
 
         if analyze_percentage_balance_sheet:
 
-            balance_sheet = get_data_from_file("balance_sheet_alpha_" + s + ".json")
+            balance_sheet = read_data_from_file("balance_sheet_alpha_" + s + ".json")
 
             counter = 0
 
@@ -112,7 +112,7 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
 
         if analyze_live_with_income_statement:
 
-            income_statement = get_data_from_file("income_statement_alpha_" + s + ".json")
+            income_statement = read_data_from_file("income_statement_alpha_" + s + ".json")
             counter = 0
             for i in indicator_live_with_income_statement:
 
@@ -148,7 +148,7 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
         if analyze_live_with_balance_sheet:
             indicator_live_with_balance_sheet = ["totalAssets_to_marketCap"]
 
-            balance_sheet = get_data_from_file("balance_sheet_alpha_" + s + ".json")
+            balance_sheet = read_data_from_file("balance_sheet_alpha_" + s + ".json")
             counter = 0
             for i in indicator_live_with_balance_sheet:
                 try:

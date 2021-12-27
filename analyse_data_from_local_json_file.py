@@ -1,14 +1,14 @@
 from data_processor import processor_filter_plot_data
 from functions_for_alpha_vantage import extract_quarterly_report_data_from_alpha
 from functions_for_yahoo import get_market_cap_from_yahoo_finance
-from general_functions import get_data_from_file, split_indicator_in_two, calculate_quotient, \
+from general_functions import read_data_from_file, split_indicator_in_two, calculate_quotient, \
     convert_list_elements_to_int, get_data
 
 
 def analyse_data_from_local_json_file():
     filename = "D:\\Desktop\\Finanzreporte\\json\\testsymbol.json"
     s = "TEST"
-    data = get_data_from_file(filename)
+    data = read_data_from_file(filename)
 
     # my indicators I want to analyse from the json file
 

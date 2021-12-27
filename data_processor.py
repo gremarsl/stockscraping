@@ -28,7 +28,6 @@ class NotWorkingToPlot(Exception):
 
 
 def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols: bool, source: str):
-
     print(data_list)
     # all_data_list = [data_per_symbol_1]
 
@@ -75,7 +74,7 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
             except NoWorkingIndicatorData:
                 print("no working indicators data")
 
-        if source == "finnhub" and (not relative_data):
+        if source == "finnhub" and (not relative_data) and all_symbols is False:
             except_grossmargin = list(filter(lambda x: (x[3] != "grossMargin"), data_list))
             except_grossmargin_debt = list(filter(lambda x: x[3] != "totalDebtToEquity", except_grossmargin))
 
@@ -89,6 +88,13 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
 
             if len(eps_ebit_per_share_plot_data) == 0:
                 raise NoEbitData()
+
+        if source == "finnhub" and (not relative_data) and all_symbols is True:
+
+            try:
+                plot_compare_symbols_one_indicator(data_list,source)
+            except NotWorkingToPlot:
+                print("Not working to plot ratios_eps_ebit_net_margin_data data in one plot {}".format(data_list))
 
         if source == "excel" and (not relative_data):
             try:
