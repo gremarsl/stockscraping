@@ -6,6 +6,9 @@ api_url = "https://finnhub.io/api/v1/stock/metric?"
 
 
 def calling_finnhub_api(symbols: list):
+
+    if type(symbols) is not list:
+        raise Exception("IncorrectParameter")
     # 'https://finnhub.io/api/v1/stock/metric?symbol=DAI.DE&metric=all&token=buk3id748v6r2017iuog'
 
     for s in symbols:

@@ -9,6 +9,10 @@ class NoData:
 
 
 def analyse_data_from_finnhub(symbols: list):
+
+    if type(symbols) is not list:
+        raise Exception("IncorrectParameter")
+
     source = "finnhub"
     all_plot_data = []
 

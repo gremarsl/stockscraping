@@ -24,6 +24,9 @@ indicator_live_with_income_statement = ["totalRevenue_to_marketCap"]
 
 
 def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: int):
+
+    if type(symbols) is not list:
+        raise Exception("IncorrectParameter")
     # TODO all symbols one indicator - in the list with more than one indicator -> e.g. 2 indicator -> I get 10
     #  graphs in the plot. Only one indicator is allowed -> need to be more modularized
 

@@ -6,6 +6,7 @@ from general_functions import read_data_from_file, split_indicator_in_two, calcu
 
 
 def analyse_data_from_local_json_file():
+
     filename = "D:\\Desktop\\Finanzreporte\\json\\testsymbol.json"
     s = "TEST"
     data = read_data_from_file(filename)
