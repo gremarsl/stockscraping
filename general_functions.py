@@ -4,6 +4,25 @@ import os
 import datetime as dt
 
 
+def extract_quarterly_report_data_from_my_json_file(data_json: dict, indicator: str, symbol: str) -> list:
+    reports = data_json['quarterlyReports']
+    time_points = []
+    value_points = []
+    for i in reports:
+        # i ist ein  Array
+        try:
+            time_points.append(i['fiscalDateEnding']) #releaseDate
+            value_points.append(i[indicator])
+        except:
+            print("Appending data element to array didn´t work with indicator {}. Is the indicator in the data?".format(indicator))
+            exit()
+    value_points, time_points = reverse_lists(value_points, time_points)
+
+    data = [time_points, value_points, symbol, indicator]
+
+    return data
+
+
 def extract_quarterly_report_data(data_json: dict, indicator: str, symbol: str) -> list:
     # this function is a direct copy of extract_quarterly_report_data_from_alpha!! and based on the namings in alpha data
     reports = data_json['quarterlyReports']
@@ -29,6 +48,7 @@ def extract_quarterly_report_data(data_json: dict, indicator: str, symbol: str) 
 
 
 def get_data(input_data, indicator, symbol):
+    #if you change this please also change get_float_data
     # quotient: research and development:
     try:
         list_dividend = extract_quarterly_report_data(input_data, indicator, symbol=symbol)
@@ -38,9 +58,24 @@ def get_data(input_data, indicator, symbol):
 
         data = [list_dividend[0], list_dividend_converted, symbol, indicator]
     except:
-        print("function call: get data failed")
+        print("function call: get data failed - parameter:{}; {} ".format(indicator,symbol))
     return data
 
+def get_float_data(input_data, indicator, symbol):
+    #if you change this please also change get_data
+
+    # quotient: research and development:
+    try:
+        list_dividend = extract_quarterly_report_data(input_data, indicator, symbol=symbol)
+
+        # convert to int
+        temp_converted = convert_list_elements_to_float(list_dividend[1])
+        list_dividend_converted = convert_list_elements_to_int(temp_converted)
+
+        data = [list_dividend[0], list_dividend_converted, symbol, indicator]
+    except:
+        print("function call: get data failed - parameter:{}; {} ".format(indicator,symbol))
+    return data
 
 def calculate_quotient(dividend_data, divisor_data, indicator, symbol):
     quotient_list = [(x / y) * 100 for x, y in zip(dividend_data, divisor_data)]

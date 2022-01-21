@@ -9,8 +9,8 @@ from functions_for_alpha_vantage import calling_alpha_vantage_api
 # array : []
 
 # SWITCHES:
-analyse_own_excel_data = 0
-get_finnhub_data = 1
+analyse_own_excel_data = 1
+get_finnhub_data = 0
 analyse_finnhub_data = 0
 get_alpha_data = 0
 analyse_alpha_data = 0
@@ -33,7 +33,7 @@ get_finnhub_symbol = ["IFX.DE"]
 analyse_finnhub_symbol =["IBM","MSFT","AAPL","AMD","ASML","NVDA","KLAC","TEAM","UMC","TSM"]
 
 get_alpha_vantage_symbol_data = ["DAI"]
-analyse_alpha_vantage_symbol_data = ["MSFT","AAPL","AMD"]
+analyse_alpha_vantage_symbol_data = ["IBM","MSFT","AAPL","AMD","ASML","NVDA","KLAC","TEAM","UMC","TSM"]
 
 if __name__ == '__main__':
     if analyse_own_excel_data == 1:
