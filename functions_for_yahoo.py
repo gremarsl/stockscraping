@@ -24,6 +24,7 @@ def get_last_price_for_symbol_from_yahoo_finance(symbol):
 
 def get_market_cap_from_yahoo_finance(symbol):
     symbol_info = get_base_info_from_yahoo_finance(symbol)
+    print(symbol_info)
     value = symbol_info["marketCap"]
 
     return value
