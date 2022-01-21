@@ -9,28 +9,29 @@ from functions_for_alpha_vantage import calling_alpha_vantage_api
 # array : []
 
 # SWITCHES:
-analyse_my_json_data = 1
+analyse_my_json_data = 0
 get_finnhub_data = 0
-analyse_finnhub_data = 0
+analyse_finnhub_data = 1
 get_alpha_data = 0
 analyse_alpha_data = 0
 analyse_alpha_data_compare_companies = 0
 
-automotive_finnhub =  ["DAI.DE","BMW.DE","VOW.DE", "PAH3.DE"]
+automotive_finnhub = ["DAI.DE","BMW.DE","VOW.DE", "PAH3.DE"]
 chemicals_finnhub = ["BAS.DE","BAYN.DE","LIN.DE","HEN3.DE","1COV.DE"]
-semiconductor_finnhub = ["NVDA"]
+industry_finnhub = ["SIE.DE"]
+consumer_finnhub = ["BEI.DE"]
+
+semiconductor = ["INTC","AMD","ASML","NVDA","KLAC","UMC","TSM","QCOM","STM","MRVL","SNPS","VLDRW","AMBA"]
 semiconductor_nasdaq_alpha = ["IBM","MSFT","AAPL","AMD","ASML","NVDA","KLAC","TEAM","UMC","TSM"]
 semiconductor_nasdaq_alpha2 =["ZS","AMBA","QCOM","AVGO","V","STM","MRVL","VSH","SNPS","VLDRW","MU","ADI"]
 
-consumer_finnhub = ["BEI.DE"]
-consumer_companies_alpha = ["PRG"]
+network_alpha = ["NOK","VZ","T"]
+consumer_alpha = ["PRG","KO","MCD","NKE"]
 mobility_alpha = ["BA"]
-
 pharma_companies_alpha = ["JNJ","PFE"]
-industry_finnhub = ["SIE.DE"]
 
 get_finnhub_symbol = ["IFX.DE"]
-analyse_finnhub_symbol =["IBM","MSFT","AAPL","AMD","ASML","NVDA","KLAC","TEAM","UMC","TSM"]
+analyse_finnhub_symbol = automotive_finnhub
 
 get_alpha_vantage_symbol_data = ["DAI"]
 analyse_alpha_vantage_symbol_data = ["IBM","MSFT","AAPL","AMD","ASML","NVDA","KLAC","TEAM","UMC","TSM"]

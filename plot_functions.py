@@ -22,6 +22,9 @@ options_for_plot_limit = {
     "totalRevenue_to_marketCap": option_quotient_100_to_0,
     "totalAssets_to_marketCap": option_quotient_100_to_0,
     "netIncome_to_totalRevenue": option_quotient_100_to_0,  # ROS
+    "grossProfit_to_totalRevenue": option_quotient_100_to_0,
+    "operationsIncome_to_totalRevenue": option_quotient_100_to_0,
+    "totalShareholdersEquity_to_totalAssets": option_quotient_100_to_0,
 }
 
 options_for_plot_color = {
@@ -48,7 +51,10 @@ options_for_plot_color = {
     "totalLiabilities_to_totalAssets": option_color_quotient_totalLiabilities_to_totalAssets,
     "totalRevenue_to_marketCap": option_color_quotient_totalRevenue_to_marketCap,
     "totalAssets_to_marketCap": option_color_quotient_totalAssets_to_marketCap,
-    "netIncome_to_totalRevenue": option_color_quotient_netIncome_to_totalRevenue
+    "netIncome_to_totalRevenue": option_color_quotient_netIncome_to_totalRevenue,
+    "grossProfit_to_totalRevenue": option_color_quotient_grossProfit_to_totalRevenue,
+    "operationsIncome_to_totalRevenue": option_color_quotient_operationsIncome_to_totalRevenue,
+    "totalShareholdersEquity_to_totalAssets": option_color_quotient_totalShareholdersEquity_to_totalAssets,
 }
 
 

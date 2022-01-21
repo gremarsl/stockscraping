@@ -16,8 +16,8 @@ def analyse_data_from_local_json_file():
 
     # my indicators I want to analyse from the json file
     my_abs_indicators = ["totalRevenue", "netIncome"]
-    my_rel_indicators = ["researchAndDevelopment_to_totalRevenue", "totalLiabilities_to_totalAssets",
-                         "grossProfit_to_totalRevenue", "operationsIncome_to_totalRevenue",
+    my_rel_indicators = ["operationsIncome_to_totalRevenue","researchAndDevelopment_to_totalRevenue", "totalLiabilities_to_totalAssets",
+                         "grossProfit_to_totalRevenue",
                          "totalShareholdersEquity_to_totalAssets"]
     my_rel_indicators_live = ["totalRevenue_to_marketCap", "totalAssets_to_marketCap"]
 
