@@ -7,7 +7,7 @@ class NoData(Exception):
     pass  # declare a label
 
 
-class IncorrectExcelData(Exception):
+class IncorrectJsonData(Exception):
     pass
 
 
@@ -28,14 +28,13 @@ class NotWorkingToPlot(Exception):
 
 
 def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols: bool, source: str):
-    print(data_list)
     # all_data_list = [data_per_symbol_1]
 
     if len(data_list) == 0:
         raise Exception("No data")
 
-    if (source != "alpha_vantage") and (source != "finnhub") and (source != "excel"):
-        raise Exception("data is not from source alpha_vantage, finnhub or excel")
+    if (source != "alpha_vantage") and (source != "finnhub") and (source != "my_json"):
+        raise Exception("data is not from source alpha_vantage, finnhub or my_json")
 
     else:
 
@@ -103,22 +102,22 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
             except NotWorkingToPlot:
                 print("Not working to plot")
 
-        if source == "excel" and (not relative_data):
+        if source == "my_json" and (not relative_data):
             try:
                 # filter
                 indicators = filter_data(data_list, options.options_abs_indicator)
                 # plot data
                 stupid_plot_data_lists(indicators, source)
 
-            except IncorrectExcelData:
-                print("analyzing excel data failed")
+            except IncorrectJsonData:
+                print("analyzing my_json data failed")
 
-        if source == "excel" and relative_data:
+        if source == "my_json" and relative_data:
             try:
                 # filter
                 indicators = filter_data(data_list, options.options_rel_indicator)
                 # plot data
                 stupid_plot_data_lists(indicators, source)
 
-            except IncorrectExcelData:
-                print("analyzing excel data failed")
+            except IncorrectJsonData:
+                print("analyzing my_json data failed")

@@ -11,10 +11,11 @@ def extract_quarterly_report_data_from_my_json_file(data_json: dict, indicator: 
     for i in reports:
         # i ist ein  Array
         try:
-            time_points.append(i['fiscalDateEnding']) #releaseDate
+            time_points.append(i['fiscalDateEnding'])  # releaseDate
             value_points.append(i[indicator])
         except:
-            print("Appending data element to array didn´t work with indicator {}. Is the indicator in the data?".format(indicator))
+            print("Appending data element to array didn´t work with indicator {}. Is the indicator in the data?".format(
+                indicator))
             exit()
     value_points, time_points = reverse_lists(value_points, time_points)
 
@@ -48,7 +49,7 @@ def extract_quarterly_report_data(data_json: dict, indicator: str, symbol: str) 
 
 
 def get_data(input_data, indicator, symbol):
-    #if you change this please also change get_float_data
+    # if you change this please also change get_float_data
     # quotient: research and development:
     try:
         list_dividend = extract_quarterly_report_data(input_data, indicator, symbol=symbol)
@@ -58,11 +59,12 @@ def get_data(input_data, indicator, symbol):
 
         data = [list_dividend[0], list_dividend_converted, symbol, indicator]
     except:
-        print("function call: get data failed - parameter:{}; {} ".format(indicator,symbol))
+        print("function call: get data failed - parameter:{}; {} ".format(indicator, symbol))
     return data
 
+
 def get_float_data(input_data, indicator, symbol):
-    #if you change this please also change get_data
+    # if you change this please also change get_data
 
     # quotient: research and development:
     try:
@@ -74,8 +76,9 @@ def get_float_data(input_data, indicator, symbol):
 
         data = [list_dividend[0], list_dividend_converted, symbol, indicator]
     except:
-        print("function call: get data failed - parameter:{}; {} ".format(indicator,symbol))
+        print("function call: get data failed - parameter:{}; {} ".format(indicator, symbol))
     return data
+
 
 def calculate_quotient(dividend_data, divisor_data, indicator, symbol):
     quotient_list = [(x / y) * 100 for x, y in zip(dividend_data, divisor_data)]
@@ -150,7 +153,6 @@ def convert_list_elements_to_int(y):
 
 
 def convert_list_elements_to_date_instance(dates_as_strings):
-
-    dates_as_dates= [dt.datetime.strptime(d, '%Y-%m-%d').date() for d in dates_as_strings]
+    dates_as_dates = [dt.datetime.strptime(d, '%Y-%m-%d').date() for d in dates_as_strings]
 
     return dates_as_dates

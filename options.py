@@ -1,5 +1,4 @@
-
-options_abs_indicator =[
+options_abs_indicator = [
     "grossMargin",
     "netMargin",
     "grossProfit",
@@ -10,12 +9,12 @@ options_abs_indicator =[
     "totalRevenue"
 ]
 
-options_per_share_indicator =[
+options_per_share_indicator = [
     "eps",
     "ebitPerShare"
 ]
 
-options_rel_indicator =[
+options_rel_indicator = [
     "totalRevenue_to_marketCap",
     "totalDebtToEquity",
     "cashRatio",
@@ -24,7 +23,11 @@ options_rel_indicator =[
     "totalLiabilities_to_totalAssets",
     "totalAssets_to_marketCap",
     "netIncome_to_totalRevenue",
-    "totalCurrentLiabilities_to_totalCurrentAssets"
+    "totalCurrentLiabilities_to_totalCurrentAssets",
+    "grossProfit_to_totalRevenue",
+    "operationsIncome_to_totalRevenue",
+    "totalShareholdersEquity_to_totalAssets"
+
 ]
 
 
@@ -39,10 +42,12 @@ def option_quotient_2_to_0():
     y_lim_bottom = 0
     return y_lim_top, y_lim_bottom
 
+
 def option_quotient_100_to_0():
     y_lim_top = 100
     y_lim_bottom = 0
     return y_lim_top, y_lim_bottom
+
 
 def option_eps():
     y_lim_top = 20
@@ -72,6 +77,7 @@ def option_abs_50_to_30_billion():
     y_lim_top = 50 * 10 ** 9
     y_lim_bottom = 30 * 10 ** 9
     return y_lim_top, y_lim_bottom
+
 
 def option_operating_income():
     y_lim_top = 50 * 10 ** 9
@@ -134,6 +140,7 @@ def option_color_total_revenue():
 def option_color_quotient_research_and_development_revenue():
     return "blue"
 
+
 def option_color_quotient_netIncome_to_totalRevenue():
     return "orange"
 
@@ -141,11 +148,22 @@ def option_color_quotient_netIncome_to_totalRevenue():
 def option_color_quotient_totalLiabilities_to_totalAssets():
     return "green"
 
+
+def option_color_quotient_grossProfit_to_totalRevenue():
+    return "red"
+
+
+def option_color_quotient_operationsIncome_to_totalRevenue():
+    return "green"
+
+
+def option_color_quotient_totalShareholdersEquity_to_totalAssets():
+    return "black"
+
+
 def option_color_quotient_totalRevenue_to_marketCap():
     return "red"
 
+
 def option_color_quotient_totalAssets_to_marketCap():
     return "orange"
-
-
-

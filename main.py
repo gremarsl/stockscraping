@@ -9,7 +9,7 @@ from functions_for_alpha_vantage import calling_alpha_vantage_api
 # array : []
 
 # SWITCHES:
-analyse_own_excel_data = 1
+analyse_my_json_data = 1
 get_finnhub_data = 0
 analyse_finnhub_data = 0
 get_alpha_data = 0
@@ -36,7 +36,7 @@ get_alpha_vantage_symbol_data = ["DAI"]
 analyse_alpha_vantage_symbol_data = ["IBM","MSFT","AAPL","AMD","ASML","NVDA","KLAC","TEAM","UMC","TSM"]
 
 if __name__ == '__main__':
-    if analyse_own_excel_data == 1:
+    if analyse_my_json_data == 1:
         analyse_data_from_local_json_file()
 
     if get_finnhub_data == 1:

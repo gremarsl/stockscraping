@@ -13,11 +13,12 @@ def analyse_data_from_local_json_file():
     filename = "D:\\Desktop\\Finanzreporte\\json\\asml.json"
     s = "ASML"
     data = read_data_from_file(filename)
-    print(data)
 
     # my indicators I want to analyse from the json file
     my_abs_indicators = ["totalRevenue", "netIncome"]
-    my_rel_indicators = ["researchAndDevelopment_to_totalRevenue", "totalLiabilities_to_totalAssets"]
+    my_rel_indicators = ["researchAndDevelopment_to_totalRevenue", "totalLiabilities_to_totalAssets",
+                         "grossProfit_to_totalRevenue", "operationsIncome_to_totalRevenue",
+                         "totalShareholdersEquity_to_totalAssets"]
     my_rel_indicators_live = ["totalRevenue_to_marketCap", "totalAssets_to_marketCap"]
 
     abs_data = []
@@ -36,7 +37,6 @@ def analyse_data_from_local_json_file():
             quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
 
             temp_data = [dividend_data[0], quotient, s, i]
-
             rel_data.append(temp_data)
 
     rel_data_live = []
@@ -63,7 +63,7 @@ def analyse_data_from_local_json_file():
             rel_data_live.append(temp_data)
 
     # plotdata
-    source = "excel"
+    source = "my_json"
     processor_filter_plot_data(data_list=abs_data, relative_data=False, all_symbols=True, source=source)
     processor_filter_plot_data(data_list=rel_data, relative_data=True, all_symbols=True, source=source)
     processor_filter_plot_data(data_list=rel_data_live, relative_data=True, all_symbols=True, source=source)
