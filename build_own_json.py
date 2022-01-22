@@ -52,30 +52,11 @@ for quarter in json_data_object["quarterlyReports"]:
 filepath = "D://Desktop//Finanzreporte//json//" + s + ".json"
 write_to_file_in_json_format(d, filepath)
 
-print(d)
+print("d: {}".format(d))
 
-## begin file 2
-balance_sheet = read_data_from_file("reduced_balance_" + s + ".json")
-add_on_file_object = delete_object_key(balance_sheet, "annualReports")
 
-# gehe jeden quaterly report durch
-for quarter in add_on_file_object["quarterlyReports"]:
-    # für jeden key in einem quater - filter jeden parameter weg, der nicht teil von parameterlist ist
 
-    list_extracted = list(filter(lambda x: x[0] in parameter_list, quarter.items()))
-    print("listextraced: {}".format(list_extracted))
 
-    # überprüfe für jeden parameter in list_extracted, ob schon hinzugefügt zu ersten datei die erstellt wurde
-
-    for quarterA in d["quarterlyReports"]:
-        list_extracted_fileA = list(filter(lambda x: x[0] in list_extracted, quarterA.items()))
-        print("list_extracted_fileA: {}".format(list_extracted_fileA))
-
-    # erstelle ein object
-    obj = {}
-    # befülle das object mit jedem gefilterten parameter
-    for elem in list_extracted:
-        obj[elem[0]] = elem[1]
 
 '''
 
