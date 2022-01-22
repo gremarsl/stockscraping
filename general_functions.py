@@ -137,6 +137,7 @@ def reverse_lists(x: list, y: list) -> list:
 def write_to_file_in_json_format(data, name_of_file: str) -> None:
     f = open(name_of_file, "w")
     f.write(str(json.dumps(data, indent=4)))
+    print(name_of_file)
     f.close()
 
 
@@ -156,3 +157,8 @@ def convert_list_elements_to_date_instance(dates_as_strings):
     dates_as_dates = [dt.datetime.strptime(d, '%Y-%m-%d').date() for d in dates_as_strings]
 
     return dates_as_dates
+
+
+def delete_object_key(json_data_object, key):
+    del json_data_object[key]
+    return json_data_object
