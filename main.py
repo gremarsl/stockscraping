@@ -1,6 +1,7 @@
 from analyse_data_from_alpha_vantage import analyse_data_from_alpha_vantage
 from analyse_data_from_finnhub import analyse_data_from_finnhub
 from analyse_data_from_local_json_file import analyse_data_from_local_json_file
+from build_own_json import build_own_json_file
 from functions_for_finnhub import calling_finnhub_api
 from functions_for_alpha_vantage import calling_alpha_vantage_api
 
@@ -10,11 +11,12 @@ from functions_for_alpha_vantage import calling_alpha_vantage_api
 # key-value pair is object data
 
 # SWITCHES:
+build_own_json = 1
 analyse_my_json_data =1
 get_finnhub_data = 0
 analyse_finnhub_data = 0
 get_alpha_data = 0
-analyse_alpha_data = 0
+analyse_alpha_data = 1
 analyse_alpha_data_compare_companies = 0
 
 automotive_finnhub = ["DAI.DE", "BMW.DE", "VOW.DE", "PAH3.DE"]
@@ -39,8 +41,11 @@ analyse_finnhub_symbol = automotive_finnhub
 get_alpha_vantage_symbol_data = pharma_companies_alpha
 analyse_alpha_vantage_symbol_data = pharma_companies_alpha
 
-my_json_symbol = ["MSFT"]
+my_json_symbol = ["JNJ"]
 if __name__ == '__main__':
+    if build_own_json ==1:
+        build_own_json_file(my_json_symbol)
+
     if analyse_my_json_data == 1:
         analyse_data_from_local_json_file(my_json_symbol)
 
