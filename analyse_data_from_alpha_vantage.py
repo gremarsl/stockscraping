@@ -2,7 +2,7 @@ from data_processor import processor_filter_plot_data
 from functions_for_alpha_vantage import extract_quarterly_report_data_from_alpha
 from functions_for_yahoo import get_market_cap_from_yahoo_finance
 from general_functions import calculate_quotient, convert_list_elements_to_int, split_indicator_in_two, \
-    read_data_from_file, get_data
+    read_data_from_file, get_data, get_key_value_from_local_file
 
 # SWITCHES FOR ALPHA VANTAGE ANALYSIS
 analyze_absolute_income_statement = 1
@@ -127,7 +127,12 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
                     use_live_parameter = 1
 
                     if use_live_parameter == 1:
-                        marketCap = get_market_cap_from_yahoo_finance(s)
+                        #try to get data live from yahooo
+                        try:
+                            marketCap = get_market_cap_from_yahoo_finance(s)
+
+                        except:
+                            marketCap = get_key_value_from_local_file("marketCap", s)
                         created_list = [marketCap] * len(dividend_data[1])
                         converted_list = convert_list_elements_to_int(created_list)
 

@@ -3,16 +3,24 @@ import yfinance as yf
 # get stock info
 from general_functions import write_to_file_in_json_format
 
+
 def get_base_info_from_yahoo_finance(symbol):
-    symbol_base = yf.Ticker(symbol)
-    symbol_info = symbol_base.info
+    try:
+        try:
+            symbol_base = yf.Ticker(symbol)
+        except:
+            print("yf.Ticker failed for symbol: {}".format(symbol))
+        symbol_info = symbol_base.info
 
-    name_of_info_file = "yahoo_info_data_" + symbol + ".json"
+        name_of_info_file = "yahoo_info_data_" + symbol + ".json"
 
-    write_to_file_in_json_format(symbol_info, name_of_info_file)
+        write_to_file_in_json_format(symbol_info, name_of_info_file)
+    except:
+        print("get_base_info_from_yahoo_finance failed for symbol: {}".format(symbol))
 
 
     return symbol_info
+
 
 def get_last_price_for_symbol_from_yahoo_finance(symbol):
     ticker_yahoo = yf.Ticker(symbol)
@@ -23,9 +31,14 @@ def get_last_price_for_symbol_from_yahoo_finance(symbol):
 
 
 def get_market_cap_from_yahoo_finance(symbol):
-    symbol_info = get_base_info_from_yahoo_finance(symbol)
-    print(symbol_info)
+    try:
+        symbol_info = get_base_info_from_yahoo_finance(symbol)
+
+    except:
+        print("get_market_cap_from_yahoo_finance failed for symbol: {}".format(symbol))
+
     value = symbol_info["marketCap"]
+    print("symbol_info: {} ; value: {}".format(symbol_info, value))
 
     return value
 

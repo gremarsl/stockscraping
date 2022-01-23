@@ -14,8 +14,8 @@ analyse_my_json_data =1
 get_finnhub_data = 0
 analyse_finnhub_data = 0
 get_alpha_data = 0
-analyse_alpha_data = 1
-analyse_alpha_data_compare_companies = 1
+analyse_alpha_data = 0
+analyse_alpha_data_compare_companies = 0
 
 automotive_finnhub = ["DAI.DE", "BMW.DE", "VOW.DE", "PAH3.DE"]
 chemicals_finnhub = ["BAS.DE", "BAYN.DE", "LIN.DE", "HEN3.DE", "1COV.DE"]
@@ -39,9 +39,10 @@ analyse_finnhub_symbol = automotive_finnhub
 get_alpha_vantage_symbol_data = pharma_companies_alpha
 analyse_alpha_vantage_symbol_data = pharma_companies_alpha
 
+my_json_symbol = ["MSFT"]
 if __name__ == '__main__':
     if analyse_my_json_data == 1:
-        analyse_data_from_local_json_file()
+        analyse_data_from_local_json_file(my_json_symbol)
 
     if get_finnhub_data == 1:
         calling_finnhub_api(get_finnhub_symbol)

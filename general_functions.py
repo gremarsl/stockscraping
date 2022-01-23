@@ -170,3 +170,27 @@ def create_json_object_finance(s):
     d["quarterlyReports"] = []
     array = d["quarterlyReports"]
     return d
+
+
+# füge jedes quarter in dem input_file_object - füge das quarter mit den wichtigen parameter als object hinzu
+def add_keys_values_to_object(list_filtered):
+    # erstelle ein object für das aktuelle quarter
+    obj = {}
+
+    for elem in list_filtered:
+        # füge key und value zu dem object hinzu
+        obj[elem[0]] = elem[1]
+
+    return obj
+
+
+def get_key_value_from_local_file(indicator,s):
+    try:
+
+        symbol_info = read_data_from_file("yahoo_info_data_" + s[0] + ".json")
+        i = symbol_info[indicator]
+        print(i)
+    except:
+        print("live data from yahoo failed and no locally data for {} available".format(indicator))
+
+    return i
