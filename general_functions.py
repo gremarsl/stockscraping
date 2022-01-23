@@ -162,3 +162,11 @@ def convert_list_elements_to_date_instance(dates_as_strings):
 def delete_object_key(json_data_object, key):
     del json_data_object[key]
     return json_data_object
+
+
+def create_json_object_finance(s):
+    d = {}
+    d['symbol'] = s
+    d["quarterlyReports"] = []
+    array = d["quarterlyReports"]
+    return d
