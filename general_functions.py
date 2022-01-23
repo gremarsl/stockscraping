@@ -76,7 +76,7 @@ def get_float_data(input_data, indicator, symbol):
 
         data = [list_dividend[0], list_dividend_converted, symbol, indicator]
     except:
-        print("function call: get data failed - parameter:{}; {} ".format(indicator, symbol))
+        print("function call: get float data failed - parameter:{}; {} ".format(indicator, symbol))
     return data
 
 

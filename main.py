@@ -10,7 +10,7 @@ from functions_for_alpha_vantage import calling_alpha_vantage_api
 # key-value pair is object data
 
 # SWITCHES:
-analyse_my_json_data = 0
+analyse_my_json_data =1
 get_finnhub_data = 0
 analyse_finnhub_data = 0
 get_alpha_data = 0

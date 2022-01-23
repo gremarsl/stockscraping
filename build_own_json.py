@@ -52,7 +52,40 @@ for quarter in json_data_object["quarterlyReports"]:
 filepath = "D://Desktop//Finanzreporte//json//" + s + ".json"
 write_to_file_in_json_format(d, filepath)
 
-print("d: {}".format(d))
+#addonfile
+balance_sheet = read_data_from_file("reduced_balance_" + s + ".json")
+add_on_file_object = delete_object_key(balance_sheet, "annualReports")
+
+# gehe jeden quaterly report durch (quarter ist ein object
+#introduce counter to ensure, that addon file quarter matches with the already existing quarter
+counter = 0
+for quarter in add_on_file_object["quarterlyReports"]:
+    # für jeden key in einem quater - filter jeden parameter weg, der nicht teil von parameterlist ist
+
+    list_extracted = list(filter(lambda x: x[0] in parameter_list, quarter.items()))
+
+    print("list extraced: {}: ".format(list_extracted))
+
+    #controlle ob schon enthalten
+    for i in list_extracted:
+
+        # counter used to
+        if list_extracted[0][1] == d["quarterlyReports"][counter]['fiscalDateEnding']:
+            print("same quarter ")
+            if i in d["quarterlyReports"][counter].items():
+                print("key value pair of object is already added as a parameter to the object: {}".format(i))
+
+            # wenn nicht enthalte
+            else:
+                #wenn nicht enthalten, füge diese key value paar zu dem object quarter hinzu
+                d["quarterlyReports"][counter][i[0]] = i[1]
+        else:
+            print("not same quater")
+
+    counter+=1
+
+filepath = "D://Desktop//Finanzreporte//json//" + s + "_addon" + ".json"
+write_to_file_in_json_format(d, filepath)
 
 
 

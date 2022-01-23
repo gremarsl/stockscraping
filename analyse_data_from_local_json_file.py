@@ -6,17 +6,19 @@ from general_functions import read_data_from_file, split_indicator_in_two, calcu
 
 analyse_abs_indicator = 1
 analyse_rel_indicator = 1
-analyse_rel_live_indicator = 1
+analyse_rel_live_indicator = 0
 
 
 def analyse_data_from_local_json_file():
     filename = "D:\\Desktop\\Finanzreporte\\json\\asml.json"
-    s = "ASML"
+
+    filename = "D:\\Desktop\\Finanzreporte\\json\\\AAPL_addon.json"
+    s = "APPL"
     data = read_data_from_file(filename)
 
     # my indicators I want to analyse from the json file
     my_abs_indicators = ["totalRevenue", "netIncome"]
-    my_rel_indicators = ["operationsIncome_to_totalRevenue","researchAndDevelopment_to_totalRevenue", "totalLiabilities_to_totalAssets",
+    my_rel_indicators = ["researchAndDevelopment_to_totalRevenue","operationsIncome_to_totalRevenue", "totalLiabilities_to_totalAssets",
                          "grossProfit_to_totalRevenue",
                          "totalShareholdersEquity_to_totalAssets"]
     my_rel_indicators_live = ["totalRevenue_to_marketCap", "totalAssets_to_marketCap"]
@@ -52,12 +54,14 @@ def analyse_data_from_local_json_file():
                 quotient = calculate_quotient(dividend_data[1], return_data2[1], i, symbol=s)
 
             if use_live_parameter:
-                marketCap = get_market_cap_from_yahoo_finance(s)
-                created_list = [marketCap] * len(dividend_data[1])
-                converted_list = convert_list_elements_to_int(created_list)
+                try:
+                    marketCap = get_market_cap_from_yahoo_finance(s)
+                    created_list = [marketCap] * len(dividend_data[1])
+                    converted_list = convert_list_elements_to_int(created_list)
 
-                quotient = calculate_quotient(dividend_data[1], converted_list, i, symbol=s)
-
+                    quotient = calculate_quotient(dividend_data[1], converted_list, i, symbol=s)
+                except:
+                    print("get live data did not work")
             # add another list around to make it work
             temp_data = [dividend_data[0], quotient, s, i]
             rel_data_live.append(temp_data)
