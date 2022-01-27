@@ -25,7 +25,7 @@ options_rel_indicator = [
     "netIncome_to_totalRevenue",
     "totalCurrentLiabilities_to_totalCurrentAssets",
     "grossProfit_to_totalRevenue",
-    "operationsIncome_to_totalRevenue",
+    "operatingIncome_to_totalRevenue",
     "totalShareholdersEquity_to_totalAssets"
 
 ]

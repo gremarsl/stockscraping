@@ -23,7 +23,7 @@ options_for_plot_limit = {
     "totalAssets_to_marketCap": option_quotient_100_to_0,
     "netIncome_to_totalRevenue": option_quotient_100_to_0,  # ROS
     "grossProfit_to_totalRevenue": option_quotient_100_to_0,
-    "operationsIncome_to_totalRevenue": option_quotient_100_to_0,
+    "operatingIncome_to_totalRevenue": option_quotient_100_to_0,
     "totalShareholdersEquity_to_totalAssets": option_quotient_100_to_0,
 }
 
@@ -53,7 +53,7 @@ options_for_plot_color = {
     "totalAssets_to_marketCap": option_color_quotient_totalAssets_to_marketCap,
     "netIncome_to_totalRevenue": option_color_quotient_netIncome_to_totalRevenue,
     "grossProfit_to_totalRevenue": option_color_quotient_grossProfit_to_totalRevenue,
-    "operationsIncome_to_totalRevenue": option_color_quotient_operationsIncome_to_totalRevenue,
+    "operatingIncome_to_totalRevenue": option_color_quotient_operationsIncome_to_totalRevenue,
     "totalShareholdersEquity_to_totalAssets": option_color_quotient_totalShareholdersEquity_to_totalAssets,
 }
 
@@ -62,7 +62,7 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
     # x: list, y: list, symbol: str, indicator: str
 
     # data_per_symbol = [[[x_1],[y_1],symbol_1,indicator_1],...,[x_i],[y_i],symbol_i,indicator_i]]
-
+    print(data_list)
     plt.figure()
 
     for i in data_list:
