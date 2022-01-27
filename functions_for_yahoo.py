@@ -43,4 +43,4 @@ def get_market_cap_from_yahoo_finance(symbol):
     return value
 
 
-get_base_info_from_yahoo_finance("MSFT")
+#get_base_info_from_yahoo_finance("MSFT")

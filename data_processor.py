@@ -37,19 +37,14 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
         raise Exception("data is not from source alpha_vantage, finnhub or my_json")
 
     else:
-
         if source == "alpha_vantage" and relative_data and all_symbols is True:
 
             try:
-
-                # stupid_plot_data_lists(filter_data_all_symbols(data_list, options.options_rel_indicator), source)
                 plot_compare_symbols_one_indicator(data_list, source)
-
             except IncorrectAlphaData:
                 print("analyzing alpha data failed")
 
         if source == "alpha_vantage" and (not relative_data) and all_symbols is True:
-
             try:
                 plot_compare_symbols_one_indicator(data_list, source)
 
@@ -113,6 +108,7 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
                 print("analyzing my_json data failed")
 
         if source == "my_json" and relative_data:
+            print(data_list)
             try:
                 # filter
                 indicators = filter_data(data_list, options.options_rel_indicator)

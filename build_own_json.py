@@ -26,7 +26,6 @@ def build_own_json_file(symbol_list):
                           "totalLiabilities",
                           "operatingCashflow"]
 
-        s = "JNJ"
         income_statement = read_data_from_file("income_statement_alpha_" + s + ".json")
         input_object = delete_object_key(income_statement, "annualReports")
 
