@@ -28,20 +28,20 @@ pharma_companies_alpha = ["JNJ", "PFE", "ABBV", "MRK", "GSK"]
 finance_alpha = ["V"]
 
 get_finnhub_symbol = ["IFX.DE"]
-analyse_finnhub_symbol = automotive_finnhub
+analyse_finnhub_symbol = ["AMD"]
 
-get_alpha_vantage_symbol_data = automotive_alpha
-analyse_alpha_vantage_symbol_data = automotive_alpha
+get_alpha_vantage_symbol_data = ["AMD"]
+analyse_alpha_vantage_symbol_data = ["AMD"]
 
-my_json_symbol = ["TSLA"]
+my_json_symbol = ["AMD"]
 
 # SWITCHES:
-build_own_json = 0
+build_own_json = 1
 analyse_my_json_data =1
 get_finnhub_data = 0
 analyse_finnhub_data = 0
-get_alpha_data = 0
-analyse_alpha_data = 0
+get_alpha_data = 1
+analyse_alpha_data = 1
 analyse_alpha_data_compare_companies = 0
 
 if __name__ == '__main__':

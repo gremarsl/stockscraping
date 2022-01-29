@@ -75,7 +75,6 @@ def analyse_data_from_local_json_file(symbol):
         processor_filter_plot_data(data_list=abs_data, relative_data=False, all_symbols=True, source=source)
     if analyse_rel_indicator == 1:
         processor_filter_plot_data(data_list=rel_data, relative_data=True, all_symbols=True, source=source)
-
     if analyse_rel_live_indicator == 1:
         processor_filter_plot_data(data_list=rel_data_live, relative_data=True, all_symbols=True, source=source)
 
