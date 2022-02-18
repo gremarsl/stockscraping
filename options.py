@@ -92,11 +92,6 @@ def option_color_eps():
 def option_color_ebit_per_share():
     return "g"
 
-
-def option_color_gross_margin():
-    return "navy"
-
-
 def option_color_net_margin():
     return "blue"
 
@@ -104,8 +99,11 @@ def option_color_net_margin():
 def option_color_current_ratio():
     return "darkred"
 
+
+
 def option_color_cash_ratio():
     return "red"
+
 
 def option_color_totalDebtToEquity():
     return "purple"
@@ -147,7 +145,7 @@ def option_color_quotient_totalLiabilities_to_totalAssets():
     return "springgreen"
 
 
-def option_color_quotient_grossProfit_to_totalRevenue():
+def option_color_gross_margin():
     return "red"
 
 
@@ -157,6 +155,7 @@ def option_color_quotient_operationsIncome_to_totalRevenue():
 
 def option_color_quotient_totalShareholdersEquity_to_totalAssets():
     return "black"
+
 
 ## live data
 def option_color_quotient_totalRevenue_to_marketCap():

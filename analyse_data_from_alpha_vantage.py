@@ -1,3 +1,7 @@
+from PyPDF2 import PdfFileMerger
+import glob, os
+
+
 from data_processor import processor_filter_plot_data
 from functions_for_alpha_vantage import extract_quarterly_report_data_from_alpha
 from functions_for_yahoo import get_market_cap_from_yahoo_finance
@@ -212,4 +216,15 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
         processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_balance_sheet, True, True, source)
     if analyze_live_with_income_statement == 1 and analyze_only_all_companies == 1:
         processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_income_statement, True, True, source)
+
+    merger = PdfFileMerger()
+
+
+    os.chdir("D:\\Desktop\\Finanzreporte\\financial_grafics")
+    for file in glob.glob("*.pdf"):
+        print(file)
+        merger.append(file)
+
+    merger.write("D:\\Desktop\\Finanzreporte\\financial_grafics\\result.pdf")
+    merger.close()
     pass

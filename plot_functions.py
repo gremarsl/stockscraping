@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
-from general_functions import convert_list_elements_to_float, convert_list_elements_to_date_instance
+from general_functions import convert_list_elements_to_float, convert_list_elements_to_date_instance, save_figure
 from options import *
+
+
+
 
 options_for_plot_limit = {
     "totalRevenue": option_abs_50_to_30_billion,
@@ -16,7 +19,7 @@ options_for_plot_limit = {
     "researchAndDevelopment_to_totalRevenue": option_ratio_50_to_0,
     "ebitPerShare": option_per_share_30_to_minus_5,
     "netMargin": option_per_share_30_to_minus_5,
-    "grossMargin": option_gross_margin,
+    "grossMargin": option_quotient_100_to_0,
     "totalDebtToEquity": option_quotient_2_to_0,
     "totalLiabilities_to_totalAssets": option_quotient_2_to_0,
     "totalRevenue_to_marketCap": option_quotient_100_to_0,
@@ -24,6 +27,7 @@ options_for_plot_limit = {
     "netIncome_to_totalRevenue": option_quotient_100_to_0,  # ROS
     "grossProfit_to_totalRevenue": option_quotient_100_to_0,
     "operatingIncome_to_totalRevenue": option_quotient_100_to_0,
+    "operatingMargin": option_quotient_100_to_0,
     "totalShareholdersEquity_to_totalAssets": option_quotient_100_to_0,
 }
 
@@ -52,17 +56,26 @@ options_for_plot_color = {
     "totalRevenue_to_marketCap": option_color_quotient_totalRevenue_to_marketCap,
     "totalAssets_to_marketCap": option_color_quotient_totalAssets_to_marketCap,
     "netIncome_to_totalRevenue": option_color_quotient_netIncome_to_totalRevenue,
-    "grossProfit_to_totalRevenue": option_color_quotient_grossProfit_to_totalRevenue,
+    "grossProfit_to_totalRevenue": option_color_gross_margin,
     "operatingIncome_to_totalRevenue": option_color_quotient_operationsIncome_to_totalRevenue,
+    "operatingMargin": option_color_quotient_operationsIncome_to_totalRevenue,
     "totalShareholdersEquity_to_totalAssets": option_color_quotient_totalShareholdersEquity_to_totalAssets,
 }
+
+
+def transform_indicator(indicator: str):
+    if indicator == "grossProfit_to_totalRevenue":
+        indicator = "grossMargin"
+
+    if indicator == "operatingIncome_to_totalRevenue":
+        indicator = "operatingMargin"
+    return indicator
 
 
 def stupid_plot_data_lists(data_list: list, source: str) -> None:
     # x: list, y: list, symbol: str, indicator: str
 
     # data_per_symbol = [[[x_1],[y_1],symbol_1,indicator_1],...,[x_i],[y_i],symbol_i,indicator_i]]
-    print(data_list)
     plt.figure()
 
     for i in data_list:
@@ -72,6 +85,8 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
         y = convert_list_elements_to_float(y)
         symbol = i[2]
         indicator = i[3]
+
+        indicator = transform_indicator(indicator)
 
         if len(x) == len(y):
             if len(data_list) > 6:
@@ -96,6 +111,9 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
     # mng.full_screen_toggle()
     plt.legend()
 
+    save_figure(indicator)
+    plt.cla()
+    print("plt.show is commented, this is why the plot will not show up")
     plt.show()
 
 
@@ -131,6 +149,12 @@ def plot_compare_symbols_one_indicator(data_list, source):
 
     # mng = plt.get_current_fig_manager()
     # mng.full_screen_toggle()
-    plt.legend()
 
+    plt.legend()
+    save_figure(indicator)
+
+
+    print("plt.show is commented, this is why the plot will not show up")
     plt.show()
+    plt.cla()
+
