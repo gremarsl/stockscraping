@@ -4,23 +4,21 @@ from general_functions import read_data_from_file, split_indicator_in_two, calcu
     convert_list_elements_to_int, get_data, extract_quarterly_report_data_from_my_json_file, get_float_data, \
     get_key_value_from_local_file
 
-
-
 analyse_abs_indicator = 1
 analyse_rel_indicator = 1
 analyse_rel_live_indicator = 1
 
 
 def analyse_data_from_local_json_file(symbol):
-
     filename = "D:\\Desktop\\Finanzreporte\\json\\" + symbol[0] + ".json"
     data = read_data_from_file(filename)
 
     # my indicators I want to analyse from the json file
-    my_abs_indicators = ["totalRevenue","grossProfit","operatingIncome","ebit","netIncome"]
-    my_rel_indicators = ["researchAndDevelopment_to_totalRevenue","operatingIncome_to_totalRevenue", "totalLiabilities_to_totalAssets","totalCurrentLiabilities_to_totalCurrentAssets",
+    my_abs_indicators = ["totalRevenue", "grossProfit", "operatingIncome", "ebit", "netIncome"]
+    my_rel_indicators = ["researchAndDevelopment_to_totalRevenue", "operatingIncome_to_totalRevenue",
+                         "totalLiabilities_to_totalAssets", "totalCurrentLiabilities_to_totalCurrentAssets",
                          "grossProfit_to_totalRevenue",
-                         ] #, "totalShareholdersEquity_to_totalAssets" == ,"totalAssets_minus_totalLiabilities"
+                         ]  # , "totalShareholdersEquity_to_totalAssets" == ,"totalAssets_minus_totalLiabilities"
     my_rel_indicators_live = ["totalRevenue_to_marketCap", "totalAssets_to_marketCap"]
 
     abs_data = []
@@ -58,7 +56,7 @@ def analyse_data_from_local_json_file(symbol):
                     try:
                         marketCap = get_market_cap_from_yahoo_finance(symbol)
                     except:
-                        marketCap = get_key_value_from_local_file("marketCap",symbol)
+                        marketCap = get_key_value_from_local_file("marketCap", symbol)
 
                     created_list = [marketCap] * len(dividend_data[1])
                     converted_list = convert_list_elements_to_int(created_list)
@@ -78,6 +76,5 @@ def analyse_data_from_local_json_file(symbol):
         processor_filter_plot_data(data_list=rel_data, relative_data=True, all_symbols=True, source=source)
     if analyse_rel_live_indicator == 1:
         processor_filter_plot_data(data_list=rel_data_live, relative_data=True, all_symbols=True, source=source)
-
 
     pass

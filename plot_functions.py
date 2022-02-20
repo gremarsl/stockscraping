@@ -2,9 +2,6 @@ import matplotlib.pyplot as plt
 from general_functions import convert_list_elements_to_float, convert_list_elements_to_date_instance, save_figure
 from options import *
 
-
-
-
 options_for_plot_limit = {
     "totalRevenue": option_abs_50_to_30_billion,
     "grossProfit": option_gross_profit,
@@ -153,8 +150,6 @@ def plot_compare_symbols_one_indicator(data_list, source):
     plt.legend()
     save_figure(indicator)
 
-
     print("plt.show is commented, this is why the plot will not show up")
     plt.show()
     plt.cla()
-
