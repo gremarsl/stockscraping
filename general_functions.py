@@ -4,7 +4,6 @@ import os
 import datetime as dt
 
 
-
 def extract_quarterly_report_data_from_my_json_file(data_json: dict, indicator: str, symbol: str) -> list:
     reports = data_json['quarterlyReports']
     time_points = []
@@ -185,7 +184,7 @@ def add_keys_values_to_object(list_filtered):
     return obj
 
 
-def get_key_value_from_local_file(indicator,s):
+def get_key_value_from_local_file(indicator, s):
     try:
 
         symbol_info = read_data_from_file("yahoo_info_data_" + s[0] + ".json")
@@ -203,7 +202,7 @@ def delete_all_lines_from_file():
     pass
 
 
-def add_file_to_main_html_file(indicator,complete_string):
+def add_file_to_main_html_file(indicator, complete_string):
     f = open('D:\\Desktop\\Finanzreporte\\atestsite.html', 'a')
 
     message = """
@@ -215,7 +214,7 @@ def add_file_to_main_html_file(indicator,complete_string):
         </figure>
        </center>
     </html>
-    """.format(indicator,complete_string)
+    """.format(indicator, complete_string)
 
     f.write(message)
     f.close()
@@ -229,8 +228,8 @@ def save_figure(indicator):
     complete_string_pdf = path + indicator + ".pdf"
 
     plt.tight_layout()
-    plt.savefig(complete_string_svg,dpi=300, bbox_inches = "tight")
-    plt.savefig(complete_string_pdf,dpi=300, bbox_inches = "tight")
+    plt.savefig(complete_string_svg, dpi=300, bbox_inches="tight")
+    plt.savefig(complete_string_pdf, dpi=300, bbox_inches="tight")
 
-    add_file_to_main_html_file(indicator,complete_string_svg)
+    add_file_to_main_html_file(indicator, complete_string_svg)
     pass

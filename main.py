@@ -78,4 +78,11 @@ next goals: deploy own server to get the graphs shown in the browser
 
 python -m http.server 8000
 
+
+
+#Erkenntnis:
+# ein JSON Objekt ist in Python in Dictionary - 
+# Hinzufügen eines Key Value paares über     
+# dict[key]= value - um zu vemreiden dass doppelte anführunggstringe kommen -> vorher mit '' versehen
+
 '''
