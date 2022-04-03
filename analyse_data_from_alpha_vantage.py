@@ -1,22 +1,28 @@
 from PyPDF2 import PdfFileMerger
 import glob, os
 
-
+import global_vars
 from data_processor import processor_filter_plot_data
 from functions_for_alpha_vantage import extract_quarterly_report_data_from_alpha
 from functions_for_yahoo import get_market_cap_from_yahoo_finance
 from general_functions import calculate_quotient, convert_list_elements_to_int, split_indicator_in_two, \
     read_data_from_file, get_data, get_key_value_from_local_file
+from global_vars import market_cap
 
 # SWITCHES FOR ALPHA VANTAGE ANALYSIS
-analyze_absolute_income_statement = 1
-analyze_percentage_income_statement = 1
-analyze_percentage_balance_sheet = 1
-analyze_live_with_income_statement = 1
-analyze_live_with_balance_sheet = 1
+analyse_absolute_income_statement = 1
+analyse_absolute_cash_flow = 1
+analyse_percentage_income_statement = 1
+analyse_percentage_balance_sheet = 1
+analyse_live_with_income_statement = 1
+analyse_live_with_balance_sheet = 1
 
-indicator_absolute_with_income_statement = ["netIncome", "totalRevenue", "grossProfit", "ebit",
+#TODO right now only the first one can be analysed
+indicator_absolute_with_income_statement = [ "netIncome","totalRevenue","grossProfit","totalRevenue", "ebit",
                                             "incomeBeforeTax", "operatingIncome"]
+
+indicator_absolute_with_cash_flow = ["operatingCashflow","changeInCashAndCashEquivalents"]
+
 
 indicator_percentage_with_income_statement = [
     "netIncome_to_totalRevenue"]  # "researchAndDevelopment_to_totalRevenue"
@@ -26,15 +32,16 @@ indicator_percentage_with_balance_sheet = ["totalLiabilities_to_totalAssets",
 
 indicator_live_with_income_statement = ["totalRevenue_to_marketCap"]
 
+filepath_alpha = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\alpha_vantage\\"
 
-def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: int):
 
+def analyse_data_from_alpha_vantage(symbols: list, analyse_only_all_companies: int):
     if type(symbols) is not list:
         raise Exception("IncorrectParameter")
-    # TODO all symbols one indicator - in the list with more than one indicator -> e.g. 2 indicator -> I get 10
-    #  graphs in the plot. Only one indicator is allowed -> need to be more modularized
 
     all_symbols_quaterly_absolute_data_with_income_statement = []
+
+    all_symbols_quaterly_absolute_data_with_cash_flow = []
 
     all_symbols_quaterly_relative_percentage_with_balance_sheet = []
     all_symbols_quaterly_relative_percentage_with_income_statement = []
@@ -47,9 +54,9 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
         quaterly_absolute_data_per_symbol = []
         quaterly_relative_data_per_symbol = []
 
-        if analyze_absolute_income_statement:
+        if analyse_absolute_income_statement:
 
-            income_statement = read_data_from_file("income_statement_alpha_" + s + ".json")
+            income_statement = read_data_from_file(filepath_alpha + "income_statement_alpha_" + s + ".json")
 
             counter = 0
             for i in indicator_absolute_with_income_statement:
@@ -57,7 +64,7 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
                     temp_data = extract_quarterly_report_data_from_alpha(income_statement, i, symbol=s)
                     quaterly_absolute_data_per_symbol.append(temp_data)
 
-                    if analyze_only_all_companies == 1:
+                    if analyse_only_all_companies == 1:
                         if counter < 1:
                             all_symbols_quaterly_absolute_data_with_income_statement.append(temp_data)
                             counter = counter + 1
@@ -65,9 +72,9 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
                 except:
                     print("error in quaterly data {}".format(s))
 
-        if analyze_percentage_income_statement:
+        if analyse_percentage_income_statement:
 
-            income_statement = read_data_from_file("income_statement_alpha_" + s + ".json")
+            income_statement = read_data_from_file(filepath_alpha + "income_statement_alpha_" + s + ".json")
 
             counter = 0
             for i in indicator_percentage_with_income_statement:
@@ -89,14 +96,30 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
                 except:
                     print("-{}- calculate quotient of {} didnt work for".format(s, i))
 
-        if analyze_percentage_balance_sheet:
+        if analyse_absolute_cash_flow:
 
-            balance_sheet = read_data_from_file("balance_sheet_alpha_" + s + ".json")
+            cash_flow = read_data_from_file(filepath_alpha + "cash_flow_alpha_" + s + ".json")
+
+            counter = 0
+            for i in indicator_absolute_with_cash_flow:
+                try:
+                    temp_data = extract_quarterly_report_data_from_alpha(cash_flow, i, symbol=s)
+                    quaterly_absolute_data_per_symbol.append(temp_data)
+
+                    if analyse_only_all_companies == 1:
+                        if counter < 1:
+                            all_symbols_quaterly_absolute_data_with_cash_flow.append(temp_data)
+                            counter = counter + 1
+
+                except:
+                    print("error in quaterly data {}".format(s))
+
+        if analyse_percentage_balance_sheet:
+            balance_sheet = read_data_from_file(filepath_alpha + "balance_sheet_alpha_" + s + ".json")
 
             counter = 0
 
             for i in indicator_percentage_with_balance_sheet:
-
                 try:
                     dividend, divisor = split_indicator_in_two(i)
                     dividend_data = get_data(balance_sheet, indicator=dividend, symbol=s)
@@ -110,16 +133,16 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
 
                     if counter < 1:
                         all_symbols_quaterly_relative_percentage_with_balance_sheet.append(temp_data)
+                        #TODO
                         counter = 1
-
                 except:
                     print("-{}- calculate quotient of {} didnt work".format(s, i))
 
         quaterly_relative_live_data_per_symbol = []
 
-        if analyze_live_with_income_statement:
+        if analyse_live_with_income_statement:
 
-            income_statement = read_data_from_file("income_statement_alpha_" + s + ".json")
+            income_statement = read_data_from_file(filepath_alpha + "income_statement_alpha_" + s + ".json")
             counter = 0
             for i in indicator_live_with_income_statement:
 
@@ -131,7 +154,8 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
                     use_live_parameter = 1
 
                     if use_live_parameter == 1:
-                        #try to get data live from yahooo
+
+                        # try to get data live from yahooo
                         try:
                             marketCap = get_market_cap_from_yahoo_finance(s)
 
@@ -157,10 +181,10 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
                 except:
                     print("-{}- calculate quotient of {} didnt work".format(s, i))
 
-        if analyze_live_with_balance_sheet:
+        if analyse_live_with_balance_sheet:
             indicator_live_with_balance_sheet = ["totalAssets_to_marketCap"]
 
-            balance_sheet = read_data_from_file("balance_sheet_alpha_" + s + ".json")
+            balance_sheet = read_data_from_file(filepath_alpha + "balance_sheet_alpha_" + s + ".json")
             counter = 0
             for i in indicator_live_with_balance_sheet:
                 try:
@@ -194,31 +218,33 @@ def analyse_data_from_alpha_vantage(symbols: list, analyze_only_all_companies: i
 
         source = "alpha_vantage"
 
-        if analyze_only_all_companies != 1:
+        if analyse_only_all_companies != 1:
             if len(quaterly_relative_data_per_symbol) != 0:
                 processor_filter_plot_data(quaterly_relative_data_per_symbol, True, False, source)
-            if len(quaterly_relative_data_per_symbol) != 0:
+            if len(quaterly_absolute_data_per_symbol) != 0:
                 processor_filter_plot_data(quaterly_absolute_data_per_symbol, False, False, source)
             if len(quaterly_relative_live_data_per_symbol) != 0:
                 processor_filter_plot_data(quaterly_relative_live_data_per_symbol, True, False, source)
 
     source = "alpha_vantage"
 
-    if analyze_absolute_income_statement == 1 and analyze_only_all_companies == 1:
+    if analyse_absolute_income_statement == 1 and analyse_only_all_companies == 1:
         processor_filter_plot_data(all_symbols_quaterly_absolute_data_with_income_statement, False, True, source)
 
-    if analyze_percentage_balance_sheet == 1 and analyze_only_all_companies == 1:
+    if analyse_absolute_cash_flow == 1 and analyse_only_all_companies == 1:
+        processor_filter_plot_data(all_symbols_quaterly_absolute_data_with_cash_flow, False, True, source)
+
+    if analyse_percentage_balance_sheet == 1 and analyse_only_all_companies == 1:
         processor_filter_plot_data(all_symbols_quaterly_relative_percentage_with_balance_sheet, True, True, source)
-    if analyze_percentage_income_statement == 1 and analyze_only_all_companies == 1:
+    if analyse_percentage_income_statement == 1 and analyse_only_all_companies == 1:
         processor_filter_plot_data(all_symbols_quaterly_relative_percentage_with_income_statement, True, True, source)
 
-    if analyze_live_with_balance_sheet == 1 and analyze_only_all_companies == 1:
+    if analyse_live_with_balance_sheet == 1 and analyse_only_all_companies == 1:
         processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_balance_sheet, True, True, source)
-    if analyze_live_with_income_statement == 1 and analyze_only_all_companies == 1:
+    if analyse_live_with_income_statement == 1 and analyse_only_all_companies == 1:
         processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_income_statement, True, True, source)
 
     merger = PdfFileMerger()
-
 
     os.chdir("D:\\Desktop\\Finanzreporte\\financial_grafics")
     for file in glob.glob("*.pdf"):
