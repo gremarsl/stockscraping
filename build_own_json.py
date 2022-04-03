@@ -1,3 +1,4 @@
+from analyse_data_from_alpha_vantage import filepath_alpha
 from general_functions import read_data_from_file, write_to_file_in_json_format, delete_object_key, \
     create_json_object_finance, add_keys_values_to_object
 
@@ -26,7 +27,7 @@ def build_own_json_file(symbol_list):
                           "totalLiabilities",
                           "operatingCashflow"]
 
-        income_statement = read_data_from_file("income_statement_alpha_" + s + ".json")
+        income_statement = read_data_from_file(filepath_alpha + "income_statement_alpha_" + s + ".json")
         input_object = delete_object_key(income_statement, "annualReports")
 
         # create empty json_object_finance
@@ -46,7 +47,7 @@ def build_own_json_file(symbol_list):
         write_to_file_in_json_format(output_object, filepath)
 
         # addonfile
-        balance_sheet = read_data_from_file("balance_sheet_alpha_" + s + ".json")
+        balance_sheet = read_data_from_file(filepath_alpha + "balance_sheet_alpha_" + s + ".json")
         add_on_object = delete_object_key(balance_sheet, "annualReports")
 
         # gehe jeden quaterly report durch (quarter ist ein object
