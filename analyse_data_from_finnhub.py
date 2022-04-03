@@ -10,9 +10,6 @@ from global_vars import market_cap
 class NoData:
     pass
 
-filepath_finnhub = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\finnhub\\"
-
-
 def analyse_data_from_finnhub(symbols: list):
 
     if type(symbols) is not list:
@@ -33,7 +30,7 @@ def analyse_data_from_finnhub(symbols: list):
         data_per_symbol = []
 
         # new:
-        fundamental_data_json = read_data_from_file(filepath_finnhub + "fundamental_data_finnhub_" + s + ".json")
+        fundamental_data_json = read_data_from_file(global_vars.filepath_finnhub + "fundamental_data_finnhub_" + s + ".json")
 
         indicator_absolute_list = ["grossMargin"]  # netMargin
         indicators_per_share = ["eps", "ebitPerShare"]

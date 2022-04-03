@@ -12,17 +12,15 @@ from global_vars import market_cap
 # SWITCHES FOR ALPHA VANTAGE ANALYSIS
 analyse_absolute_income_statement = 1
 analyse_absolute_cash_flow = 1
-analyse_percentage_income_statement = 1
-analyse_percentage_balance_sheet = 1
-analyse_live_with_income_statement = 1
-analyse_live_with_balance_sheet = 1
+analyse_percentage_income_statement = 0
+analyse_percentage_balance_sheet = 0
+analyse_live_with_income_statement = 0
+analyse_live_with_balance_sheet = 0
 
-#TODO right now only the first one can be analysed
-indicator_absolute_with_income_statement = [ "netIncome","totalRevenue","grossProfit","totalRevenue", "ebit",
-                                            "incomeBeforeTax", "operatingIncome"]
+# TODO right now only the first one can be analysed
+indicator_absolute_with_income_statement = ["netIncome", "totalRevenue"]# , "grossProfit", "totalRevenue", "ebit", "incomeBeforeTax", "operatingIncome"
 
-indicator_absolute_with_cash_flow = ["operatingCashflow","changeInCashAndCashEquivalents"]
-
+indicator_absolute_with_cash_flow = ["operatingCashflow", "changeInCashAndCashEquivalents"]
 
 indicator_percentage_with_income_statement = [
     "netIncome_to_totalRevenue"]  # "researchAndDevelopment_to_totalRevenue"
@@ -31,8 +29,6 @@ indicator_percentage_with_balance_sheet = ["totalLiabilities_to_totalAssets",
                                            "totalCurrentLiabilities_to_totalCurrentAssets"]
 
 indicator_live_with_income_statement = ["totalRevenue_to_marketCap"]
-
-filepath_alpha = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\alpha_vantage\\"
 
 
 def analyse_data_from_alpha_vantage(symbols: list, analyse_only_all_companies: int):
@@ -56,7 +52,7 @@ def analyse_data_from_alpha_vantage(symbols: list, analyse_only_all_companies: i
 
         if analyse_absolute_income_statement:
 
-            income_statement = read_data_from_file(filepath_alpha + "income_statement_alpha_" + s + ".json")
+            income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
 
             counter = 0
             for i in indicator_absolute_with_income_statement:
@@ -74,7 +70,7 @@ def analyse_data_from_alpha_vantage(symbols: list, analyse_only_all_companies: i
 
         if analyse_percentage_income_statement:
 
-            income_statement = read_data_from_file(filepath_alpha + "income_statement_alpha_" + s + ".json")
+            income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
 
             counter = 0
             for i in indicator_percentage_with_income_statement:
@@ -98,7 +94,7 @@ def analyse_data_from_alpha_vantage(symbols: list, analyse_only_all_companies: i
 
         if analyse_absolute_cash_flow:
 
-            cash_flow = read_data_from_file(filepath_alpha + "cash_flow_alpha_" + s + ".json")
+            cash_flow = read_data_from_file(global_vars.filepath_alpha + "cash_flow_alpha_" + s + ".json")
 
             counter = 0
             for i in indicator_absolute_with_cash_flow:
@@ -115,7 +111,7 @@ def analyse_data_from_alpha_vantage(symbols: list, analyse_only_all_companies: i
                     print("error in quaterly data {}".format(s))
 
         if analyse_percentage_balance_sheet:
-            balance_sheet = read_data_from_file(filepath_alpha + "balance_sheet_alpha_" + s + ".json")
+            balance_sheet = read_data_from_file(global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
 
             counter = 0
 
@@ -133,7 +129,7 @@ def analyse_data_from_alpha_vantage(symbols: list, analyse_only_all_companies: i
 
                     if counter < 1:
                         all_symbols_quaterly_relative_percentage_with_balance_sheet.append(temp_data)
-                        #TODO
+                        # TODO
                         counter = 1
                 except:
                     print("-{}- calculate quotient of {} didnt work".format(s, i))
@@ -142,7 +138,7 @@ def analyse_data_from_alpha_vantage(symbols: list, analyse_only_all_companies: i
 
         if analyse_live_with_income_statement:
 
-            income_statement = read_data_from_file(filepath_alpha + "income_statement_alpha_" + s + ".json")
+            income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
             counter = 0
             for i in indicator_live_with_income_statement:
 
@@ -184,7 +180,7 @@ def analyse_data_from_alpha_vantage(symbols: list, analyse_only_all_companies: i
         if analyse_live_with_balance_sheet:
             indicator_live_with_balance_sheet = ["totalAssets_to_marketCap"]
 
-            balance_sheet = read_data_from_file(filepath_alpha + "balance_sheet_alpha_" + s + ".json")
+            balance_sheet = read_data_from_file(global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
             counter = 0
             for i in indicator_live_with_balance_sheet:
                 try:

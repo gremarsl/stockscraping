@@ -46,6 +46,7 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
 
         if source == "alpha_vantage" and (not relative_data) and all_symbols is True:
             try:
+                print(data_list)
                 plot_compare_symbols_one_indicator(data_list, source)
 
             except IncorrectAlphaData:
