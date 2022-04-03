@@ -1,14 +1,17 @@
+import global_vars
 from analyse_data_from_alpha_vantage import analyse_data_from_alpha_vantage
 from analyse_data_from_finnhub import analyse_data_from_finnhub
 from analyse_data_from_local_json_file import analyse_data_from_local_json_file
 from build_own_json import build_own_json_file
 from functions_for_finnhub import calling_finnhub_api
 from functions_for_alpha_vantage import calling_alpha_vantage_api
+from global_vars import market_cap
 
 # Understand JSON
 # object: {}
 # array : []
 # key-value pair is object data
+from functions_for_yahoo import get_market_cap_from_yahoo_finance
 from general_functions import delete_all_lines_from_file
 
 automotive_finnhub = ["DAI.DE", "BMW.DE", "VOW.DE", "PAH3.DE"]
@@ -16,11 +19,11 @@ chemicals_finnhub = ["BAS.DE", "BAYN.DE", "LIN.DE", "HEN3.DE", "1COV.DE"]
 industry_finnhub = ["SIE.DE"]
 consumer_finnhub = ["BEI.DE"]
 
-semiconductor = ["INTC", "AMD", "ASML", "NVDA", "KLAC", "UMC", "TSM", "QCOM", "STM", "MRVL", "SNPS", "VLDRW", "AMBA",
-                 "AMAT"]
+semiconductor = ["INTC", "AMD", "NVDA","AAPL","MSFT", "QCOM",  "MRVL"] #"ASML","KLAC","STM","SNPS", "AMBA"
 semiconductor_nasdaq_alpha = ["IBM", "MSFT", "AAPL", "AMD", "ASML", "NVDA", "KLAC", "TEAM", "UMC", "TSM"]
 semiconductor_nasdaq_alpha2 = ["ZS", "AMBA", "QCOM", "AVGO", "STM", "MRVL", "VSH", "SNPS", "VLDRW", "MU", "ADI"]
 big = ["MSFT", "AAPL", "GOOGL", "FB", "AMD", "NVDA"]
+energy = ["CVX","COP","XOM","RDS-B","BP"] #
 
 automotive_alpha = ["TSLA"]
 network_alpha = ["NOK", "VZ", "T"]
@@ -31,25 +34,25 @@ finance_alpha = ["V"]
 
 insurance = ["ALV"]
 
-get_finnhub_symbol = insurance
-analyse_finnhub_symbol =insurance
+get_finnhub_symbol = semiconductor
+analyse_finnhub_symbol =semiconductor
 
-get_alpha_vantage_symbol_data = insurance
-analyse_alpha_vantage_symbol_data = insurance
+get_alpha_vantage_symbol_data = semiconductor
+analyse_alpha_vantage_symbol_data = semiconductor
 
-build_json_from_symbols = big
-my_json_symbol = ["GOOGL"]
+build_json_from_symbols = insurance
+my_json_symbol = ["MSFT"]
 
 # SWITCHES:
 build_own_json = 0
 analyse_my_json_data = 0
 
 get_finnhub_data = 0
-analyse_finnhub_data = 1
+analyse_finnhub_data = 0
 
 get_alpha_data = 0
-analyse_alpha_data = 0
-analyse_alpha_data_compare_companies = 0
+analyse_alpha_data = 1
+analyse_alpha_data_compare_companies = 1
 
 if __name__ == '__main__':
 
@@ -71,6 +74,8 @@ if __name__ == '__main__':
         build_own_json_file(build_json_from_symbols)
 
     if analyse_my_json_data == 1:
+        global_vars.market_cap = get_market_cap_from_yahoo_finance(my_json_symbol[0])
+        print(global_vars.market_cap)
         analyse_data_from_local_json_file(my_json_symbol)
 
 '''

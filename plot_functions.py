@@ -8,6 +8,8 @@ options_for_plot_limit = {
     "operatingIncome": option_operating_income,
     "incomeBeforeTax": option_abs_50_to_30_billion,
     "ebit": option_abs_50_to_30_billion,
+    "operatingCashflow": option_abs_50_to_30_billion,
+    "changeInCashAndCashEquivalents": option_abs_50_to_30_billion,
     "netIncome": option_abs_50_to_30_billion,
     "eps": option_eps,
     "cashRatio": option_ratio_50_to_0,
@@ -38,6 +40,8 @@ options_for_plot_color = {
     "incomeBeforeTax": option_color_income_before_tax,
     # -interest expenes
     "ebit": option_color_ebit,
+    "operatingCashflow":option_color_operatingCashflow,
+    "changeInCashAndCashEquivalents":option_color_changeInCashAndCashEquivalents,
     # -taxes
     "netIncome": option_color_net_income,
     "eps": option_color_eps,
@@ -108,9 +112,10 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
     # mng.full_screen_toggle()
     plt.legend()
 
-    save_figure(indicator)
-    plt.cla()
-    print("plt.show is commented, this is why the plot will not show up")
+    print("plt save as figure is commented, this is why the plot will not be saved as pdf")
+    #save_figure(indicator)
+    #plt.cla()
+    # print("plt.show is commented, this is why the plot will not show up")
     plt.show()
 
 
@@ -147,8 +152,10 @@ def plot_compare_symbols_one_indicator(data_list, source):
     # mng = plt.get_current_fig_manager()
     # mng.full_screen_toggle()
 
+    print("plt save figure is commented, this is why the plot will not be save as pdf")
+
     plt.legend()
-    save_figure(indicator)
+    #save_figure(indicator)
 
     print("plt.show is commented, this is why the plot will not show up")
     plt.show()

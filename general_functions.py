@@ -115,6 +115,7 @@ def read_data_from_file(filename):
         with open(filename) as json_file:
             data = json.load(json_file)
     else:
+        print(filename)
         print(
             "WARNING: file not found - This should not be reached")
 

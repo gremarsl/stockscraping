@@ -37,10 +37,10 @@ def get_market_cap_from_yahoo_finance(symbol):
     except:
         print("get_market_cap_from_yahoo_finance failed for symbol: {}".format(symbol))
 
-    value = symbol_info["marketCap"]
-    print("symbol_info: {} ; value: {}".format(symbol_info, value))
+    market_cap = symbol_info["marketCap"]
+    print("symbol_info: {} ; value: {}".format(symbol_info, market_cap))
 
-    return value
+    return market_cap
 
 
 #get_base_info_from_yahoo_finance("MSFT")

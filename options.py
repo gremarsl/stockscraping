@@ -6,7 +6,10 @@ options_abs_indicator = [
     "netIncome",
     "incomeBeforeTax",
     "operatingIncome",
-    "totalRevenue"
+    "totalRevenue",
+    "operatingCashflow",
+    "changeInCashAndCashEquivalents"
+
 ]
 
 options_per_share_indicator = [
@@ -131,6 +134,13 @@ def option_color_operating_income():
 
 def option_color_total_revenue():
     return "orange"
+
+def option_color_operatingCashflow():
+    return "darkred"
+
+def option_color_changeInCashAndCashEquivalents():
+    return "tomato"
+
 
 
 def option_color_quotient_research_and_development_revenue():
