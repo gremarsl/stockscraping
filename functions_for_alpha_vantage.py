@@ -19,7 +19,6 @@ def filter_relative_alpha_vantage_data(data_list):
 
 
 def calling_alpha_vantage_api(symbols):
-
     if type(symbols) is not list:
         raise Exception("IncorrectParameter")
 
@@ -31,7 +30,6 @@ def calling_alpha_vantage_api(symbols):
         balance_sheets = request_balance_sheet_from_alpha(s)
         cash_flow = request_cash_flow_from_alpha(s)
         earnings = request_earnings_from_alpha(s)
-        overview = request_overiew_from_alpha(s)
 
         if symbols.index(s) == list_elem:
             return
@@ -41,7 +39,8 @@ def calling_alpha_vantage_api(symbols):
 
     return
 
-def request_overiew_from_alpha(symbol):
+
+def request_overview_from_alpha(symbol):
     API_URL = "https://www.alphavantage.co/query?"
 
     data = {
@@ -55,10 +54,10 @@ def request_overiew_from_alpha(symbol):
 
     fundamental_data_response_json = response.json()  # maybe redundant
 
-    name_of_file = "fundamental_alpha_data_" + symbol + ".json"
-    # print(fundamental_data_response_json) # this is of type: <class 'dict'>
-
-    write_to_file_in_json_format(fundamental_data_response_json, name_of_file)
+    path = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\alpha_vantage\\"
+    filename = "fundamental_alpha_data_" + symbol + ".json"
+    path_to_file = path + filename
+    write_to_file_in_json_format(fundamental_data_response_json, path_to_file)
 
     return fundamental_data_response_json
 
@@ -167,28 +166,26 @@ def request_symbol_search_from_alpha(keywords):
     print(response_json)
     print('----------')
 
-    # XETRA:
-    # Porsche: 	"PAH3.DEX", "Porsche Automobil Holding SE"
-    # HENKEL HEN3.DEX
-
-    # SAP = SAP
-    # Deutsche Bank: DB
-    #
-
 
 def request_income_statement_from_alpha(symbol):
     # https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol=HENKY&apikey=X90PH4C1TIFJA4MP
 
     API_URL = "https://www.alphavantage.co/query?"
+
+    path = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\alpha_vantage\\"
+
     filename = "income_statement_alpha_" + symbol + ".json"
+
+    path_to_file = path + filename
+
 
     input = {
         "function": "INCOME_STATEMENT",
         "symbol": symbol,
         "apikey": api_key_alpha}
 
-    if os.path.isfile(filename):
-        with open(filename) as json_file:
+    if os.path.isfile(path_to_file):
+        with open(path_to_file) as json_file:
             income_statement = json.load(json_file)
 
     else:
@@ -196,7 +193,7 @@ def request_income_statement_from_alpha(symbol):
 
         income_statement = response.json()  # maybe redundant
 
-    write_to_file_in_json_format(income_statement, filename)
+    write_to_file_in_json_format(income_statement, path_to_file)
 
     return income_statement
 
@@ -205,25 +202,25 @@ def request_balance_sheet_from_alpha(symbol):
     # https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol=IBM&apikey=demo
 
     API_URL = "https://www.alphavantage.co/query?"
+    path = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\alpha_vantage\\"
+
     filename = "balance_sheet_alpha_" + symbol + ".json"
+    path_to_file = path + filename
 
     input = {
         "function": "BALANCE_SHEET",
         "symbol": symbol,
         "apikey": api_key_alpha}
 
-
-    if os.path.isfile(filename):
-        with open(filename) as json_file:
+    if os.path.isfile(path_to_file):
+        with open(path_to_file) as json_file:
             balance_sheet = json.load(json_file)
 
     else:
         response = requests.get(API_URL, input)
         balance_sheet = response.json()  # maybe redundant
 
-    print(balance_sheet)
-
-    write_to_file_in_json_format(balance_sheet, filename)
+    write_to_file_in_json_format(balance_sheet, path_to_file)
 
     return balance_sheet
 
@@ -231,48 +228,56 @@ def request_balance_sheet_from_alpha(symbol):
 def request_cash_flow_from_alpha(symbol):
     # https://www.alphavantage.co/query?function=CASH_FLOW&symbol=VLDR&apikey=X90PH4C1TIFJA4MP
     API_URL = "https://www.alphavantage.co/query?"
+    path = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\alpha_vantage\\"
+
     filename = "cash_flow_alpha_" + symbol + ".json"
+
+    path_to_file = path + filename
+
 
     input = {
         "function": "CASH_FLOW",
         "symbol": symbol,
         "apikey": api_key_alpha}
 
-    if os.path.isfile(filename):
-        with open(filename) as json_file:
+    if os.path.isfile(path_to_file):
+        with open(path_to_file) as json_file:
             cash_flow = json.load(json_file)
 
     else:
         response = requests.get(API_URL, input)
 
         cash_flow = response.json()  # maybe redundant
-    print(cash_flow)
 
-    write_to_file_in_json_format(cash_flow, filename)
-    pass
+    write_to_file_in_json_format(cash_flow, path_to_file)
+    return cash_flow
 
 
 def request_earnings_from_alpha(symbol):
     # https://www.alphavantage.co/query?function=CASH_FLOW&symbol=IBM&apikey=demo
     API_URL = "https://www.alphavantage.co/query?"
+    path = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\alpha_vantage\\"
     filename = "earnings_alpha_" + symbol + ".json"
+
+    path_to_file = path + filename
+
 
     input = {
         "function": "EARNINGS",
         "symbol": symbol,
         "apikey": api_key_alpha}
-    if os.path.isfile(filename):
-        with open(filename) as json_file:
+
+    if os.path.isfile(path_to_file):
+        with open(path_to_file) as json_file:
             earnings = json.load(json_file)
 
     else:
         response = requests.get(API_URL, input)
 
         earnings = response.json()  # maybe redundant
-    print(earnings)
 
-    write_to_file_in_json_format(earnings, filename)
-    pass
+    write_to_file_in_json_format(earnings, path_to_file)
+    return earnings
 
 
 def get_annual_report_alpha(data_json: dict, indicator: str, symbol: str) -> list:
@@ -301,7 +306,8 @@ def extract_quarterly_report_data_from_alpha(data_json: dict, indicator: str, sy
             time_points.append(i['fiscalDateEnding'])
             value_points.append(i[indicator])
         except:
-            print("Appending data element to array didn´t work with indicator {}. Is the indicator in the data?".format(indicator))
+            print("Appending data element to array didn´t work with indicator {}. Is the indicator in the data?".format(
+                indicator))
             exit()
     value_points, time_points = reverse_lists(value_points, time_points)
 

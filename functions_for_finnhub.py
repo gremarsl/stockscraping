@@ -6,7 +6,7 @@ api_url = "https://finnhub.io/api/v1/stock/metric?"
 
 
 def calling_finnhub_api(symbols: list):
-
+    
     if type(symbols) is not list:
         raise Exception("IncorrectParameter")
     # 'https://finnhub.io/api/v1/stock/metric?symbol=DAI.DE&metric=all&token=buk3id748v6r2017iuog'
@@ -18,10 +18,13 @@ def calling_finnhub_api(symbols: list):
             "token": api_key}
 
         filename = "fundamental_data_finnhub_" + s + ".json"
+        path = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\finnhub\\"
+        path_to_file = path + filename
+
 
         fundamental_data_response = requests.get(api_url, data)
         fundamental_data_response_json: requests.models.Response = fundamental_data_response.json()  # maybe redundant
-        write_to_file_in_json_format(fundamental_data_response_json, filename)
+        write_to_file_in_json_format(fundamental_data_response_json, path_to_file)
 
         print("Successful finnhub api scraping for {}".format(s))
 
