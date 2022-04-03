@@ -1,11 +1,16 @@
+import abc
+
+import global_vars
 from data_processor import processor_filter_plot_data
 from functions_for_finnhub import get_one_indicator_from_finnhub, \
     get_one_relative_indicator_from_finnhub
 from general_functions import read_data_from_file
-
+from global_vars import market_cap
 
 class NoData:
     pass
+
+filepath_finnhub = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\finnhub\\"
 
 
 def analyse_data_from_finnhub(symbols: list):
@@ -15,11 +20,9 @@ def analyse_data_from_finnhub(symbols: list):
 
     source = "finnhub"
     all_plot_data = []
-
     period = 'quarterly'
 
     analyse_all_companies = 1
-
 
     all_symbols_absolute_indicator = []
     all_symbols_per_share_indicator = []
@@ -30,7 +33,7 @@ def analyse_data_from_finnhub(symbols: list):
         data_per_symbol = []
 
         # new:
-        fundamental_data_json = read_data_from_file("fundamental_data_finnhub_" + s + ".json")
+        fundamental_data_json = read_data_from_file(filepath_finnhub + "fundamental_data_finnhub_" + s + ".json")
 
         indicator_absolute_list = ["grossMargin"]  # netMargin
         indicators_per_share = ["eps", "ebitPerShare"]

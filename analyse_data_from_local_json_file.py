@@ -1,3 +1,4 @@
+import global_vars
 from data_processor import processor_filter_plot_data
 from functions_for_yahoo import get_market_cap_from_yahoo_finance
 from general_functions import read_data_from_file, split_indicator_in_two, calculate_quotient, \
@@ -10,8 +11,8 @@ analyse_rel_live_indicator = 1
 
 
 def analyse_data_from_local_json_file(symbol):
-    filename = "D:\\Desktop\\Finanzreporte\\json\\" + symbol[0] + ".json"
-    data = read_data_from_file(filename)
+    filepath = "D:\\Desktop\\Finanzreporte\\json\\" + symbol[0] + ".json"
+    data = read_data_from_file(filepath)
 
     # my indicators I want to analyse from the json file
     my_abs_indicators = ["totalRevenue", "grossProfit", "operatingIncome", "ebit", "netIncome"]
@@ -45,25 +46,24 @@ def analyse_data_from_local_json_file(symbol):
             dividend, divisor = split_indicator_in_two(i)
             dividend_data = get_float_data(data, indicator=dividend, symbol=symbol)
 
-            use_live_parameter = True
 
-            if not use_live_parameter:
-                return_data2 = get_data(data, indicator=divisor, symbol=symbol)
-                quotient = calculate_quotient(dividend_data[1], return_data2[1], i, symbol=symbol)
 
-            if use_live_parameter:
+            if global_vars.market_cap == 0:
+                # because in main the market cap was called from yahoo finance
+                print("get live data did not work in order to calculate: {}".format(i))
+
+            else:
                 try:
-                    try:
-                        marketCap = get_market_cap_from_yahoo_finance(symbol)
-                    except:
-                        marketCap = get_key_value_from_local_file("marketCap", symbol)
-
-                    created_list = [marketCap] * len(dividend_data[1])
-                    converted_list = convert_list_elements_to_int(created_list)
-
-                    quotient = calculate_quotient(dividend_data[1], converted_list, i, symbol=symbol)
+                    marketCap = global_vars.market_cap
                 except:
-                    print("get live data did not work in order to calculate: {}".format(i))
+                    print("live data not used - exception hit")
+                    marketCap = get_key_value_from_local_file("marketCap", symbol)
+
+                created_list = [marketCap] * len(dividend_data[1])
+                converted_list = convert_list_elements_to_int(created_list)
+
+                quotient = calculate_quotient(dividend_data[1], converted_list, i, symbol=symbol)
+
             # add another list around to make it work
             temp_data = [dividend_data[0], quotient, symbol, i]
             rel_data_live.append(temp_data)
