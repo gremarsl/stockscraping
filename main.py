@@ -38,20 +38,21 @@ get_finnhub_symbol = automotive_finnhub
 analyse_finnhub_symbol = automotive_finnhub
 
 get_alpha_vantage_symbol_data = automotive_finnhub
-analyse_alpha_vantage_symbol_data = automotive_alpha
+analyse_alpha_vantage_symbol_data = ["MSFT", "AAPL"]
 
-build_json_from_symbols = insurance
-my_json_symbol = ["MSFT"]
+build_json_from_symbols = ["MSFT", "AAPL"]
+my_json_symbol = ["MSFT","AAPL"]
 
 # SWITCHES:
 build_own_json = 0
-analyse_my_json_data = 0
+analyse_my_json_data = 1
+analyse_my_json_data_compare_companies = 1
 
 get_finnhub_data = 0
 analyse_finnhub_data = 0
 
-get_alpha_data = 1
-analyse_alpha_data = 1
+get_alpha_data = 0
+analyse_alpha_data = 0
 analyse_alpha_data_compare_companies = 0
 
 if __name__ == '__main__':
@@ -73,10 +74,10 @@ if __name__ == '__main__':
     if build_own_json == 1:
         build_own_json_file(build_json_from_symbols)
 
-    if analyse_my_json_data == 1:
+    if analyse_my_json_data == 1  or analyse_my_json_data_compare_companies == 1:
         global_vars.market_cap = get_market_cap_from_yahoo_finance(my_json_symbol[0])
         print(global_vars.market_cap)
-        analyse_data_from_local_json_file(my_json_symbol)
+        analyse_data_from_local_json_file(my_json_symbol,analyse_my_json_data_compare_companies)
 
 '''
 next goals: deploy own server to get the graphs shown in the browser
