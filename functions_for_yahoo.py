@@ -38,7 +38,8 @@ def get_market_cap_from_yahoo_finance(symbol):
         print("get_market_cap_from_yahoo_finance failed for symbol: {}".format(symbol))
 
     market_cap = symbol_info["marketCap"]
-    print("symbol_info: {} ; value: {}".format(symbol_info, market_cap))
+
+    #print("symbol_info: {} ; value: {}".format(symbol_info, market_cap))
 
     return market_cap
 

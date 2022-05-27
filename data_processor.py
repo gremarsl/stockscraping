@@ -109,7 +109,6 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
                 print("analyzing my_json data failed")
 
         if source == "my_json" and relative_data:
-            print(data_list)
             try:
                 # filter
                 indicators = filter_data(data_list, options.options_rel_indicator)

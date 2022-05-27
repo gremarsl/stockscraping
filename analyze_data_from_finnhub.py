@@ -7,11 +7,12 @@ from functions_for_finnhub import get_one_indicator_from_finnhub, \
 from general_functions import read_data_from_file
 from global_vars import market_cap
 
+
 class NoData:
     pass
 
-def analyse_data_from_finnhub(symbols: list):
 
+def analyze_data_from_finnhub(symbols: list):
     if type(symbols) is not list:
         raise Exception("IncorrectParameter")
 
@@ -23,14 +24,15 @@ def analyse_data_from_finnhub(symbols: list):
 
     all_symbols_absolute_indicator = []
     all_symbols_per_share_indicator = []
-    all_symbols_ratio_indicator =[]
-    all_symbols_percentage_indicator= []
+    all_symbols_ratio_indicator = []
+    all_symbols_percentage_indicator = []
 
     for s in symbols:
         data_per_symbol = []
 
         # new:
-        fundamental_data_json = read_data_from_file(global_vars.filepath_finnhub + "fundamental_data_finnhub_" + s + ".json")
+        fundamental_data_json = read_data_from_file(
+            global_vars.filepath_finnhub + "fundamental_data_finnhub_" + s + ".json")
 
         indicator_absolute_list = ["grossMargin"]  # netMargin
         indicators_per_share = ["eps", "ebitPerShare"]
@@ -87,14 +89,15 @@ def analyse_data_from_finnhub(symbols: list):
             except NoData:
                 print("no {} data  for  {} ".format(i, s))
 
-        if analyse_all_companies ==0:
+        if analyse_all_companies == 0:
             processor_filter_plot_data(data_per_symbol, relative_data=False, all_symbols=False, source=source)
 
     if analyse_all_companies == 1:
         processor_filter_plot_data(all_symbols_absolute_indicator, relative_data=False, all_symbols=True, source=source)
 
-        processor_filter_plot_data(all_symbols_per_share_indicator, relative_data=False, all_symbols=True, source=source)
+        processor_filter_plot_data(all_symbols_per_share_indicator, relative_data=False, all_symbols=True,
+                                   source=source)
         processor_filter_plot_data(all_symbols_ratio_indicator, relative_data=False, all_symbols=True, source=source)
 
-        processor_filter_plot_data(all_symbols_percentage_indicator, relative_data=True, all_symbols=True, source=source)
-
+        processor_filter_plot_data(all_symbols_percentage_indicator, relative_data=True, all_symbols=True,
+                                   source=source)
