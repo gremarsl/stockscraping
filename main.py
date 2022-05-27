@@ -1,7 +1,6 @@
 import global_vars
-from analyse_data_from_alpha_vantage import analyse_data_from_alpha_vantage
-from analyse_data_from_finnhub import analyse_data_from_finnhub
-from analyse_data_from_local_json_file import analyse_data_from_local_json_file
+from analyse_data_from_local_json_file import analyze_data_from_local_json_file
+from analyze_data_from_finnhub import analyze_data_from_finnhub
 from build_own_json import build_own_json_file
 from functions_for_finnhub import calling_finnhub_api
 from functions_for_alpha_vantage import calling_alpha_vantage_api
@@ -35,25 +34,31 @@ finance_alpha = ["V"]
 insurance = ["ALV"]
 
 get_finnhub_symbol = automotive_finnhub
-analyse_finnhub_symbol = automotive_finnhub
+analyze_finnhub_symbol = automotive_finnhub
 
 get_alpha_vantage_symbol_data = automotive_finnhub
-analyse_alpha_vantage_symbol_data = ["MSFT", "AAPL"]
+analyze_alpha_vantage_symbol_data = ["MSFT", "AAPL"]
 
 build_json_from_symbols = ["MSFT", "AAPL"]
 my_json_symbol = ["MSFT","AAPL"]
 
 # SWITCHES:
 build_own_json = 0
-analyse_my_json_data = 1
-analyse_my_json_data_compare_companies = 1
+analyze_my_json_data = 1
+analyze_my_json_data_compare_companies = 1
 
 get_finnhub_data = 0
-analyse_finnhub_data = 0
+analyze_finnhub_data = 0
 
 get_alpha_data = 0
-analyse_alpha_data = 0
-analyse_alpha_data_compare_companies = 0
+analyze_alpha_data = 0
+analyze_alpha_data_compare_companies = 0
+
+
+def analyse_data_from_alpha_vantage(analyze_alpha_vantage_symbol_data, analyze_alpha_data_compare_companies):
+    pass
+
+
 
 if __name__ == '__main__':
 
@@ -62,22 +67,22 @@ if __name__ == '__main__':
     if get_finnhub_data == 1:
         calling_finnhub_api(get_finnhub_symbol)
 
-    if analyse_finnhub_data == 1:
-        analyse_data_from_finnhub(analyse_finnhub_symbol)
+    if analyze_finnhub_data == 1:
+        analyze_data_from_finnhub(analyze_finnhub_symbol)
 
     if get_alpha_data == 1:
         calling_alpha_vantage_api(get_alpha_vantage_symbol_data)
 
-    if analyse_alpha_data == 1 or analyse_alpha_data_compare_companies == 1:
-        analyse_data_from_alpha_vantage(analyse_alpha_vantage_symbol_data, analyse_alpha_data_compare_companies)
+    if analyze_alpha_data == 1 or analyze_alpha_data_compare_companies == 1:
+        analyse_data_from_alpha_vantage(analyze_alpha_vantage_symbol_data, analyze_alpha_data_compare_companies)
 
     if build_own_json == 1:
         build_own_json_file(build_json_from_symbols)
 
-    if analyse_my_json_data == 1  or analyse_my_json_data_compare_companies == 1:
+    if analyze_my_json_data == 1  or analyze_my_json_data_compare_companies == 1:
         global_vars.market_cap = get_market_cap_from_yahoo_finance(my_json_symbol[0])
         print(global_vars.market_cap)
-        analyse_data_from_local_json_file(my_json_symbol,analyse_my_json_data_compare_companies)
+        analyze_data_from_local_json_file(my_json_symbol,analyze_my_json_data_compare_companies)
 
 '''
 next goals: deploy own server to get the graphs shown in the browser
