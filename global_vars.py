@@ -6,3 +6,6 @@ filepath_alpha  = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\alpha
 
 global filepath_finnhub
 filepath_finnhub = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\finnhub\\"
+
+global my_json
+filepath_my_json = "D:\\Desktop\\Finanzreporte\\json\\"

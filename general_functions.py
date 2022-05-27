@@ -103,9 +103,11 @@ def filter_data(data_list, options):
             packed_indicators.append(indicator_list)
 
     # unpacking the list because with append to indicators - we have one list element to much - what we didnt have when doing list(filter(...))
-    for i in packed_indicators:
-        [unpack] = i
-        indicators.append(unpack)
+    #unpack one level
+    temp = packed_indicators[0]
+
+    for i in temp:
+        indicators.append(i)
 
     return indicators
 
