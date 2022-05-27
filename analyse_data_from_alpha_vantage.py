@@ -12,10 +12,10 @@ from global_vars import market_cap
 # SWITCHES FOR ALPHA VANTAGE ANALYSIS
 analyse_absolute_income_statement = 1
 analyse_absolute_cash_flow = 1
-analyse_percentage_income_statement = 0
-analyse_percentage_balance_sheet = 0
-analyse_live_with_income_statement = 0
-analyse_live_with_balance_sheet = 0
+analyse_percentage_income_statement = 1
+analyse_percentage_balance_sheet = 1
+analyse_live_with_income_statement = 1
+analyse_live_with_balance_sheet = 1
 
 # TODO right now only the first one can be analysed
 indicator_absolute_with_income_statement = ["netIncome", "totalRevenue"]# , "grossProfit", "totalRevenue", "ebit", "incomeBeforeTax", "operatingIncome"
@@ -384,7 +384,8 @@ def analyse_data_from_alpha_vantage(symbols: list, analyse_alpha_data_compare_co
         compare_companies(symbols)
 
     else:
-        one_company_only(symbols [0])
+        for s in symbols:
+            one_company_only(s)
 
     merger = PdfFileMerger()
 
