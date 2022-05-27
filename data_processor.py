@@ -46,9 +46,7 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
 
         if source == "alpha_vantage" and (not relative_data) and all_symbols is True:
             try:
-                print(data_list)
                 plot_compare_symbols_one_indicator(data_list, source)
-
             except IncorrectAlphaData:
                 print("analyzing alpha data failed")
 
@@ -98,22 +96,26 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
             except NotWorkingToPlot:
                 print("Not working to plot")
 
-        if source == "my_json" and (not relative_data):
+        if source == "my_json" and (not relative_data) and all_symbols is True:
             try:
                 # filter
                 indicators = filter_data(data_list, options.options_abs_indicator)
                 # plot data
-                stupid_plot_data_lists(indicators, source)
+                plot_compare_symbols_one_indicator(data_list,source)
+
+                # stupid_plot_data_lists(indicators, source)
 
             except IncorrectJsonData:
                 print("analyzing my_json data failed")
 
-        if source == "my_json" and relative_data:
+        if source == "my_json" and relative_data and all_symbols is True:
             try:
                 # filter
                 indicators = filter_data(data_list, options.options_rel_indicator)
                 # plot data
-                stupid_plot_data_lists(indicators, source)
+                plot_compare_symbols_one_indicator(data_list,source)
+
+                #stupid_plot_data_lists(indicators, source)
 
             except IncorrectJsonData:
                 print("analyzing my_json data failed")

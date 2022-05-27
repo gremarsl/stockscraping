@@ -249,6 +249,7 @@ def compare_companies(symbols, source):
     if analyse_live_with_my_json == 1:
         processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_my_json, True, True, source)
 
+
     merger = PdfFileMerger()
 
     os.chdir("D:\\Desktop\\Finanzreporte\\financial_grafics")
