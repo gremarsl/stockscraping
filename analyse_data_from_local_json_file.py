@@ -5,8 +5,8 @@ from general_functions import read_data_from_file, split_indicator_in_two, calcu
     convert_list_elements_to_int, get_data, extract_quarterly_report_data_from_my_json_file, get_float_data, \
     get_key_value_from_local_file
 
-analyse_abs_indicator = 0
-analyse_rel_indicator = 0
+analyse_abs_indicator = 1
+analyse_rel_indicator = 1
 analyse_rel_live_indicator = 1
 
 
@@ -19,6 +19,7 @@ def analyze_data_from_local_json_file(symbol: list, analyse_my_json_data_compare
     if analyse_my_json_data_compare_companies:
         compare_companies(symbol,source)
 
+    #TODO reduce length and abstract in separate func
     else:
 
         # my indicators I want to analyse from the json file
