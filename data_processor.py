@@ -115,7 +115,22 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
                 # plot data
                 plot_compare_symbols_one_indicator(data_list,source)
 
+
                 #stupid_plot_data_lists(indicators, source)
+
+            except IncorrectJsonData:
+                print("analyzing my_json data failed")
+
+
+        #if one symbol and multiple indicators
+        if source == "my_json" and relative_data and all_symbols is False:
+            try:
+                # filter
+                indicators = filter_data(data_list, options.options_rel_indicator)
+                # plot data
+                stupid_plot_data_lists(data_list, source)
+
+                # stupid_plot_data_lists(indicators, source)
 
             except IncorrectJsonData:
                 print("analyzing my_json data failed")
