@@ -37,8 +37,8 @@ insurance = ["ALV"]
 get_finnhub_symbol = automotive_finnhub
 analyze_finnhub_symbol = automotive_finnhub
 
-get_alpha_vantage_symbol_data = automotive_finnhub
-analyze_alpha_vantage_symbol_data = ["MSFT", "AAPL"]
+get_alpha_vantage_symbol_data = big
+analyze_alpha_vantage_symbol_data = big
 
 build_json_from_symbols = ["MSFT", "AAPL"]
 my_json_symbol = ["BAS.DE","MSFT"]
@@ -51,9 +51,9 @@ analyze_my_json_data_compare_companies = 0
 get_finnhub_data = 0
 analyze_finnhub_data = 0
 
-get_alpha_data = 0
+get_alpha_data = 1
 analyze_alpha_data = 1
-analyze_alpha_data_compare_companies = 0
+analyze_alpha_data_compare_companies = 1
 
 
 
