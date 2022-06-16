@@ -108,15 +108,17 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
     plt.title('{} source: {}'.format(symbol, source))
     plt.xlabel('Year')
 
-    # mng = plt.get_current_fig_manager()
-    # mng.full_screen_toggle()
+    #plot_full_screen()
     plt.legend()
 
-    print("plt save as figure is commented, this is why the plot will not be saved as pdf")
-    #save_figure(indicator)
-    #plt.cla()
-    # print("plt.show is commented, this is why the plot will not show up")
     plt.show()
+
+
+def plot_full_screen():
+    mng = plt.get_current_fig_manager()
+    mng.full_screen_toggle()
+
+    pass
 
 
 def plot_compare_symbols_one_indicator(data_list, source):
@@ -149,14 +151,10 @@ def plot_compare_symbols_one_indicator(data_list, source):
     plt.title('{} source: {}'.format(indicator, source))
     plt.xlabel('Year')
 
-    # mng = plt.get_current_fig_manager()
-    # mng.full_screen_toggle()
-
-    print("plt save figure is commented, this is why the plot will not be save as pdf")
+    #plot_full_screen()
 
     plt.legend()
     #save_figure(indicator)
-
-    print("plt.show is commented, this is why the plot will not show up")
+    #print("plt.show is commented, this is why the plot will not show up")
     plt.show()
     plt.cla()

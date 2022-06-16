@@ -1,5 +1,6 @@
 from PyPDF2 import PdfFileMerger
-import glob, os
+import glob
+import os
 
 import global_vars
 from data_processor import processor_filter_plot_data
@@ -7,23 +8,23 @@ from functions_for_alpha_vantage import extract_quarterly_report_data_from_alpha
 from functions_for_yahoo import get_market_cap_from_yahoo_finance
 from general_functions import calculate_quotient, convert_list_elements_to_int, split_indicator_in_two, \
     read_data_from_file, get_data, get_key_value_from_local_file
-from global_vars import market_cap
 
 # SWITCHES FOR ALPHA VANTAGE ANALYSIS
 analyse_absolute_income_statement = 0
-analyse_absolute_cash_flow = 0
+analyse_absolute_cash_flow = 1
 analyse_percentage_income_statement = 0
-analyse_percentage_balance_sheet = 0
+analyze_percentage_balance_sheet = 0
 analyse_live_with_income_statement = 0
 analyse_live_with_balance_sheet = 0
 
 analyse_absolute_my_json = 0
 analyse_percentage_my_json = 0
-analyse_live_with_my_json = 1
+analyse_live_with_my_json = 0
 
 # TODO right now only the first one can be analysed
 indicator_absolute_with_income_statement = ["netIncome",
-                                            "totalRevenue"]  # , "grossProfit", "totalRevenue", "ebit", "incomeBeforeTax", "operatingIncome"
+                                            "totalRevenue"]
+# , "grossProfit", "totalRevenue", "ebit", "incomeBeforeTax", "operatingIncome"
 
 indicator_absolute_with_cash_flow = ["operatingCashflow", "changeInCashAndCashEquivalents"]
 
@@ -36,20 +37,36 @@ indicator_percentage_with_balance_sheet = ["totalLiabilities_to_totalAssets",
 indicator_live_with_income_statement = ["totalRevenue_to_marketCap"]
 
 
+def pdf_merger():
+    merger = PdfFileMerger()
+
+    os.chdir("D:\\Desktop\\Finanzreporte\\financial_grafics")
+    for file in glob.glob("*.pdf"):
+        print(file)
+        merger.append(file)
+
+    merger.write("D:\\Desktop\\Finanzreporte\\financial_grafics\\result.pdf")
+    merger.close()
+    pass
+
+
+def analyze_one_symbol(args):
+    pass
+
+
 def compare_companies(symbols, source):
     all_symbols_quaterly_absolute_data_with_income_statement = []
     all_symbols_quaterly_absolute_data_with_cash_flow = []
-    all_symbols_quaterly_absolute_data_with_my_json = []
 
     all_symbols_quaterly_relative_percentage_with_balance_sheet = []
     all_symbols_quaterly_relative_percentage_with_income_statement = []
-    all_symbols_quaterly_relative_percentage_with_my_json = []
 
     all_symbols_quaterly_relative_live_data_with_balance_sheet = []
     all_symbols_quaterly_relative_live_data_with_income_statement = []
     all_symbols_quaterly_relative_live_data_with_my_json = []
 
     for s in symbols:
+        map(analyze_one_symbol,symbols)
 
         if analyse_absolute_income_statement:
 
@@ -64,14 +81,13 @@ def compare_companies(symbols, source):
                         all_symbols_quaterly_absolute_data_with_income_statement.append(temp_data)
                         counter = counter + 1
 
-                except:
+                except BaseException:
                     print("error in quaterly data {}".format(s))
 
         if analyse_percentage_income_statement:
 
             income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
 
-            counter = 0
             for i in indicator_percentage_with_income_statement:
 
                 try:
@@ -105,7 +121,7 @@ def compare_companies(symbols, source):
                 except:
                     print("error in quaterly data {}".format(s))
 
-        if analyse_percentage_balance_sheet:
+        if analyze_percentage_balance_sheet:
             balance_sheet = read_data_from_file(global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
 
             counter = 0
@@ -236,7 +252,7 @@ def compare_companies(symbols, source):
     if analyse_absolute_cash_flow == 1:
         processor_filter_plot_data(all_symbols_quaterly_absolute_data_with_cash_flow, False, True, source)
 
-    if analyse_percentage_balance_sheet == 1:
+    if analyze_percentage_balance_sheet == 1:
         processor_filter_plot_data(all_symbols_quaterly_relative_percentage_with_balance_sheet, True, True, source)
     if analyse_percentage_income_statement == 1:
         processor_filter_plot_data(all_symbols_quaterly_relative_percentage_with_income_statement, True, True, source)
@@ -249,16 +265,6 @@ def compare_companies(symbols, source):
     if analyse_live_with_my_json == 1:
         processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_my_json, True, True, source)
 
-
-    merger = PdfFileMerger()
-
-    os.chdir("D:\\Desktop\\Finanzreporte\\financial_grafics")
-    for file in glob.glob("*.pdf"):
-        print(file)
-        merger.append(file)
-
-    merger.write("D:\\Desktop\\Finanzreporte\\financial_grafics\\result.pdf")
-    merger.close()
     pass
 
 
@@ -315,7 +321,7 @@ def one_company_only(symbol):
             except:
                 print("error in quaterly data {}".format(s))
 
-    if analyse_percentage_balance_sheet:
+    if analyze_percentage_balance_sheet:
         balance_sheet = read_data_from_file(global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
 
         counter = 0
@@ -422,16 +428,6 @@ def analyze_data_from_alpha_vantage(symbols: list, analyse_alpha_data_compare_co
         compare_companies(symbols, "alpha_vantage")
 
     else:
-        for s in symbols:
-            one_company_only(s)
+        map(one_company_only, symbols)
 
-    merger = PdfFileMerger()
-
-    os.chdir("D:\\Desktop\\Finanzreporte\\financial_grafics")
-    for file in glob.glob("*.pdf"):
-        print(file)
-        merger.append(file)
-
-    merger.write("D:\\Desktop\\Finanzreporte\\financial_grafics\\result.pdf")
-    merger.close()
     pass

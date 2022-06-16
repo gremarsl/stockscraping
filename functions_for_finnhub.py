@@ -6,7 +6,6 @@ api_url = "https://finnhub.io/api/v1/stock/metric?"
 
 
 def calling_finnhub_api(symbols: list):
-    
     if type(symbols) is not list:
         raise Exception("IncorrectParameter")
     # 'https://finnhub.io/api/v1/stock/metric?symbol=DAI.DE&metric=all&token=buk3id748v6r2017iuog'
@@ -20,7 +19,6 @@ def calling_finnhub_api(symbols: list):
         filename = "fundamental_data_finnhub_" + s + ".json"
         path = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\finnhub\\"
         path_to_file = path + filename
-
 
         fundamental_data_response = requests.get(api_url, data)
         fundamental_data_response_json: requests.models.Response = fundamental_data_response.json()  # maybe redundant
@@ -46,23 +44,6 @@ def get_one_indicator_from_finnhub(data_json: dict, period: str, indicator: str,
 
     return data_list
 
-
-'''
-def get_one_ratio_indicator_from_finnhub(data_json: dict, period: str, indicator: str, symbol: str) -> list:
-    data = data_json['series'][period][indicator]
-    time_points = []
-    value_points = []
-    for i in data:
-        # i ist ein  Array
-        value_points.append(i['v'])
-        time_points.append(i['period'])
-
-    value_points, time_points = reverse_lists(value_points, time_points)
-
-    data_list = [time_points, value_points, symbol, indicator]
-
-    return data_list
-'''
 
 def get_one_relative_indicator_from_finnhub(data_json: dict, period: str, indicator: str, symbol: str) -> list:
     data = data_json['series'][period][indicator]
