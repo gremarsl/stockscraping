@@ -1,12 +1,8 @@
-import abc
-
 import global_vars
 from data_processor import processor_filter_plot_data
 from functions_for_finnhub import get_one_indicator_from_finnhub, \
     get_one_relative_indicator_from_finnhub
 from general_functions import read_data_from_file
-from global_vars import market_cap
-
 
 class NoData:
     pass

@@ -33,104 +33,93 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
     if len(data_list) == 0:
         raise Exception("No data")
 
-    if (source != "alpha_vantage") and (source != "finnhub") and (source != "my_json"):
-        raise Exception("data is not from source alpha_vantage, finnhub or my_json")
+    match source:
+        case "alpha_vantage":
+            if all_symbols is True:
+                try:
+                    plot_compare_symbols_one_indicator(data_list, source)
+                except IncorrectAlphaData:
+                    print("analyzing alpha data failed")
 
-    else:
-        if source == "alpha_vantage" and relative_data and all_symbols is True:
+            else:
+                if relative_data is True:
+                    try:
+                        stupid_plot_data_lists(filter_data(data_list, options.options_rel_indicator), source)
 
-            try:
-                plot_compare_symbols_one_indicator(data_list, source)
-            except IncorrectAlphaData:
-                print("analyzing alpha data failed")
+                    except IncorrectAlphaData:
+                        print("analyzing alpha data failed")
 
-        if source == "alpha_vantage" and (not relative_data) and all_symbols is True:
-            try:
-                plot_compare_symbols_one_indicator(data_list, source)
-            except IncorrectAlphaData:
-                print("analyzing alpha data failed")
+                if relative_data is False:
 
-        if source == "alpha_vantage" and relative_data and all_symbols is False:
+                    try:
+                        stupid_plot_data_lists(filter_data(data_list, options.options_abs_indicator), source)
 
-            try:
-                stupid_plot_data_lists(filter_data(data_list, options.options_rel_indicator), source)
+                    except NoWorkingIndicatorData:
+                        print("no working indicators data")
 
-            except IncorrectAlphaData:
-                print("analyzing alpha data failed")
+        case "finnhub":
+            if all_symbols is True:
+                try:
+                    plot_compare_symbols_one_indicator(data_list, source)
+                except NotWorkingToPlot:
+                    print("Not working to plot")
 
-        if source == "alpha_vantage" and (not relative_data) and all_symbols is False:
+            else:
+                if not relative_data:
+                    except_grossmargin = list(filter(lambda x: (x[3] != "grossMargin"), data_list))
+                    except_grossmargin_debt = list(filter(lambda x: x[3] != "totalDebtToEquity", except_grossmargin))
 
-            try:
-                temp_data = filter_data(data_list, options.options_abs_indicator)
-                stupid_plot_data_lists(temp_data, source)
+                    eps_ebit_per_share_plot_data = list(
+                        filter(lambda x: x[3] == "eps" or x[3] == "ebitPerShare", data_list))
 
-            except NoWorkingIndicatorData:
-                print("no working indicators data")
+                    try:
+                        stupid_plot_data_lists(except_grossmargin_debt, source)
+                    except NotWorkingToPlot:
+                        print(
+                            "Not working to plot ratios_eps_ebit_net_margin_data data in one plot {}".format(data_list))
 
-        if source == "finnhub" and (not relative_data) and all_symbols is False:
-            except_grossmargin = list(filter(lambda x: (x[3] != "grossMargin"), data_list))
-            except_grossmargin_debt = list(filter(lambda x: x[3] != "totalDebtToEquity", except_grossmargin))
+                    if len(eps_ebit_per_share_plot_data) == 0:
+                        raise NoEbitData()
+                else:
+                    print("ERROR - this case is not catched")
 
-            eps_ebit_per_share_plot_data = list(
-                filter(lambda x: x[3] == "eps" or x[3] == "ebitPerShare", data_list))
+        case "my_json":
+            if (not relative_data) and all_symbols is True:
+                try:
+                    # filter
+                    indicators = filter_data(data_list, options.options_abs_indicator)
+                    # plot data
+                    plot_compare_symbols_one_indicator(data_list, source)
 
-            try:
-                stupid_plot_data_lists(except_grossmargin_debt, source)
-            except NotWorkingToPlot:
-                print("Not working to plot ratios_eps_ebit_net_margin_data data in one plot {}".format(data_list))
+                    # stupid_plot_data_lists(indicators, source)
 
-            if len(eps_ebit_per_share_plot_data) == 0:
-                raise NoEbitData()
+                except IncorrectJsonData:
+                    print("analyzing my_json data failed")
 
-        if source == "finnhub" and (not relative_data) and all_symbols is True:
+            if relative_data and all_symbols is True:
+                try:
+                    # filter
+                    indicators = filter_data(data_list, options.options_rel_indicator)
+                    # plot data
+                    plot_compare_symbols_one_indicator(data_list, source)
 
-            try:
-                plot_compare_symbols_one_indicator(data_list,source)
-            except NotWorkingToPlot:
-                print("Not working to plot")
+                    # stupid_plot_data_lists(indicators, source)
 
-        if source == "finnhub" and relative_data is True and all_symbols is True:
+                except IncorrectJsonData:
+                    print("analyzing my_json data failed")
 
-            try:
-                plot_compare_symbols_one_indicator(data_list,source)
-            except NotWorkingToPlot:
-                print("Not working to plot")
+            # if one symbol and multiple indicators
+            if  relative_data and all_symbols is False:
+                try:
+                    # filter
+                    indicators = filter_data(data_list, options.options_rel_indicator)
+                    # plot data
+                    stupid_plot_data_lists(data_list, source)
 
-        if source == "my_json" and (not relative_data) and all_symbols is True:
-            try:
-                # filter
-                indicators = filter_data(data_list, options.options_abs_indicator)
-                # plot data
-                plot_compare_symbols_one_indicator(data_list,source)
+                    # stupid_plot_data_lists(indicators, source)
 
-                # stupid_plot_data_lists(indicators, source)
+                except IncorrectJsonData:
+                    print("analyzing my_json data failed")
 
-            except IncorrectJsonData:
-                print("analyzing my_json data failed")
-
-        if source == "my_json" and relative_data and all_symbols is True:
-            try:
-                # filter
-                indicators = filter_data(data_list, options.options_rel_indicator)
-                # plot data
-                plot_compare_symbols_one_indicator(data_list,source)
-
-
-                #stupid_plot_data_lists(indicators, source)
-
-            except IncorrectJsonData:
-                print("analyzing my_json data failed")
-
-
-        #if one symbol and multiple indicators
-        if source == "my_json" and relative_data and all_symbols is False:
-            try:
-                # filter
-                indicators = filter_data(data_list, options.options_rel_indicator)
-                # plot data
-                stupid_plot_data_lists(data_list, source)
-
-                # stupid_plot_data_lists(indicators, source)
-
-            except IncorrectJsonData:
-                print("analyzing my_json data failed")
+        case _:
+            raise Exception("data is not from source alpha_vantage, finnhub or my_json")
