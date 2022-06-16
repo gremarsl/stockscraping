@@ -57,6 +57,7 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
         case "alpha_vantage":
             if all_symbols is True:
                 if data_list[0][3] != data_list[1][3]:
+
                     number_of_symbols_in_data_list = get_number_of_elements_in_list(data_list)
                     number_of_indicators_per_symbol = count_number_of_entries(data_list)
 
@@ -72,19 +73,36 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
 
             else:
                 if relative_data is True:
-                    try:
-                        stupid_plot_data_lists(filter_data(data_list, options.options_rel_indicator), source)
+                    if data_list[0][3] != data_list[1][3]:
 
-                    except IncorrectAlphaData:
-                        print("analyzing alpha data failed")
+                        number_of_symbols_in_data_list = get_number_of_elements_in_list(data_list)
+                        number_of_indicators_per_symbol = count_number_of_entries(data_list)
+
+                        for x in range(0, number_of_symbols_in_data_list):
+                            new_data_list = data_list[::(number_of_indicators_per_symbol + x)]
+                            plot_compare_symbols_one_indicator(new_data_list, source)
+                    else:
+                        try:
+                            stupid_plot_data_lists(filter_data(data_list, options.options_rel_indicator), source)
+
+                        except IncorrectAlphaData:
+                            print("analyzing alpha data failed")
 
                 if relative_data is False:
+                    if data_list[0][3] != data_list[1][3]:
 
-                    try:
-                        stupid_plot_data_lists(filter_data(data_list, options.options_abs_indicator), source)
+                        number_of_symbols_in_data_list = get_number_of_elements_in_list(data_list)
+                        number_of_indicators_per_symbol = count_number_of_entries(data_list)
 
-                    except NoWorkingIndicatorData:
-                        print("no working indicators data")
+                        for x in range(0, number_of_symbols_in_data_list):
+                            new_data_list = data_list[::(number_of_indicators_per_symbol + x)]
+                            plot_compare_symbols_one_indicator(new_data_list, source)
+                    else:
+                        try:
+                            stupid_plot_data_lists(filter_data(data_list, options.options_abs_indicator), source)
+
+                        except NoWorkingIndicatorData:
+                            print("no working indicators data")
 
         case "finnhub":
             if all_symbols is True:
@@ -154,26 +172,3 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
             raise Exception("data is not from source alpha_vantage, finnhub or my_json")
 
 
-
-
-'''
-
-            if all_symbols is True:
-
-                # wenn mehrere indicatoren in dem array sind, dann muss anders geplottet werden
-                # TODO implementierung dass alle indicatoren
-                if data_list[0][3] != data_list[1][3]:
-                    number_of_symbols_in_data_list = get_number_of_elements_in_list(data_list)
-                    number_of_indicators_per_symbol = count_number_of_entries(data_list)
-
-                     for n in number_of_indicators_per_symbol:
-                        new_data_list = data_list[::number_of_indicators_per_symbol]
-                        plot_compare_symbols_one_indicator(data_list, source)
-
-                #TODO erstelle eine neue datenliste beginnend bei 0 und füeg jedes x-te element hinzu
-
-                    plot_compare_symbols_one_indicator(data_list, source)
-                try:
-                    plot_compare_symbols_one_indicator(data_list, source)
-                except IncorrectAlphaData:
-                    print("analyzing alpha data failed")'''

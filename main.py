@@ -5,7 +5,7 @@ from analyze_data_from_finnhub import analyze_data_from_finnhub
 from build_own_json import build_own_json_file
 from functions_for_finnhub import calling_finnhub_api
 from functions_for_alpha_vantage import calling_alpha_vantage_api
-from functions_for_yahoo import get_market_cap_from_yahoo_finance
+from functions_for_yahoo import get_market_cap_from_yahoo_finance, calculate_sp_500
 from general_functions import delete_all_lines_from_file
 
 # Understand JSON
@@ -66,6 +66,7 @@ def finnhub_scraper():
 
 
 if __name__ == '__main__':
+    calculate_sp_500()
 
     delete_all_lines_from_file()
 
@@ -81,14 +82,12 @@ if __name__ == '__main__':
         build_own_json_file(build_json_from_symbols)
 
     if analyze_my_json_data == 1 or analyze_my_json_data_compare_companies == 1:
-        global_vars.market_cap = get_market_cap_from_yahoo_finance(my_json_symbol[0])
         analyze_data_from_local_json_file(my_json_symbol, analyze_my_json_data_compare_companies)
 
 # TODO
 # Implement all coefficients generic in one file -> independent from the scraping website
 '''
 KGV berechnung: 
-Berechnung des S&P Wertes live, geteilt durch GDP und dann abspeichern in ein file 
 marketkap
 ----
 net earnings 

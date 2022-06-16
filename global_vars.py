@@ -9,3 +9,10 @@ filepath_finnhub = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\finn
 
 global my_json
 filepath_my_json = "D:\\Desktop\\Finanzreporte\\json\\"
+
+
+global sp_500_divisor
+sp_500_divisor =8451.33
+
+global usa_gdp
+usa_gdp = 19731.10 #billion

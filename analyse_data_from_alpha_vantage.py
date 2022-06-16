@@ -11,17 +11,16 @@ from general_functions import calculate_quotient, convert_list_elements_to_int, 
 
 # SWITCHES FOR ALPHA VANTAGE ANALYSIS
 analyse_absolute_income_statement = 1
-analyse_absolute_cash_flow = 0
-analyse_percentage_income_statement = 0
-analyze_percentage_balance_sheet = 0
-analyse_live_with_income_statement = 0
-analyse_live_with_balance_sheet = 0
+analyse_absolute_cash_flow = 1
+analyse_percentage_income_statement = 1
+analyze_percentage_balance_sheet = 1
+analyse_live_with_income_statement = 1
+analyse_live_with_balance_sheet = 1
 
 analyse_absolute_my_json = 0
 analyse_percentage_my_json = 0
 analyse_live_with_my_json = 0
 
-# TODO right now only the first one can be analysed
 indicator_absolute_with_income_statement = ["netIncome",
                                             "totalRevenue"]
 # , "grossProfit", "totalRevenue", "ebit", "incomeBeforeTax", "operatingIncome"
@@ -71,16 +70,11 @@ def compare_companies(symbols, source):
 
             income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
 
-            counter = 0
             for i in indicator_absolute_with_income_statement:
                 try:
                     temp_data = extract_quarterly_report_data_from_alpha(income_statement, i, symbol=s)
                     all_symbols_quaterly_absolute_data_with_income_statement.append(temp_data)
-                    '''
-                    if counter < 1:
-                        all_symbols_quaterly_absolute_data_with_income_statement.append(temp_data)
-                        counter = counter + 1
-                    '''
+
                 except BaseException:
                     print("error in quaterly data {}".format(s))
 
@@ -109,22 +103,16 @@ def compare_companies(symbols, source):
 
             cash_flow = read_data_from_file(global_vars.filepath_alpha + "cash_flow_alpha_" + s + ".json")
 
-            counter = 0
             for i in indicator_absolute_with_cash_flow:
                 try:
                     temp_data = extract_quarterly_report_data_from_alpha(cash_flow, i, symbol=s)
-
-                    if counter < 1:
-                        all_symbols_quaterly_absolute_data_with_cash_flow.append(temp_data)
-                        counter = counter + 1
+                    all_symbols_quaterly_absolute_data_with_cash_flow.append(temp_data)
 
                 except:
                     print("error in quaterly data {}".format(s))
 
         if analyze_percentage_balance_sheet:
             balance_sheet = read_data_from_file(global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
-
-            counter = 0
 
             for i in indicator_percentage_with_balance_sheet:
                 try:
@@ -135,18 +123,14 @@ def compare_companies(symbols, source):
                     quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
 
                     temp_data = [dividend_data[0], quotient, s, i]
+                    all_symbols_quaterly_relative_percentage_with_balance_sheet.append(temp_data)
 
-                    if counter < 1:
-                        all_symbols_quaterly_relative_percentage_with_balance_sheet.append(temp_data)
-                        # TODO
-                        counter = 1
                 except:
                     print("-{}- calculate quotient of {} didnt work".format(s, i))
 
         if analyse_live_with_income_statement:
 
             income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
-            counter = 0
             for i in indicator_live_with_income_statement:
 
                 try:
@@ -173,10 +157,7 @@ def compare_companies(symbols, source):
                         quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
 
                     temp_data = [dividend_data[0], quotient, s, i]
-
-                    if counter < 1:
-                        all_symbols_quaterly_relative_live_data_with_income_statement.append(temp_data)
-                        counter = 1
+                    all_symbols_quaterly_relative_live_data_with_income_statement.append(temp_data)
 
 
                 except:
