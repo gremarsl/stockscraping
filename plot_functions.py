@@ -133,7 +133,9 @@ def plot_compare_symbols_one_indicator(data_list, source):
         symbol = i[2]
         indicator = i[3]
 
-        if len(x) == len(y):
+        if len(x) != len(y):
+            raise print("ERROR - Length of x is {} and length of y is {} - must be same".format(len(x), len(y)))
+        else:
             if len(data_list) > 6:
                 y_lim_top = 200
                 y_lim_bottom = 0
@@ -143,8 +145,6 @@ def plot_compare_symbols_one_indicator(data_list, source):
             plt.plot(x, y, label=symbol)
             plt.scatter(x, y)
 
-        else:
-            print("ERROR - Length of x is {} and length of y is {} - must be same".format(len(x), len(y)))
 
     plt.grid(b=None, which='major', axis='both')
     plt.xticks(data_list[0][0], rotation="vertical")

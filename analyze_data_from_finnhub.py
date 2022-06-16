@@ -13,7 +13,6 @@ def analyze_data_from_finnhub(symbols: list):
         raise Exception("IncorrectParameter")
 
     source = "finnhub"
-    all_plot_data = []
     period = 'quarterly'
 
     analyse_all_companies = 1
