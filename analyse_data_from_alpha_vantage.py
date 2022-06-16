@@ -10,8 +10,8 @@ from general_functions import calculate_quotient, convert_list_elements_to_int, 
     read_data_from_file, get_data, get_key_value_from_local_file
 
 # SWITCHES FOR ALPHA VANTAGE ANALYSIS
-analyse_absolute_income_statement = 0
-analyse_absolute_cash_flow = 1
+analyse_absolute_income_statement = 1
+analyse_absolute_cash_flow = 0
 analyse_percentage_income_statement = 0
 analyze_percentage_balance_sheet = 0
 analyse_live_with_income_statement = 0
@@ -66,7 +66,6 @@ def compare_companies(symbols, source):
     all_symbols_quaterly_relative_live_data_with_my_json = []
 
     for s in symbols:
-        map(analyze_one_symbol,symbols)
 
         if analyse_absolute_income_statement:
 
@@ -76,11 +75,12 @@ def compare_companies(symbols, source):
             for i in indicator_absolute_with_income_statement:
                 try:
                     temp_data = extract_quarterly_report_data_from_alpha(income_statement, i, symbol=s)
-
+                    all_symbols_quaterly_absolute_data_with_income_statement.append(temp_data)
+                    '''
                     if counter < 1:
                         all_symbols_quaterly_absolute_data_with_income_statement.append(temp_data)
                         counter = counter + 1
-
+                    '''
                 except BaseException:
                     print("error in quaterly data {}".format(s))
 
@@ -420,11 +420,11 @@ def one_company_only(symbol):
     pass
 
 
-def analyze_data_from_alpha_vantage(symbols: list, analyse_alpha_data_compare_companies: int):
+def analyze_data_from_alpha_vantage(symbols: list, analyze_alpha_data_compare_companies: int):
     if type(symbols) is not list:
         raise Exception("IncorrectParameter. List as parameter type is expected")
 
-    if analyse_alpha_data_compare_companies:
+    if analyze_alpha_data_compare_companies:
         compare_companies(symbols, "alpha_vantage")
 
     else:

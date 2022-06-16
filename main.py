@@ -38,7 +38,7 @@ get_finnhub_symbol = automotive_finnhub
 analyze_finnhub_symbol = automotive_finnhub
 
 get_alpha_vantage_symbol_data = big
-analyze_alpha_vantage_symbol_data = big
+analyze_alpha_vantage_symbol_data =  ["MSFT", "AAPL"]
 
 build_json_from_symbols = ["MSFT", "AAPL"]
 my_json_symbol = ["BAS.DE", "MSFT"]
@@ -55,15 +55,21 @@ get_alpha_data = 0
 analyze_alpha_data = 1
 analyze_alpha_data_compare_companies = 1
 
-if __name__ == '__main__':
 
-    delete_all_lines_from_file()
-
+def finnhub_scraper():
     if get_finnhub_data == 1:
         calling_finnhub_api(get_finnhub_symbol)
 
     if analyze_finnhub_data == 1:
         analyze_data_from_finnhub(analyze_finnhub_symbol)
+    pass
+
+
+if __name__ == '__main__':
+
+    delete_all_lines_from_file()
+
+    finnhub_scraper()
 
     if get_alpha_data == 1:
         calling_alpha_vantage_api(get_alpha_vantage_symbol_data)
@@ -77,7 +83,6 @@ if __name__ == '__main__':
     if analyze_my_json_data == 1 or analyze_my_json_data_compare_companies == 1:
         global_vars.market_cap = get_market_cap_from_yahoo_finance(my_json_symbol[0])
         analyze_data_from_local_json_file(my_json_symbol, analyze_my_json_data_compare_companies)
-
 
 # TODO
 # Implement all coefficients generic in one file -> independent from the scraping website

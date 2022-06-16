@@ -27,6 +27,26 @@ class NotWorkingToPlot(Exception):
     pass
 
 
+def get_number_of_elements_in_list(data_list):
+    symbol_list = []
+
+    for i in data_list:
+        if i[2] not in symbol_list:
+            symbol_list.append(i[2])
+
+    return len(symbol_list)
+
+
+def count_number_of_entries(data_list):
+    element_to_count = data_list[0][2]
+    counter = 0
+    for i in data_list:
+        if i[2] == element_to_count:
+            counter += 1
+
+    return counter
+
+
 def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols: bool, source: str):
     # all_data_list = [data_per_symbol_1]
 
@@ -36,10 +56,19 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
     match source:
         case "alpha_vantage":
             if all_symbols is True:
-                try:
-                    plot_compare_symbols_one_indicator(data_list, source)
-                except IncorrectAlphaData:
-                    print("analyzing alpha data failed")
+                if data_list[0][3] != data_list[1][3]:
+                    number_of_symbols_in_data_list = get_number_of_elements_in_list(data_list)
+                    number_of_indicators_per_symbol = count_number_of_entries(data_list)
+
+                    for x in range (0,number_of_symbols_in_data_list):
+                        new_data_list = data_list[::(number_of_indicators_per_symbol+x)]
+                        plot_compare_symbols_one_indicator(new_data_list, source)
+
+                else:
+                    try:
+                        plot_compare_symbols_one_indicator(data_list, source)
+                    except IncorrectAlphaData:
+                        print("analyzing alpha data failed")
 
             else:
                 if relative_data is True:
@@ -109,7 +138,7 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
                     print("analyzing my_json data failed")
 
             # if one symbol and multiple indicators
-            if  relative_data and all_symbols is False:
+            if relative_data and all_symbols is False:
                 try:
                     # filter
                     indicators = filter_data(data_list, options.options_rel_indicator)
@@ -123,3 +152,28 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
 
         case _:
             raise Exception("data is not from source alpha_vantage, finnhub or my_json")
+
+
+
+
+'''
+
+            if all_symbols is True:
+
+                # wenn mehrere indicatoren in dem array sind, dann muss anders geplottet werden
+                # TODO implementierung dass alle indicatoren
+                if data_list[0][3] != data_list[1][3]:
+                    number_of_symbols_in_data_list = get_number_of_elements_in_list(data_list)
+                    number_of_indicators_per_symbol = count_number_of_entries(data_list)
+
+                     for n in number_of_indicators_per_symbol:
+                        new_data_list = data_list[::number_of_indicators_per_symbol]
+                        plot_compare_symbols_one_indicator(data_list, source)
+
+                #TODO erstelle eine neue datenliste beginnend bei 0 und füeg jedes x-te element hinzu
+
+                    plot_compare_symbols_one_indicator(data_list, source)
+                try:
+                    plot_compare_symbols_one_indicator(data_list, source)
+                except IncorrectAlphaData:
+                    print("analyzing alpha data failed")'''
