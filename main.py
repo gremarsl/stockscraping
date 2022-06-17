@@ -29,8 +29,9 @@ analyze_alpha_vantage_symbol_data = ["MSFT", "AAPL"]
 
 build_json_from_symbols = ["BAS.DE", "AAPL"]
 my_json_symbol = ["BAS.DE", "MSFT"]
-# END ENTER COMPANIES TO ANALYZE
 
+
+# END ENTER COMPANIES TO ANALYZE
 
 
 def finnhub_analysis():
@@ -43,7 +44,6 @@ def finnhub_analysis():
 
 
 def alpha_vantage_analysis():
-
     if get_alpha_data == 1:
         calling_alpha_vantage_api(get_alpha_vantage_symbol_data)
 
@@ -53,7 +53,6 @@ def alpha_vantage_analysis():
 
 
 def own_json_analysis():
-
     if build_own_json == 1:
         build_own_json_file(build_json_from_symbols)
 
@@ -64,7 +63,6 @@ def own_json_analysis():
 
 
 def start():
-
     calculate_sp_500_to_gdp_usa()
 
     finnhub_analysis()
@@ -77,6 +75,4 @@ def start():
 
 
 if __name__ == '__main__':
-
     start()
-

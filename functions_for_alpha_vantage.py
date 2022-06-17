@@ -1,14 +1,11 @@
 import os
 from time import strftime, gmtime
-import json
 import pandas as pd
 import requests
 import json
-
 import global_vars
 from general_functions import write_to_file_in_json_format, reverse_lists
 import time
-
 from keys import api_key_alpha
 
 
@@ -25,10 +22,10 @@ def calling_alpha_vantage_api(symbols):
 
     list_elem = len(symbols) - 1
     for s in symbols:
-        income_statement = request_income_statement_from_alpha(s)
-        balance_sheets = request_balance_sheet_from_alpha(s)
-        cash_flow = request_cash_flow_from_alpha(s)
-        earnings = request_earnings_from_alpha(s)
+        request_income_statement_from_alpha(s)
+        request_balance_sheet_from_alpha(s)
+        request_cash_flow_from_alpha(s)
+        request_earnings_from_alpha(s)
 
         if symbols.index(s) == list_elem:
             return
@@ -57,7 +54,7 @@ def request_overview_from_alpha(symbol):
     path_to_file = global_vars.filepath_alpha + filename
     write_to_file_in_json_format(fundamental_data_response_json, path_to_file)
 
-    return fundamental_data_response_json
+    pass
 
 
 def append_line_to_file_and_save(line: str, filename: str):
@@ -123,6 +120,8 @@ def request_time_income_data_from_alpha(symbol):
     df = pd.DataFrame(fundamental_data_response_json['annualReports'])
     df.set_index('fiscalDateEnding', inplace=True)
 
+    pass
+
 
 def request_time_series_daily_data_from_alpha(symbol):
     API_URL = "https://www.alphavantage.co/query?"
@@ -164,6 +163,8 @@ def request_symbol_search_from_alpha(keywords):
     print(response_json)
     print('----------')
 
+    pass
+
 
 def request_income_statement_from_alpha(symbol):
     # https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol=HENKY&apikey=X90PH4C1TIFJA4MP
@@ -179,6 +180,7 @@ def request_income_statement_from_alpha(symbol):
         "symbol": symbol,
         "apikey": api_key_alpha}
 
+    # TODO - implement other logic. "if file older then 5 days, then do a request to the server"
     if os.path.isfile(path_to_file):
         with open(path_to_file) as json_file:
             income_statement = json.load(json_file)
@@ -190,7 +192,7 @@ def request_income_statement_from_alpha(symbol):
 
     write_to_file_in_json_format(income_statement, path_to_file)
 
-    return income_statement
+    pass
 
 
 def request_balance_sheet_from_alpha(symbol):
@@ -216,7 +218,7 @@ def request_balance_sheet_from_alpha(symbol):
 
     write_to_file_in_json_format(balance_sheet, path_to_file)
 
-    return balance_sheet
+    pass
 
 
 def request_cash_flow_from_alpha(symbol):
@@ -242,7 +244,8 @@ def request_cash_flow_from_alpha(symbol):
         cash_flow = response.json()  # maybe redundant
 
     write_to_file_in_json_format(cash_flow, path_to_file)
-    return cash_flow
+
+    pass
 
 
 def request_earnings_from_alpha(symbol):
@@ -267,7 +270,8 @@ def request_earnings_from_alpha(symbol):
         earnings = response.json()  # maybe redundant
 
     write_to_file_in_json_format(earnings, path_to_file)
-    return earnings
+
+    pass
 
 
 def get_annual_report_alpha(data_json: dict, indicator: str, symbol: str) -> list:
