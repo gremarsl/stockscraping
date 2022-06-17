@@ -39,12 +39,12 @@ indicator_live_with_income_statement = ["totalRevenue_to_marketCap","netIncome_t
 def pdf_merger():
     merger = PdfFileMerger()
 
-    os.chdir("D:\\Desktop\\Finanzreporte\\financial_grafics")
+    os.chdir(global_vars.filepath_my_json)
     for file in glob.glob("*.pdf"):
         print(file)
         merger.append(file)
 
-    merger.write("D:\\Desktop\\Finanzreporte\\financial_grafics\\result.pdf")
+    merger.write(global_vars.filepath_my_json + "\\result.pdf")
     merger.close()
     pass
 

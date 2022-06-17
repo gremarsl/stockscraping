@@ -43,7 +43,7 @@ def build_own_json_file(symbol_list):
             # füge das object mit allen parametern in dieser datei zu dem array - als ein object (pro quarter) hinzu
             output_quarter_array.append(obj)
 
-        filepath = "D://Desktop//Finanzreporte//json//" + s + ".json"
+        filepath = global_vars.filepath_my_json + s + ".json"
         write_to_file_in_json_format(output_object, filepath)
 
         # addonfile
@@ -74,5 +74,5 @@ def build_own_json_file(symbol_list):
 
             counter += 1
 
-        filepath = "D://Desktop//Finanzreporte//json//" + s + ".json"
+        filepath = global_vars.filepath_my_json + s + ".json"
         write_to_file_in_json_format(output_object, filepath)

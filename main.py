@@ -11,7 +11,7 @@ from functions_for_yahoo import calculate_sp_500_to_gdp_usa
 #TODO Beschreibung how to use it
 
 get_finnhub_data = 0
-analyze_finnhub_data = 0
+analyze_finnhub_data = 1
 
 get_alpha_data = 0
 analyze_alpha_data = 1

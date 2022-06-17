@@ -3,6 +3,8 @@ import json
 import os
 import datetime as dt
 
+import global_vars
+
 
 def extract_quarterly_report_data_from_my_json_file(data_json: dict, indicator: str, symbol: str) -> list:
     reports = data_json['quarterlyReports']
@@ -199,13 +201,13 @@ def get_key_value_from_local_file(indicator, s):
 
 
 def delete_all_lines_from_file():
-    with open("D:\\Desktop\\Finanzreporte\\atestsite.html", "w") as file:
+    with open(global_vars.filepath_my_json + "\\atestsite.html", "w") as file:
         file.truncate()
     pass
 
 
 def add_file_to_main_html_file(indicator, complete_string):
-    f = open('D:\\Desktop\\Finanzreporte\\atestsite.html', 'a')
+    f = open(global_vars.filepath_my_json + '\\atestsite.html', 'a')
 
     message = """
     <html>
@@ -224,7 +226,7 @@ def add_file_to_main_html_file(indicator, complete_string):
 
 
 def save_figure(indicator):
-    path = "D:\\Desktop\\Finanzreporte\\financial_grafics\\"
+    path = global_vars.filepath_my_json + "\\financial_grafics\\"
 
     complete_string_svg = path + indicator + ".svg"
     complete_string_pdf = path + indicator + ".pdf"
