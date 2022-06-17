@@ -1,7 +1,6 @@
 from PyPDF2 import PdfFileMerger
 import glob
 import os
-
 import global_vars
 from data_processor import processor_filter_plot_data
 from functions_for_alpha_vantage import extract_quarterly_report_data_from_alpha

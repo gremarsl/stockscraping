@@ -60,9 +60,11 @@ def get_data(input_data, indicator, symbol):
         list_dividend_converted = convert_list_elements_to_int(list_dividend[1])
 
         data = [list_dividend[0], list_dividend_converted, symbol, indicator]
+
+        return data
     except:
         print("function call: get data failed - parameter:{}; {} ".format(indicator, symbol))
-    return data
+    return 1 # error if 1 is returned
 
 
 def get_float_data(input_data, indicator, symbol):
@@ -77,9 +79,11 @@ def get_float_data(input_data, indicator, symbol):
         list_dividend_converted = convert_list_elements_to_int(temp_converted)
 
         data = [list_dividend[0], list_dividend_converted, symbol, indicator]
+        return data
+
     except:
         print("function call: get float data failed - parameter:{}; {} ".format(indicator, symbol))
-    return data
+    return 1 # error if 1 is returned
 
 
 def calculate_quotient(dividend_data, divisor_data, indicator, symbol):
