@@ -37,6 +37,11 @@ For an in-depth look at financial metrics, four data sources are available:
 ### Usage
 
 
+## Improvements
+- Erweiterung um Indikatoren 
+- Nutzung 
+- Mögliche Modularisierung in 3 Tools. Jede API eigene Behandlung
+
 ## Contribution
 Thank you for helping and improving this work. 
 

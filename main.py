@@ -10,28 +10,28 @@ from functions_for_yahoo import calculate_sp_500_to_gdp_usa
 
 def finnhub_analysis():
     if global_vars.get_finnhub_data == 1:
-        calling_finnhub_api(global_vars.get_finnhub_symbol)
+        calling_finnhub_api(global_vars.finnhub_symbols)
 
     if global_vars.analyze_finnhub_data == 1:
-        analyze_data_from_finnhub(global_vars.analyze_finnhub_symbol)
+        analyze_data_from_finnhub(global_vars.finnhub_symbols)
     pass
 
 
 def alpha_vantage_analysis():
     if global_vars.get_alpha_data == 1:
-        calling_alpha_vantage_api(global_vars.get_alpha_vantage_symbol_data)
+        calling_alpha_vantage_api(global_vars.alpha_vantage_symbols)
 
     if global_vars.analyze_alpha_data == 1 or global_vars.analyze_alpha_data_compare_companies == 1:
-        analyze_data_from_alpha_vantage(global_vars.analyze_alpha_vantage_symbol_data, global_vars.analyze_alpha_data_compare_companies)
+        analyze_data_from_alpha_vantage(global_vars.alpha_vantage_symbols, global_vars.analyze_alpha_data_compare_companies)
     pass
 
 
 def own_json_analysis():
     if global_vars.build_own_json == 1:
-        build_own_json_file(global_vars.build_json_from_symbols)
+        build_own_json_file(global_vars.my_json_symbols)
 
     if global_vars.analyze_my_json_data == 1 or global_vars.analyze_my_json_data_compare_companies == 1:
-        analyze_data_from_local_json_file(global_vars.my_json_symbol, global_vars.analyze_my_json_data_compare_companies)
+        analyze_data_from_local_json_file(global_vars.my_json_symbols, global_vars.analyze_my_json_data_compare_companies)
 
     pass
 
