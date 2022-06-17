@@ -31,19 +31,21 @@ For an in-depth look at financial metrics, four data sources are available:
 1. finnhub stock API (https://finnhub.io/)
 2. alpha vantage stock API (https://www.alphavantage.co/)
 3. yahoo finance (https://pypi.org/project/yfinance/)
-4. use of a standalone data filled file (json format).
+4. use of a standalone data filled file (currently json format).
 
 
 ### Usage
 
 
 ## Improvements
-- Erweiterung um Indikatoren 
-- Nutzung 
-- Mögliche Modularisierung in 3 Tools. Jede API eigene Behandlung
+Possible improvements are
+- Simplified extension of additional indicators. The extension of additional indicators is currently time-consuming, since the extension must be made in several places within the implementation.
+- Error Handling.
+- Python package and dependency management.
+- Possible modularization in 3 tools. Each API own handling
 
 ## Contribution
-Thank you for helping and improving this work. 
+Thank you for helping and improving this program. 
 
 1. Fork the Project (see: [https://help.github.com/en/github/getting-started-with-github/fork-a-repo](https://help.github.com/en/github/getting-started-with-github/fork-a-repo)
 2. Create your Feature Branch (`git checkout -b `)
