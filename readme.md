@@ -7,12 +7,24 @@ I am interested in programming and economics. Both combined, has led me to write
 This application is written in Python. Python Interpreter: v3.10
 
 ## User Manual
+Unfortunately, using the program with the current version is not very user-friendly.
+Therefore, I will try to answer all the important points in this section.
 Leider ist die Nutzung des Programms mit dem aktuellen Stand nicht sehr benutzerfreundlich.
 Deshalb versuche ich in diesem Abschnitt alle wichtigen Punkte zu beantworten.
 
-### Vorbereitungen zur Nutzung 
+### Voraussetzungen
+Python Interpreter: v3.10 ist auf dem computer installiert und funktionsfähig.
+Die Python Pakete sind installiert und stehen dem Programm bereit.
+
+### Vorbereitungen für die Nutzung 
 Damit das Programm erfolgreich eingesetzt und Unternehmen auf Kennzahlen untersucht werden können, werden vorbereitungen notwendig. 
 Diese werden in diesem Abschnitt beschrieben. 
+
+#### Welche Herangehensweisen stehen mir zur Verfügung?
+Für ein besseres Verständnis der Nutzung, hier ein paar Worte den auswählbaren Herangehensweisen des Nutzers. 
+1. Nutzen einer Stock API, um anschließend die Unternehmensdaten auszuwerten.
+2. Erstellen eines eigenen Formats, mit eigenständig ausgewählten Daten, die anschließend ausgewertet werden sollen. Aktuelle Format: JSON.
+
 
 #### Von wo kommen die Daten für eine Unternehmensanalyse ?
 Für eine ausführliche Betrachtung der finanziellen Kennzahlen, stehen vier Datenquellen zur Verfügung: 
@@ -24,10 +36,6 @@ Für eine ausführliche Betrachtung der finanziellen Kennzahlen, stehen vier Dat
 [TLDR]: Damit du die finnhub und alpha vantage stock api nutzen kannst, benötigst du keys. Wie du einen key erhälst, erfährst du auf der webseite, wie ich sie oben verlinkt habe.
 In keys.py sind die keys dann einzutragen. api_key für die Nutzung der finnhub api und api_key_alpha für alpha vantage
 
-
-#### Welche Herangehensweisen stehen mir zur Verfügung?
-- REquest einer API 
-- Auslesen und auswerten der gefüllten Datei
 
 ## Contribution
 Thank you for helping and improving this work. 
