@@ -5,7 +5,7 @@ import global_vars
 from general_functions import write_to_file_in_json_format
 
 
-def calculate_sp_500():
+def calculate_sp_500_to_gdp_usa():
     price = get_index_value_from_yahoo_finance("^GSPC")
     valuation = price * global_vars.sp_500_divisor / 1000 #now it is in unit: trillion
     print(valuation)

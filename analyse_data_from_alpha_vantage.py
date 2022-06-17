@@ -33,7 +33,7 @@ indicator_percentage_with_income_statement = [
 indicator_percentage_with_balance_sheet = ["totalLiabilities_to_totalAssets",
                                            "totalCurrentLiabilities_to_totalCurrentAssets"]
 
-indicator_live_with_income_statement = ["totalRevenue_to_marketCap"]
+indicator_live_with_income_statement = ["totalRevenue_to_marketCap","netIncome_to_marketCap"]
 
 
 def pdf_merger():

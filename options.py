@@ -18,6 +18,7 @@ options_per_share_indicator = [
 ]
 
 options_rel_indicator = [
+    "netIncome_to_marketCap",
     "totalRevenue_to_marketCap",
     "totalDebtToEquity",
     "cashRatio",
@@ -171,6 +172,8 @@ def option_color_quotient_totalShareholdersEquity_to_totalAssets():
 def option_color_quotient_totalRevenue_to_marketCap():
     return "b"
 
+def option_color_quotient_netIncome_to_marketCap():
+    return "g"
 
 def option_color_quotient_totalAssets_to_marketCap():
     return "g"
