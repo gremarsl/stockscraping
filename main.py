@@ -11,15 +11,15 @@ from functions_for_yahoo import calculate_sp_500_to_gdp_usa
 #TODO Beschreibung how to use it
 
 get_finnhub_data = 0
-analyze_finnhub_data = 1
+analyze_finnhub_data = 0
 
 get_alpha_data = 0
-analyze_alpha_data = 1
-analyze_alpha_data_compare_companies = 1
+analyze_alpha_data = 0
+analyze_alpha_data_compare_companies =0
 
 build_own_json = 0
 analyze_my_json_data = 0
-analyze_my_json_data_compare_companies = 0
+analyze_my_json_data_compare_companies =1
 
 get_finnhub_symbol = ["MSFT", "AAPL"]
 analyze_finnhub_symbol = ["MSFT", "AAPL"]

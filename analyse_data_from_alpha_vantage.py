@@ -17,9 +17,10 @@ analyze_percentage_balance_sheet = 1
 analyse_live_with_income_statement = 1
 analyse_live_with_balance_sheet = 1
 
-analyse_absolute_my_json = 0
-analyse_percentage_my_json = 0
-analyse_live_with_my_json = 0
+#SWITCHES FOR JSON ANALYSIS
+analyse_absolute_my_json = 1
+analyse_percentage_my_json = 1
+analyse_live_with_my_json = 1
 
 indicator_absolute_with_income_statement = ["netIncome",
                                             "totalRevenue"]
@@ -65,186 +66,198 @@ def compare_companies(symbols, source):
     all_symbols_quaterly_relative_live_data_with_my_json = []
 
     for s in symbols:
+        match source:
+            case "alpha_vantage":
 
-        if analyse_absolute_income_statement:
+                if analyse_absolute_income_statement:
 
-            income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
+                    income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
 
-            for i in indicator_absolute_with_income_statement:
-                try:
-                    temp_data = extract_quarterly_report_data_from_alpha(income_statement, i, symbol=s)
-                    all_symbols_quaterly_absolute_data_with_income_statement.append(temp_data)
-
-                except BaseException:
-                    print("error in quaterly data {}".format(s))
-
-        if analyse_percentage_income_statement:
-
-            income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
-
-            for i in indicator_percentage_with_income_statement:
-
-                try:
-                    # extract data for every indicator
-                    dividend, divisor = split_indicator_in_two(i)
-                    dividend_data = get_data(income_statement, indicator=dividend, symbol=s)
-
-                    divisor_data = get_data(income_statement, indicator=divisor, symbol=s)
-                    quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
-
-                    temp_data = [dividend_data[0], quotient, s, i]
-
-                    all_symbols_quaterly_relative_percentage_with_income_statement.append(temp_data)
-
-                except:
-                    print("-{}- calculate quotient of {} didnt work for".format(s, i))
-
-        if analyse_absolute_cash_flow:
-
-            cash_flow = read_data_from_file(global_vars.filepath_alpha + "cash_flow_alpha_" + s + ".json")
-
-            for i in indicator_absolute_with_cash_flow:
-                try:
-                    temp_data = extract_quarterly_report_data_from_alpha(cash_flow, i, symbol=s)
-                    all_symbols_quaterly_absolute_data_with_cash_flow.append(temp_data)
-
-                except:
-                    print("error in quaterly data {}".format(s))
-
-        if analyze_percentage_balance_sheet:
-            balance_sheet = read_data_from_file(global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
-
-            for i in indicator_percentage_with_balance_sheet:
-                try:
-                    dividend, divisor = split_indicator_in_two(i)
-                    dividend_data = get_data(balance_sheet, indicator=dividend, symbol=s)
-
-                    divisor_data = get_data(balance_sheet, indicator=divisor, symbol=s)
-                    quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
-
-                    temp_data = [dividend_data[0], quotient, s, i]
-                    all_symbols_quaterly_relative_percentage_with_balance_sheet.append(temp_data)
-
-                except:
-                    print("-{}- calculate quotient of {} didnt work".format(s, i))
-
-        if analyse_live_with_income_statement:
-
-            income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
-            for i in indicator_live_with_income_statement:
-
-                try:
-                    dividend, divisor = split_indicator_in_two(i)
-                    dividend_data = get_data(income_statement, indicator=dividend, symbol=s)
-
-                    # wenn parameter vorhanden, dann hole dir aus file:
-                    use_live_parameter = 1
-
-                    if use_live_parameter == 1:
-
-                        # try to get data live from yahooo
+                    for i in indicator_absolute_with_income_statement:
                         try:
-                            marketCap = get_market_cap_from_yahoo_finance(s)
+                            temp_data = extract_quarterly_report_data_from_alpha(income_statement, i, symbol=s)
+                            all_symbols_quaterly_absolute_data_with_income_statement.append(temp_data)
+
+                        except BaseException:
+                            print("error in quaterly data {}".format(s))
+
+                if analyse_percentage_income_statement:
+
+                    income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
+
+                    for i in indicator_percentage_with_income_statement:
+
+                        try:
+                            # extract data for every indicator
+                            dividend, divisor = split_indicator_in_two(i)
+                            dividend_data = get_data(income_statement, indicator=dividend, symbol=s)
+
+                            divisor_data = get_data(income_statement, indicator=divisor, symbol=s)
+                            quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
+
+                            temp_data = [dividend_data[0], quotient, s, i]
+
+                            all_symbols_quaterly_relative_percentage_with_income_statement.append(temp_data)
 
                         except:
-                            marketCap = get_key_value_from_local_file("marketCap", s)
-                        created_list = [marketCap] * len(dividend_data[1])
-                        converted_list = convert_list_elements_to_int(created_list)
+                            print("-{}- calculate quotient of {} didnt work for".format(s, i))
 
-                        quotient = calculate_quotient(dividend_data[1], converted_list, i, symbol="TEST")
-                    else:
-                        divisor_data = get_data(income_statement, indicator=divisor, symbol=s)
-                        quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
+                if analyse_absolute_cash_flow:
 
-                    temp_data = [dividend_data[0], quotient, s, i]
-                    all_symbols_quaterly_relative_live_data_with_income_statement.append(temp_data)
+                    cash_flow = read_data_from_file(global_vars.filepath_alpha + "cash_flow_alpha_" + s + ".json")
+
+                    for i in indicator_absolute_with_cash_flow:
+                        try:
+                            temp_data = extract_quarterly_report_data_from_alpha(cash_flow, i, symbol=s)
+                            all_symbols_quaterly_absolute_data_with_cash_flow.append(temp_data)
+
+                        except:
+                            print("error in quaterly data {}".format(s))
+
+                if analyze_percentage_balance_sheet:
+                    balance_sheet = read_data_from_file(global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
+
+                    for i in indicator_percentage_with_balance_sheet:
+                        try:
+                            dividend, divisor = split_indicator_in_two(i)
+                            dividend_data = get_data(balance_sheet, indicator=dividend, symbol=s)
+
+                            divisor_data = get_data(balance_sheet, indicator=divisor, symbol=s)
+                            quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
+
+                            temp_data = [dividend_data[0], quotient, s, i]
+                            all_symbols_quaterly_relative_percentage_with_balance_sheet.append(temp_data)
+
+                        except:
+                            print("-{}- calculate quotient of {} didnt work".format(s, i))
+
+                if analyse_live_with_income_statement:
+
+                    income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
+                    for i in indicator_live_with_income_statement:
+
+                        try:
+                            dividend, divisor = split_indicator_in_two(i)
+                            dividend_data = get_data(income_statement, indicator=dividend, symbol=s)
+
+                            # wenn parameter vorhanden, dann hole dir aus file:
+                            use_live_parameter = 1
+
+                            if use_live_parameter == 1:
+
+                                # try to get data live from yahooo
+                                try:
+                                    marketCap = get_market_cap_from_yahoo_finance(s)
+
+                                except:
+                                    marketCap = get_key_value_from_local_file("marketCap", s)
+                                created_list = [marketCap] * len(dividend_data[1])
+                                converted_list = convert_list_elements_to_int(created_list)
+
+                                quotient = calculate_quotient(dividend_data[1], converted_list, i, symbol="TEST")
+                            else:
+                                divisor_data = get_data(income_statement, indicator=divisor, symbol=s)
+                                quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
+
+                            temp_data = [dividend_data[0], quotient, s, i]
+                            all_symbols_quaterly_relative_live_data_with_income_statement.append(temp_data)
 
 
-                except:
-                    print("-{}- calculate quotient of {} didnt work".format(s, i))
+                        except:
+                            print("-{}- calculate quotient of {} didnt work".format(s, i))
 
-        if analyse_live_with_balance_sheet:
-            indicator_live_with_balance_sheet = ["totalAssets_to_marketCap"]
+                if analyse_live_with_balance_sheet:
+                    indicator_live_with_balance_sheet = ["totalAssets_to_marketCap"]
 
-            balance_sheet = read_data_from_file(global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
-            counter = 0
-            for i in indicator_live_with_balance_sheet:
-                try:
-                    dividend, divisor = split_indicator_in_two(i)
-                    dividend_data = get_data(balance_sheet, indicator=dividend, symbol=s)
+                    balance_sheet = read_data_from_file(global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
+                    counter = 0
+                    for i in indicator_live_with_balance_sheet:
+                        try:
+                            dividend, divisor = split_indicator_in_two(i)
+                            dividend_data = get_data(balance_sheet, indicator=dividend, symbol=s)
 
-                    # wenn parameter vorhanden, dann hole dir aus file:
-                    use_live_parameter = 1
+                            # wenn parameter vorhanden, dann hole dir aus file:
+                            use_live_parameter = 1
 
-                    if use_live_parameter == 1:
-                        marketCap = get_market_cap_from_yahoo_finance(s)
-                        created_list = [marketCap] * len(dividend_data[1])
-                        converted_list = convert_list_elements_to_int(created_list)
+                            if use_live_parameter == 1:
+                                marketCap = get_market_cap_from_yahoo_finance(s)
+                                created_list = [marketCap] * len(dividend_data[1])
+                                converted_list = convert_list_elements_to_int(created_list)
 
-                        quotient = calculate_quotient(dividend_data[1], converted_list, i, symbol="TEST")
-                    else:
-                        divisor_data = get_data(balance_sheet, indicator=divisor, symbol=s)
-                        quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
+                                quotient = calculate_quotient(dividend_data[1], converted_list, i, symbol="TEST")
+                            else:
+                                divisor_data = get_data(balance_sheet, indicator=divisor, symbol=s)
+                                quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
 
-                    temp_data = [dividend_data[0], quotient, s, i]
+                            temp_data = [dividend_data[0], quotient, s, i]
 
-                    if counter < 1:
-                        all_symbols_quaterly_relative_live_data_with_balance_sheet.append(temp_data)
-                        counter = 1
+                            if counter < 1:
+                                all_symbols_quaterly_relative_live_data_with_balance_sheet.append(temp_data)
+                                counter = 1
 
 
-                except:
-                    print("-{}- calculate quotient of {} didnt work".format(s, i))
+                        except:
+                            print("-{}- calculate quotient of {} didnt work".format(s, i))
 
-        if analyse_live_with_my_json:
+            case "my_json":
+                if analyse_live_with_my_json:
 
-            my_json_data = read_data_from_file(global_vars.filepath_my_json + s + ".json")
+                    my_json_data = read_data_from_file(global_vars.filepath_my_json + s + ".json")
 
-            counter = 0
-            for i in indicator_live_with_income_statement:
+                    counter = 0
+                    for i in indicator_live_with_income_statement:
 
-                try:
-                    dividend, divisor = split_indicator_in_two(i)
-                    dividend_data = get_data(my_json_data, indicator=dividend, symbol=s)
+                        try:
+                            dividend, divisor = split_indicator_in_two(i)
+                            dividend_data = get_data(my_json_data, indicator=dividend, symbol=s)
 
-                    # try to get data live from yahooo
-                    try:
-                        marketCap = get_market_cap_from_yahoo_finance(s)
+                            # try to get data live from yahooo
+                            try:
+                                marketCap = get_market_cap_from_yahoo_finance(s)
 
-                    except:
-                        marketCap = get_key_value_from_local_file("marketCap", s)
-                    created_list = [marketCap] * len(dividend_data[1])
-                    converted_list = convert_list_elements_to_int(created_list)
+                            except:
+                                marketCap = get_key_value_from_local_file("marketCap", s)
+                            created_list = [marketCap] * len(dividend_data[1])
+                            converted_list = convert_list_elements_to_int(created_list)
 
-                    quotient = calculate_quotient(dividend_data[1], converted_list, i, symbol="TEST")
+                            quotient = calculate_quotient(dividend_data[1], converted_list, i, symbol="TEST")
 
-                    temp_data = [dividend_data[0], quotient, s, i]
+                            temp_data = [dividend_data[0], quotient, s, i]
 
-                    if counter < 1:
-                        all_symbols_quaterly_relative_live_data_with_my_json.append(temp_data)
-                        counter = 1
+                            if counter < 1:
+                                all_symbols_quaterly_relative_live_data_with_my_json.append(temp_data)
+                                counter = 1
 
-                except:
-                    print("-{}- calculate quotient of {} didnt work".format(s, i))
+                        except:
+                            print("-{}- calculate quotient of {} didnt work".format(s, i))
 
-    if analyse_absolute_income_statement == 1:
-        processor_filter_plot_data(all_symbols_quaterly_absolute_data_with_income_statement, False, True, source)
+            case _:
+                raise Exception("invalid source")
 
-    if analyse_absolute_cash_flow == 1:
-        processor_filter_plot_data(all_symbols_quaterly_absolute_data_with_cash_flow, False, True, source)
+    match source:
+        case "alpha_vantage":
+            if analyse_absolute_income_statement == 1:
+                processor_filter_plot_data(all_symbols_quaterly_absolute_data_with_income_statement, False, True, source)
 
-    if analyze_percentage_balance_sheet == 1:
-        processor_filter_plot_data(all_symbols_quaterly_relative_percentage_with_balance_sheet, True, True, source)
-    if analyse_percentage_income_statement == 1:
-        processor_filter_plot_data(all_symbols_quaterly_relative_percentage_with_income_statement, True, True, source)
+            if analyse_absolute_cash_flow == 1:
+                processor_filter_plot_data(all_symbols_quaterly_absolute_data_with_cash_flow, False, True, source)
 
-    if analyse_live_with_balance_sheet == 1:
-        processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_balance_sheet, True, True, source)
-    if analyse_live_with_income_statement == 1:
-        processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_income_statement, True, True, source)
+            if analyze_percentage_balance_sheet == 1:
+                processor_filter_plot_data(all_symbols_quaterly_relative_percentage_with_balance_sheet, True, True, source)
+            if analyse_percentage_income_statement == 1:
+                processor_filter_plot_data(all_symbols_quaterly_relative_percentage_with_income_statement, True, True, source)
 
-    if analyse_live_with_my_json == 1:
-        processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_my_json, True, True, source)
+            if analyse_live_with_balance_sheet == 1:
+                processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_balance_sheet, True, True, source)
+            if analyse_live_with_income_statement == 1:
+                processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_income_statement, True, True, source)
+
+        case "my_json":
+            if analyse_live_with_my_json == 1:
+                processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_my_json, True, True, source)
+
+        case _:
+            raise Exception("invalid source")
 
     pass
 

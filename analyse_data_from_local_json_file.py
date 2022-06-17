@@ -75,10 +75,10 @@ def one_company_only(symbol, source="my_json"):
         processor_filter_plot_data(data_list=rel_data_live, relative_data=True, all_symbols=False, source=source)
 
 
-def analyze_data_from_local_json_file(symbols: list, analyse_my_json_data_compare_companies: int):
+def analyze_data_from_local_json_file(symbols: list, analyze_my_json_data_compare_companies: int):
     source = "my_json"
 
-    if analyse_my_json_data_compare_companies:
+    if analyze_my_json_data_compare_companies:
         compare_companies(symbols, source)
 
     else:
