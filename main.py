@@ -9,6 +9,7 @@ from functions_for_yahoo import calculate_sp_500_to_gdp_usa
 
 
 def finnhub_analysis():
+    print("start finnhub analysis")
     if global_vars.get_finnhub_data == 1:
         calling_finnhub_api(global_vars.finnhub_symbols)
 
@@ -18,6 +19,8 @@ def finnhub_analysis():
 
 
 def alpha_vantage_analysis():
+    print("start alpha vantage analysis")
+
     if global_vars.get_alpha_data == 1:
         calling_alpha_vantage_api(global_vars.alpha_vantage_symbols)
 
@@ -27,6 +30,8 @@ def alpha_vantage_analysis():
 
 
 def own_json_analysis():
+    print("start own json analysis")
+
     if global_vars.build_own_json == 1:
         build_own_json_file(global_vars.my_json_symbols)
 
