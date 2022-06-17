@@ -1,10 +1,7 @@
 # Fundamental Stock Analysis - An approach
 
-## Motivation:
+## Motivation
 I am kind of interested in programming and economics. Both combined, has led me to write irregularly but every now and then on this little Python script.
-
-## Application
-This application is written in Python. Python Interpreter: v3.10
 
 ## User Manual
 Unfortunately, using the program with the current version is not very user-friendly.
@@ -19,7 +16,7 @@ Preparations are required so that the program can be used successfully and compa
 These are described in this section. 
 
 [TLDR]: In order to use the finnhub and alpha vantage stock api you need keys. You can find out how to get a key on the web page I referenced above.
-In keys.py you have to enter the keys. api_key for using the finnhub api and api_key_alpha for alpha vantage.
+In `keys.py` you have to enter the keys. `api_key` for using the finnhub api and `api_key_alpha` for alpha vantage.
 
 #### What approaches are available to me?
 For a better understanding, here a few words about the selectable approaches of the user. 
@@ -35,10 +32,18 @@ For an in-depth look at financial metrics, four data sources are available:
 
 
 ### Usage
+The program execution an individual adjustment of the parameters and the companies can be made. 
+For these adjustments the file `global_vars.py` is available.
+This again is subdivided into different sections. A section always starts with `# START <section name>` and ends with `# END <section name>`.
+
+To analyze a company, enter the stock symbol under which the company is listed on the stock exchange. 
+The list of companies can be extended at will. The limiting factor is at some point the computing capacity of your own PC.
+
+### Hints
+* When the program goes to sleep for 60 seconds, don´t cancel execution. The program will continue
 
 
-## Improvements
-Possible improvements are
+## Possible Improvements
 - Simplified extension of additional indicators. The extension of additional indicators is currently time-consuming, since the extension must be made in several places within the implementation.
 - Error Handling.
 - Python package and dependency management.

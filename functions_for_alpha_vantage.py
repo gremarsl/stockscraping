@@ -30,7 +30,7 @@ def calling_alpha_vantage_api(symbols):
         if symbols.index(s) == list_elem:
             return
 
-        print("Going to sleep for 60 Seconds now...")
+        print("Going to sleep for 60 Seconds now... Because you reached the maximum number of requests. (Free version is limited). Further infos unter alpha vantage website. ")
         time.sleep(60)
 
     return
