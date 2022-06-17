@@ -50,12 +50,7 @@ The list of companies can be extended at will. The limiting factor is at some po
 - Possible modularization in 3 tools. Each API own handling
 
 ## Contribution
-Thank you for helping and improving this program. 
-
-1. Fork the Project (see: [https://help.github.com/en/github/getting-started-with-github/fork-a-repo](https://help.github.com/en/github/getting-started-with-github/fork-a-repo)
-2. Create your Feature Branch (`git checkout -b `)
-3. Commit your Changes (`git commit -m 'Add my Feature`)
-4. Push to the Branch (`git push origin feature/Feature`)
+Thanks for your feedback, help and improving this program.
 
 ## Licence
 Standard Github license. Feel free to view and fork this project for personal use.
