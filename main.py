@@ -63,13 +63,15 @@ def own_json_analysis():
 
 
 def start():
-    calculate_sp_500_to_gdp_usa()
 
     finnhub_analysis()
 
     alpha_vantage_analysis()
 
     own_json_analysis()
+
+    #gimmic
+    calculate_sp_500_to_gdp_usa()
 
     pass
 

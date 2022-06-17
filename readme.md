@@ -1,7 +1,7 @@
 # Fundamental Stock Analysis - An approach
 
 ## Motivation:
-I am interested in programming and economics. Both combined, has led me to write irregularly but every now and then on this little Python script.
+I am kind of interested in programming and economics. Both combined, has led me to write irregularly but every now and then on this little Python script.
 
 ## Application
 This application is written in Python. Python Interpreter: v3.10
@@ -9,32 +9,30 @@ This application is written in Python. Python Interpreter: v3.10
 ## User Manual
 Unfortunately, using the program with the current version is not very user-friendly.
 Therefore, I will try to answer all the important points in this section.
-Leider ist die Nutzung des Programms mit dem aktuellen Stand nicht sehr benutzerfreundlich.
-Deshalb versuche ich in diesem Abschnitt alle wichtigen Punkte zu beantworten.
 
-### Voraussetzungen
-Python Interpreter: v3.10 ist auf dem computer installiert und funktionsfähig.
-Die Python Pakete sind installiert und stehen dem Programm bereit.
+### Prerequisites
+Python Interpreter: v3.10 is installed and functioning on the computer.
+The Python packages are installed and ready for usage.
 
-### Vorbereitungen für die Nutzung 
-Damit das Programm erfolgreich eingesetzt und Unternehmen auf Kennzahlen untersucht werden können, werden vorbereitungen notwendig. 
-Diese werden in diesem Abschnitt beschrieben. 
+### Preparations for use
+Preparations are required so that the program can be used successfully and companies can be analyzed for key figures. 
+These are described in this section. 
 
-#### Welche Herangehensweisen stehen mir zur Verfügung?
-Für ein besseres Verständnis der Nutzung, hier ein paar Worte den auswählbaren Herangehensweisen des Nutzers. 
-1. Nutzen einer Stock API, um anschließend die Unternehmensdaten auszuwerten.
-2. Erstellen eines eigenen Formats, mit eigenständig ausgewählten Daten, die anschließend ausgewertet werden sollen. Aktuelle Format: JSON.
+[TLDR]: In order to use the finnhub and alpha vantage stock api you need keys. You can find out how to get a key on the web page I referenced above.
+In keys.py you have to enter the keys. api_key for using the finnhub api and api_key_alpha for alpha vantage.
 
+#### What approaches are available to me?
+For a better understanding, here a few words about the selectable approaches of the user. 
+1. Using a stock API in order to analyze the enterprise data afterwards.
+2. Creating your own format, with individually / customized data to be evaluated afterwards. Current format: JSON.
 
-#### Von wo kommen die Daten für eine Unternehmensanalyse ?
-Für eine ausführliche Betrachtung der finanziellen Kennzahlen, stehen vier Datenquellen zur Verfügung: 
-1. finnhub stock API  (https://finnhub.io/)
+#### Where does the data for a company analysis come from ?
+For an in-depth look at financial metrics, four data sources are available: 
+1. finnhub stock API (https://finnhub.io/)
 2. alpha vantage stock API (https://www.alphavantage.co/)
 3. yahoo finance (https://pypi.org/project/yfinance/)
-4. Nutzung einer eigenständig mit Daten gefüllten Datei (json Format).
+4. use of a standalone data filled file (json format).
 
-[TLDR]: Damit du die finnhub und alpha vantage stock api nutzen kannst, benötigst du keys. Wie du einen key erhälst, erfährst du auf der webseite, wie ich sie oben verlinkt habe.
-In keys.py sind die keys dann einzutragen. api_key für die Nutzung der finnhub api und api_key_alpha für alpha vantage
 
 
 ## Contribution
