@@ -140,7 +140,6 @@ def reverse_lists(x: list, y: list) -> list:
 def write_to_file_in_json_format(data, name_of_file: str) -> None:
     f = open(name_of_file, "w")
     f.write(str(json.dumps(data, indent=4)))
-    print(name_of_file)
     f.close()
 
 
