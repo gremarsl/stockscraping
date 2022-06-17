@@ -1,0 +1,23 @@
+{
+    "symbol": "MSFT",
+    "quarterlyReports": [
+        {
+            "fiscalDateEnding": "2022-05-01",
+            "quater":"1",
+            "grossProfit": "34768000000",
+            "totalRevenue": "51228000000",
+            "costOfRevenue": "24433000000",
+            "operatingIncome": "22247000000",
+            "researchAndDevelopment": "5758000000",
+            "ebit": "23040000000",
+            "netIncome": "18765000000",
+            "totalAssets": "340389000000",
+            "totalCurrentAssets": "174188000000",
+            "totalNonCurrentAssets": "169701000000",
+            "goodwill": "50921000000",
+            "totalLiabilities": "180379000000",
+            "totalCurrentLiabilities": "77510000000",
+            "totalNonCurrentLiabilities": "102869000000"
+        }
+    ]
+}

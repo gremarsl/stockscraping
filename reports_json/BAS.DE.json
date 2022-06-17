@@ -1,0 +1,26 @@
+{
+    "symbol": "BAS.DE",
+    "quarterlyReports": [
+        {
+            "fiscalDateEnding": "2022-05-01",
+            "quater":"1",
+            "totalRevenue": "23100000000",
+            "totalRevenue_wrong": "23.1000000000",
+            "costOfRevenue": "17.081000000000",
+            "grossProfit":"6.003000000000",
+            "researchAndDevelopment":"366000000",
+            "operatingIncome":"2785000000",
+            "ebit":"2785000000",
+            "ebit_margin_calculate": "26,5",
+            "netIncome": "1321000000",
+            "totalAssets": "93983000000",
+            "totalCurrentAssets": "42726000000",
+            "totalLiabilities": "51000000000",
+            "totalCurrentLiabilities": "25093000000",
+            "employees":"14595",
+            "ROCemployed":"12.6",
+            "netCashFlow":"18.2",
+            "cashAndCashEquivalentsAtEndOfPeriod":"4494000000"
+        }
+    ]
+}

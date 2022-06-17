@@ -22,9 +22,10 @@ Für eine ausführliche Betrachtung der finanziellen Kennzahlen, stehen vier Dat
 4. Nutzung einer eigenständig mit Daten gefüllten Datei (json Format).
 
 [TLDR]: Damit du die finnhub und alpha vantage stock api nutzen kannst, benötigst du keys. Wie du einen key erhälst, erfährst du auf der webseite, wie ich sie oben verlinkt habe.
+In keys.py sind die keys dann einzutragen. api_key für die Nutzung der finnhub api und api_key_alpha für alpha vantage
 
 
-###Herangehensweisen 
+#### Welche Herangehensweisen stehen mir zur Verfügung?
 - REquest einer API 
 - Auslesen und auswerten der gefüllten Datei
 
