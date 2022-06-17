@@ -34,6 +34,8 @@ For an in-depth look at financial metrics, four data sources are available:
 4. use of a standalone data filled file (json format).
 
 
+### Usage
+
 
 ## Contribution
 Thank you for helping and improving this work. 

@@ -29,8 +29,6 @@ analyze_alpha_vantage_symbol_data = ["MSFT", "AAPL"]
 
 build_json_from_symbols = ["BAS.DE", "AAPL"]
 my_json_symbol = ["BAS.DE", "MSFT"]
-
-
 # END ENTER COMPANIES TO ANALYZE
 
 
