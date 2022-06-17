@@ -42,7 +42,6 @@ The list of companies can be extended at will. The limiting factor is at some po
 ### Hints
 * When the program goes to sleep for 60 seconds, don´t cancel execution. The program will continue
 
-
 ## Possible Improvements
 - Simplified extension of additional indicators. The extension of additional indicators is currently time-consuming, since the extension must be made in several places within the implementation.
 - Error Handling.
