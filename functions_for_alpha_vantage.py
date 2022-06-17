@@ -5,6 +5,7 @@ import pandas as pd
 import requests
 import json
 
+import global_vars
 from general_functions import write_to_file_in_json_format, reverse_lists
 import time
 
@@ -52,9 +53,8 @@ def request_overview_from_alpha(symbol):
 
     fundamental_data_response_json = response.json()  # maybe redundant
 
-    path = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\alpha_vantage\\"
     filename = "fundamental_alpha_data_" + symbol + ".json"
-    path_to_file = path + filename
+    path_to_file = global_vars.filepath_alpha + filename
     write_to_file_in_json_format(fundamental_data_response_json, path_to_file)
 
     return fundamental_data_response_json
@@ -170,12 +170,9 @@ def request_income_statement_from_alpha(symbol):
 
     API_URL = "https://www.alphavantage.co/query?"
 
-    path = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\alpha_vantage\\"
-
     filename = "income_statement_alpha_" + symbol + ".json"
 
-    path_to_file = path + filename
-
+    path_to_file = global_vars.filepath_alpha + filename
 
     input = {
         "function": "INCOME_STATEMENT",
@@ -200,10 +197,9 @@ def request_balance_sheet_from_alpha(symbol):
     # https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol=IBM&apikey=demo
 
     API_URL = "https://www.alphavantage.co/query?"
-    path = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\alpha_vantage\\"
 
     filename = "balance_sheet_alpha_" + symbol + ".json"
-    path_to_file = path + filename
+    path_to_file = global_vars.filepath_alpha + filename
 
     input = {
         "function": "BALANCE_SHEET",
@@ -226,12 +222,10 @@ def request_balance_sheet_from_alpha(symbol):
 def request_cash_flow_from_alpha(symbol):
     # https://www.alphavantage.co/query?function=CASH_FLOW&symbol=VLDR&apikey=X90PH4C1TIFJA4MP
     API_URL = "https://www.alphavantage.co/query?"
-    path = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\alpha_vantage\\"
 
     filename = "cash_flow_alpha_" + symbol + ".json"
 
-    path_to_file = path + filename
-
+    path_to_file = global_vars.filepath_alpha + filename
 
     input = {
         "function": "CASH_FLOW",
@@ -254,11 +248,9 @@ def request_cash_flow_from_alpha(symbol):
 def request_earnings_from_alpha(symbol):
     # https://www.alphavantage.co/query?function=CASH_FLOW&symbol=IBM&apikey=demo
     API_URL = "https://www.alphavantage.co/query?"
-    path = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\alpha_vantage\\"
     filename = "earnings_alpha_" + symbol + ".json"
 
-    path_to_file = path + filename
-
+    path_to_file = global_vars.filepath_alpha + filename
 
     input = {
         "function": "EARNINGS",

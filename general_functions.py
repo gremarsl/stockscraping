@@ -189,11 +189,11 @@ def add_keys_values_to_object(list_filtered):
 
 def get_key_value_from_local_file(indicator, s):
     try:
-
         symbol_info = read_data_from_file("yahoo_info_data_" + s[0] + ".json")
         i = symbol_info[indicator]
-        print(i)
+
     except:
+        print(i)
         print("live data from yahoo failed and no locally data for {} available".format(indicator))
 
     return i

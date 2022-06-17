@@ -8,6 +8,7 @@ from functions_for_yahoo import calculate_sp_500_to_gdp_usa
 
 
 # START USER CONFIG SWITCHES
+#TODO Beschreibung how to use it
 build_own_json = 0
 analyze_my_json_data = 0
 analyze_my_json_data_compare_companies = 0
@@ -29,7 +30,7 @@ build_json_from_symbols = ["BAS.DE", "AAPL"]
 my_json_symbol = ["BAS.DE", "MSFT"]
 
 
-# START USER CONFIG SWITCHES
+# END USER CONFIG SWITCHES
 
 def finnhub_analysis():
     if get_finnhub_data == 1:
@@ -51,6 +52,7 @@ def alpha_vantage_analysis():
 
 
 def own_json_analysis():
+
     if build_own_json == 1:
         build_own_json_file(build_json_from_symbols)
 
@@ -69,10 +71,10 @@ def start():
 
     own_json_analysis()
 
-
     pass
 
 
 if __name__ == '__main__':
+
     start()
 

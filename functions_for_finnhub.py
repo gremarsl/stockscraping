@@ -1,4 +1,6 @@
 import requests
+
+import global_vars
 from keys import api_key
 from general_functions import write_to_file_in_json_format, reverse_lists
 
@@ -17,8 +19,7 @@ def calling_finnhub_api(symbols: list):
             "token": api_key}
 
         filename = "fundamental_data_finnhub_" + s + ".json"
-        path = "C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\finnhub\\"
-        path_to_file = path + filename
+        path_to_file = global_vars.filepath_finnhub + filename
 
         fundamental_data_response = requests.get(api_url, data)
         fundamental_data_response_json: requests.models.Response = fundamental_data_response.json()  # maybe redundant
