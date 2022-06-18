@@ -4,19 +4,29 @@ import os
 # set value to 1, to enable an analysis and calculation. set value to 0 to disable it.
 
 '''
-@param get_finnhub_data                         Requests / Gets data from finnhub for the entered companies. If enabled / set to 1.
-@param analyze_finnhub_data                     Evaluates the available data from finnhub for the entered companies. If enabled / set to 1.
+@param get_finnhub_data                         Requests / Gets data from finnhub for the entered companies. 
+                                                If enabled / set to 1.
+@param analyze_finnhub_data                     Evaluates the available data from finnhub for the entered companies. 
+                                                If enabled / set to 1.
 
-@param get_alpha_data                           Requests / Gets data from alpha vantage for the entered companies. If enabled / set to 1.
-@param analyze_alpha_data                       Evaluates the available data from alpha vantage for the entered companies. If enabled / set to 1 every company get evaluated 
-                                                and can be interpreted with the help of grafics showing financial indicators separately.
-@param analyze_alpha_data_compare_companies     Evaluates the available data from alpha vantage. If enabled the entered companies are evaluated and shown 
+@param get_alpha_data                           Requests / Gets data from alpha vantage for the entered companies. 
+                                                If enabled / set to 1.
+@param analyze_alpha_data                       Evaluates the available data from alpha vantage for the 
+                                                entered companies. If enabled / set to 1 every company get evaluated and 
+                                                can be interpreted with the help of graphics showing financial indicators 
+                                                separately.
+@param analyze_alpha_data_compare_companies     Evaluates the available data from alpha vantage. 
+                                                If enabled the entered companies are evaluated and shown 
                                                 together in one graphic for easier comparison.
 
-@param build_own_json                           Builds a json file for the entered companies with data from alpha vantage. If enabled / set to 1.
-@param analyze_my_json_data                     Evaluates the available data from the json-files for the entered companies. If enabled / set to 1 every company get evaluated 
-                                                and can be interpreted with the help of grafics showing financial indicators separately.
-@param analyze_my_json_data_compare_companies   Evaluates the available data from  the json-files. If enabled the entered companies are evaluated and shown 
+@param build_own_json                           Builds a json file for the entered companies with data 
+                                                from alpha vantage. If enabled / set to 1.
+@param analyze_my_json_data                     Evaluates the available data from the json-files for the 
+                                                entered companies. If enabled / set to 1 every company get evaluated 
+                                                and can be interpreted with the help of grafics showing financial 
+                                                indicators separately.
+@param analyze_my_json_data_compare_companies   Evaluates the available data from  the json-files. 
+                                                If enabled the entered companies are evaluated and shown 
                                                 together in one graphic for easier comparison.
 '''
 
