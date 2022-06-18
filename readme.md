@@ -32,15 +32,21 @@ For an in-depth look at financial metrics, four data sources are available:
 
 
 ### Usage
-The program execution an individual adjustment of the parameters and the companies can be made. 
+Before the program execution an individual adjustment of the parameters and the companies can be made. 
 For these adjustments the file `global_vars.py` is available.
 This again is subdivided into different sections. A section always starts with `# START <section name>` and ends with `# END <section name>`.
 
 To analyze a company, enter the stock symbol under which the company is listed on the stock exchange. 
 The list of companies can be extended at will. The limiting factor is at some point the computing capacity of your own PC.
 
+### The first Execution
+After you have downloaded and installed the necessary packages for a successful execution of the script, nothing stands in the way of a first program execution. 
+After a few seconds, graphs should be displayed one after the other, showing you a comparison between Apple and Microsoft. 
+If you want to continue to the next graph, press X to close the current graphic.
+
 ### Hints
-* When the program goes to sleep for 60 seconds, don´t cancel execution. The program will continue
+* When the program goes to sleep for 60 seconds, don´t cancel execution. (rationale: limited amount of requests per time)
+* The file `companies.txt` contains some symbols of other companies.
 
 ## Possible Improvements
 - Simplified extension of additional indicators. The extension of additional indicators is currently time-consuming, since the extension must be made in several places within the implementation.

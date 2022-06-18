@@ -1,0 +1,25 @@
+
+## The purpose of this file is to give a few list of companies with their symbols. Also separated among industries
+
+semiconductor = ["INTC", "AMD"]  # "NVDA", "AAPL", "MSFT", "QCOM", "MRVL", "ASML","KLAC","STM","SNPS", "AMBA",  "TEAM","TSM", "NVDA", "ZS", "SNPS", "CDNS"
+
+big_five = ["MSFT", "AAPL"] # GOOGL, , "FB", "AMD", "NVDA"
+
+energy = ["CVX"]  # "COP","XOM" ,"RDS-B","BP"
+
+automotive_alpha = ["TSLA"]
+
+network_alpha = ["NOK", "VZ", "T"]
+
+consumer_alpha = ["PRG", "KO", "MCD", "NKE", "DIS", "OR.PA"]  # spencer
+
+mobility_alpha = ["BA"]
+
+pharma_companies_alpha = ["JNJ", "PFE", "ABBV", "MRK", "GSK"]
+
+finance_alpha = ["V"]
+
+automotive_finnhub = ["DAI.DE", "BMW.DE", "VOW.DE", "PAH3.DE"]
+chemicals_finnhub = ["BAS.DE", "BAYN.DE", "LIN.DE", "HEN3.DE", "1COV.DE"]
+industry_finnhub = ["SIE.DE"]
+consumer_finnhub = ["BEI.DE"]
