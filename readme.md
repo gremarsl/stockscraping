@@ -55,11 +55,14 @@ If you want to continue to the next graph, press X to close the current graphic.
 - Possible modularization in 3 tools. Each API own handling
 
 ## Contribution
-Thanks for your feedback, help and improving this program.
+If you like and use this program, feel free to donate here: 
+[Donate this program](https://www.paypal.com/donate/?hosted_button_id=FR84QT6MVPKF)
+
 
 ## Licence
 Standard Github license. Feel free to view and fork this project for personal use.
 
 ## Get in contact 
+
 Github - [gremarsl](https://github.com/gremarsl)\
 E-Mail:  [startwitharduino@gmail.com ](startwitharduino@gmail.com)
