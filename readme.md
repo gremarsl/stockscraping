@@ -56,7 +56,7 @@ If you want to continue to the next graph, press X to close the current graphic.
 
 ## Contribution
 If you like and use this program, feel free to donate here: 
-[Donate this program](https://www.paypal.com/donate/?hosted_button_id=FR84QT6MVPKF)
+[Donate this program](https://www.paypal.com/donate/?hosted_button_id=FR84QT6MVPKFS)
 
 
 ## Licence
