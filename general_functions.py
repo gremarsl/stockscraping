@@ -86,7 +86,7 @@ def get_float_data(input_data, indicator, symbol):
     return 1 # error if 1 is returned
 
 
-def calculate_quotient(dividend_data, divisor_data, indicator, symbol):
+def calculate_quotient(dividend_data, divisor_data):
     quotient_list = [(x / y) * 100 for x, y in zip(dividend_data, divisor_data)]
 
     return quotient_list
