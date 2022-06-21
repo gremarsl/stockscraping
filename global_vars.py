@@ -35,9 +35,9 @@ analyze_finnhub_data = 0
 
 get_alpha_data = 0
 analyze_alpha_data = 0
-analyze_alpha_data_compare_companies = 1
+analyze_alpha_data_compare_companies = 0
 
-build_own_json = 0
+build_own_json = 1
 analyze_my_json_data = 0
 analyze_my_json_data_compare_companies = 0
 # END USER CONFIG SWITCHES
@@ -54,7 +54,7 @@ finnhub_symbols = ["LOM"]
 
 alpha_vantage_symbols = ["LHX","NOC","GD","LMT","RTX"]
 
-my_json_symbols = ["LMT", "MSFT"]
+my_json_symbols = ["LHX","NOC","GD","LMT","RTX"]
 # END COMPANIES TO ANALYZE
 
 

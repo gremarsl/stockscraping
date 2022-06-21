@@ -5,7 +5,7 @@ import global_vars
 from data_processor import processor_filter_plot_data
 from functions_for_alpha_vantage import extract_quarterly_report_data_from_alpha
 from functions_for_yahoo import get_market_cap_from_yahoo_finance
-from general_functions import calculate_quotient, convert_list_elements_to_int, split_indicator_in_two, \
+from general_functions import calculate_quotient, split_indicator_in_two, \
     read_data_from_file, get_data, get_key_value_from_local_file
 
 indicator_absolute_with_income_statement = ["totalRevenue", "operatingIncome", "netIncome"]
@@ -76,7 +76,7 @@ def compare_companies(symbols, source):
                             dividend_data = get_data(income_statement, indicator=dividend, symbol=s)
 
                             divisor_data = get_data(income_statement, indicator=divisor, symbol=s)
-                            quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
+                            quotient = calculate_quotient(dividend_data[1], divisor_data[1])
 
                             temp_data = [dividend_data[0], quotient, s, i]
 
@@ -107,7 +107,7 @@ def compare_companies(symbols, source):
                             dividend_data = get_data(balance_sheet, indicator=dividend, symbol=s)
 
                             divisor_data = get_data(balance_sheet, indicator=divisor, symbol=s)
-                            quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
+                            quotient = calculate_quotient(dividend_data[1], divisor_data[1])
 
                             temp_data = [dividend_data[0], quotient, s, i]
                             all_symbols_quaterly_relative_percentage_with_balance_sheet.append(temp_data)
@@ -170,7 +170,7 @@ def compare_companies(symbols, source):
 
                         try:
                             dividend, divisor = split_indicator_in_two(i)
-                            dividend_data = get_data(my_json_data, indicator=dividend, symbol=s)
+                            divisor_data = get_data(my_json_data, indicator=divisor, symbol=s)
 
                             # try to get data live from yahooo
                             try:
@@ -181,7 +181,7 @@ def compare_companies(symbols, source):
 
                             quotient = list(map(lambda x: marketCap / x, divisor_data[1]))
 
-                            temp_data = [dividend_data[0], quotient, s, i]
+                            temp_data = [divisor_data[0], quotient, s, i]
 
                             all_symbols_quaterly_relative_live_data_with_my_json.append(temp_data)
 
@@ -233,7 +233,6 @@ def one_company_only(symbol):
 
         income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
 
-        counter = 0
         for i in indicator_absolute_with_income_statement:
             try:
                 temp_data = extract_quarterly_report_data_from_alpha(income_statement, i, symbol=s)
@@ -253,7 +252,7 @@ def one_company_only(symbol):
                 dividend_data = get_data(income_statement, indicator=dividend, symbol=s)
 
                 divisor_data = get_data(income_statement, indicator=divisor, symbol=s)
-                quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
+                quotient = calculate_quotient(dividend_data[1], divisor_data[1])
 
                 temp_data = [dividend_data[0], quotient, s, i]
 
@@ -267,7 +266,6 @@ def one_company_only(symbol):
 
         cash_flow = read_data_from_file(global_vars.filepath_alpha + "cash_flow_alpha_" + s + ".json")
 
-        counter = 0
         for i in indicator_absolute_with_cash_flow:
             try:
                 temp_data = extract_quarterly_report_data_from_alpha(cash_flow, i, symbol=s)
@@ -285,7 +283,7 @@ def one_company_only(symbol):
                 dividend_data = get_data(balance_sheet, indicator=dividend, symbol=s)
 
                 divisor_data = get_data(balance_sheet, indicator=divisor, symbol=s)
-                quotient = calculate_quotient(dividend_data[1], divisor_data[1], i, symbol=s)
+                quotient = calculate_quotient(dividend_data[1], divisor_data[1])
 
                 temp_data = [dividend_data[0], quotient, s, i]
 
@@ -298,7 +296,6 @@ def one_company_only(symbol):
     if global_vars.analyze_live_with_income_statement:
 
         income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
-        counter = 0
         for i in indicator_live_with_income_statement:
 
             try:
