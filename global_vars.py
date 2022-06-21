@@ -31,7 +31,7 @@ import os
 '''
 
 get_finnhub_data = 0
-analyze_finnhub_data = 1
+analyze_finnhub_data = 0
 
 get_alpha_data = 0
 analyze_alpha_data = 0
@@ -39,7 +39,7 @@ analyze_alpha_data_compare_companies = 1
 
 build_own_json = 0
 analyze_my_json_data = 0
-analyze_my_json_data_compare_companies = 1
+analyze_my_json_data_compare_companies = 0
 # END USER CONFIG SWITCHES
 
 
@@ -50,21 +50,21 @@ analyze_my_json_data_compare_companies = 1
 @param my_json_symbols          Companies to analyze with own data
 
 '''
-finnhub_symbols = ["MSFT", "AAPL"]
+finnhub_symbols = ["LOM"]
 
-alpha_vantage_symbols = ["MSFT", "AAPL"]
+alpha_vantage_symbols = ["LHX","NOC","GD","LMT","RTX"]
 
-my_json_symbols = ["BAS.DE", "MSFT"]
+my_json_symbols = ["LMT", "MSFT"]
 # END COMPANIES TO ANALYZE
 
 
 # START ADVANCED PARAMETERS
   # START SWITCHES FOR ALPHA VANTAGE ANALYSIS
 
-analyze_absolute_income_statement = 1
-analyze_absolute_cash_flow = 1
-analyze_percentage_income_statement = 1
-analyze_percentage_balance_sheet = 1
+analyze_absolute_income_statement = 0
+analyze_absolute_cash_flow = 0
+analyze_percentage_income_statement = 0
+analyze_percentage_balance_sheet = 0
 analyze_live_with_income_statement = 1
 analyze_live_with_balance_sheet = 1
   # END SWITCHES FOR ALPHA VANTAGE ANALYSIS

@@ -18,14 +18,14 @@ options_per_share_indicator = [
 ]
 
 options_rel_indicator = [
-    "netIncome_to_marketCap",
-    "totalRevenue_to_marketCap",
+    "marketCap_to_netIncome",
+    "marketCap_to_totalRevenue",
     "totalDebtToEquity",
     "cashRatio",
     "currentRatio",
     "researchAndDevelopment_to_totalRevenue",
     "totalLiabilities_to_totalAssets",
-    "totalAssets_to_marketCap",
+    "marketCap_to_totalAssets",
     "netIncome_to_totalRevenue",
     "totalCurrentLiabilities_to_totalCurrentAssets",
     "grossProfit_to_totalRevenue",
@@ -96,13 +96,13 @@ def option_color_eps():
 def option_color_ebit_per_share():
     return "g"
 
+
 def option_color_net_margin():
     return "blue"
 
 
 def option_color_current_ratio():
     return "darkred"
-
 
 
 def option_color_cash_ratio():
@@ -136,12 +136,13 @@ def option_color_operating_income():
 def option_color_total_revenue():
     return "orange"
 
+
 def option_color_operatingCashflow():
     return "darkred"
 
+
 def option_color_changeInCashAndCashEquivalents():
     return "tomato"
-
 
 
 def option_color_quotient_research_and_development_revenue():
@@ -169,11 +170,13 @@ def option_color_quotient_totalShareholdersEquity_to_totalAssets():
 
 
 ## live data
-def option_color_quotient_totalRevenue_to_marketCap():
+def option_color_quotient_marketCap_to_totalRevenue():
     return "b"
 
-def option_color_quotient_netIncome_to_marketCap():
+
+def option_color_quotient_marketCap_to_netIncome():
     return "g"
 
-def option_color_quotient_totalAssets_to_marketCap():
+
+def option_color_quotient_marketCap_to_totalAssets():
     return "g"

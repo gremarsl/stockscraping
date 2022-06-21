@@ -19,6 +19,9 @@ pharma_companies_alpha = ["JNJ", "PFE", "ABBV", "MRK", "GSK"]
 
 finance_alpha = ["V"]
 
+defence =  ["LHX","NOC","GD","LMT","RTX"]
+
+# LMT = Lockheed Martin
 automotive_finnhub = ["DAI.DE", "BMW.DE", "VOW.DE", "PAH3.DE"]
 chemicals_finnhub = ["BAS.DE", "BAYN.DE", "LIN.DE", "HEN3.DE", "1COV.DE"]
 industry_finnhub = ["SIE.DE"]

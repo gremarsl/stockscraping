@@ -19,7 +19,7 @@ def one_company_only(symbol, source="my_json"):
                          "totalLiabilities_to_totalAssets", "totalCurrentLiabilities_to_totalCurrentAssets",
                          "grossProfit_to_totalRevenue",
                          ]  # , "totalShareholdersEquity_to_totalAssets" == ,"totalAssets_minus_totalLiabilities"
-    my_rel_indicators_live = ["totalRevenue_to_marketCap", "totalAssets_to_marketCap","netIncome_to_marketCap"]
+    my_rel_indicators_live = ["marketCap_to_totalRevenue", "marketCap_to_totalAssets","marketCap_to_netIncome"]
 
     abs_data = []
     if analyse_abs_indicator == 1:

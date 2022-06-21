@@ -8,21 +8,17 @@ from functions_for_yahoo import get_market_cap_from_yahoo_finance
 from general_functions import calculate_quotient, convert_list_elements_to_int, split_indicator_in_two, \
     read_data_from_file, get_data, get_key_value_from_local_file
 
-
-
-indicator_absolute_with_income_statement = ["netIncome",
-                                            "totalRevenue"]
-# , "grossProfit", "totalRevenue", "ebit", "incomeBeforeTax", "operatingIncome"
+indicator_absolute_with_income_statement = ["totalRevenue","operatingIncome","netIncome"]
 
 indicator_absolute_with_cash_flow = ["operatingCashflow", "changeInCashAndCashEquivalents"]
 
 indicator_percentage_with_income_statement = [
-    "netIncome_to_totalRevenue"]  # "researchAndDevelopment_to_totalRevenue"
+    "netIncome_to_totalRevenue"]  #,"researchAndDevelopment_to_totalRevenue"
 
 indicator_percentage_with_balance_sheet = ["totalLiabilities_to_totalAssets",
                                            "totalCurrentLiabilities_to_totalCurrentAssets"]
 
-indicator_live_with_income_statement = ["totalRevenue_to_marketCap","netIncome_to_marketCap"]
+indicator_live_with_income_statement = ["marketCap_to_totalRevenue", "marketCap_to_netIncome"]
 
 
 def pdf_merger():
@@ -55,7 +51,8 @@ def compare_companies(symbols, source):
 
                 if global_vars.analyze_absolute_income_statement:
 
-                    income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
+                    income_statement = read_data_from_file(
+                        global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
 
                     for i in indicator_absolute_with_income_statement:
                         try:
@@ -67,7 +64,8 @@ def compare_companies(symbols, source):
 
                 if global_vars.analyze_percentage_income_statement:
 
-                    income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
+                    income_statement = read_data_from_file(
+                        global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
 
                     for i in indicator_percentage_with_income_statement:
 
@@ -99,7 +97,8 @@ def compare_companies(symbols, source):
                             print("error in quaterly data {}".format(s))
 
                 if global_vars.analyze_percentage_balance_sheet:
-                    balance_sheet = read_data_from_file(global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
+                    balance_sheet = read_data_from_file(
+                        global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
 
                     for i in indicator_percentage_with_balance_sheet:
                         try:
@@ -117,7 +116,8 @@ def compare_companies(symbols, source):
 
                 if global_vars.analyze_live_with_income_statement:
 
-                    income_statement = read_data_from_file(global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
+                    income_statement = read_data_from_file(
+                        global_vars.filepath_alpha + "income_statement_alpha_" + s + ".json")
                     for i in indicator_live_with_income_statement:
 
                         try:
@@ -153,7 +153,8 @@ def compare_companies(symbols, source):
                 if global_vars.analyze_live_with_balance_sheet:
                     indicator_live_with_balance_sheet = ["totalAssets_to_marketCap"]
 
-                    balance_sheet = read_data_from_file(global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
+                    balance_sheet = read_data_from_file(
+                        global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
                     counter = 0
                     for i in indicator_live_with_balance_sheet:
                         try:
@@ -221,20 +222,25 @@ def compare_companies(symbols, source):
     match source:
         case "alpha_vantage":
             if global_vars.analyze_absolute_income_statement == 1:
-                processor_filter_plot_data(all_symbols_quaterly_absolute_data_with_income_statement, False, True, source)
+                processor_filter_plot_data(all_symbols_quaterly_absolute_data_with_income_statement, False, True,
+                                           source)
 
             if global_vars.analyze_absolute_cash_flow == 1:
                 processor_filter_plot_data(all_symbols_quaterly_absolute_data_with_cash_flow, False, True, source)
 
             if global_vars.analyze_percentage_balance_sheet == 1:
-                processor_filter_plot_data(all_symbols_quaterly_relative_percentage_with_balance_sheet, True, True, source)
+                processor_filter_plot_data(all_symbols_quaterly_relative_percentage_with_balance_sheet, True, True,
+                                           source)
             if global_vars.analyze_percentage_income_statement == 1:
-                processor_filter_plot_data(all_symbols_quaterly_relative_percentage_with_income_statement, True, True, source)
+                processor_filter_plot_data(all_symbols_quaterly_relative_percentage_with_income_statement, True, True,
+                                           source)
 
             if global_vars.analyze_live_with_balance_sheet == 1:
-                processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_balance_sheet, True, True, source)
+                processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_balance_sheet, True, True,
+                                           source)
             if global_vars.analyze_live_with_income_statement == 1:
-                processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_income_statement, True, True, source)
+                processor_filter_plot_data(all_symbols_quaterly_relative_live_data_with_income_statement, True, True,
+                                           source)
 
         case "my_json":
             if global_vars.analyze_live_with_my_json == 1:
