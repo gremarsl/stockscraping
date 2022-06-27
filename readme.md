@@ -9,7 +9,9 @@ Therefore, I will try to answer all the important points in this section.
 
 ### Prerequisites
 Python Interpreter: v3.10 is installed and functioning on the computer.
-The Python packages are installed and ready for usage.
+The Python packages are installed and ready for usage.The necessary packages are included in requirements.txt and can be installed quickly and easily with the following command:  
+`pip install -r requirements.txt`
+
 
 ### Preparations for use
 Preparations are required so that the program can be used successfully and companies can be analyzed for key figures. 
