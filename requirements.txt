@@ -1,0 +1,10 @@
+###### Requirements without Version Specifiers ######
+numpy
+matplotlib
+PyPDF2
+
+
+
+###### Requirements with Version Specifiers ######
+yfinance >= 0.1.70
+pandas >= 1.4.2
