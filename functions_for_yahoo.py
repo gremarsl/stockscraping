@@ -1,16 +1,37 @@
 import yfinance as yf
-
-# get stock info
 import global_vars
 from general_functions import write_to_file_in_json_format
 
 
+def calculate_dax_to_gdp_germany():
+    # TODO if len is not 40 then error
+    print(len(global_vars.dax_40))
+    companies = global_vars.dax_40
+
+    list_of_market_cap = list(map(get_market_cap_from_yahoo_finance, companies))
+    print(list_of_market_cap)
+
+    latest_sum_market_cap = sum(list_of_market_cap)
+    latest_sum_market_cap = latest_sum_market_cap / 1000000000  # now it is billion
+    print(latest_sum_market_cap)
+
+    latest_dax_value = get_index_value_from_yahoo_finance("^GDAXI")
+
+    factor_sum_market_cap = latest_sum_market_cap / global_vars.germany_gdp
+    factor_latest_dax_value = latest_dax_value / global_vars.germany_gdp
+
+    print(
+        f"The quotient sum of market cap from all DAX40 to last Germany Gross Domestic Product (GDP) number is: {factor_sum_market_cap}")
+    print(
+        f"The quotient latest_dax_value to last Germany Gross Domestic Product (GDP) number is: {factor_latest_dax_value}")
+
+
 def calculate_sp_500_to_gdp_usa():
     price = get_index_value_from_yahoo_finance("^GSPC")
-    valuation = price * global_vars.sp_500_divisor / 1000 #now it is in unit: trillion
+    valuation = price * global_vars.sp_500_divisor / 1000  # now it is in unit: trillion
     print(f"The latest valuation of S&P 500 is: {valuation} Trillion US-Dollar ")
 
-    factor = valuation/global_vars.usa_gdp
+    factor = valuation / global_vars.usa_gdp
     print(f"The quotient S&P 500 to last US Gross Domestic Product (GDP) number is: {factor}")
 
 
@@ -19,14 +40,14 @@ def get_base_info_from_yahoo_finance(symbol):
         try:
             symbol_base = yf.Ticker(symbol)
         except:
-            print("yf.Ticker failed for symbol: {}".format(symbol))
+            print(f"yf.Ticker failed for symbol: {symbol}")
         symbol_info = symbol_base.info
 
         name_of_info_file = "yahoo_info_data_" + symbol + ".json"
 
         write_to_file_in_json_format(symbol_info, name_of_info_file)
     except:
-        print("get_base_info_from_yahoo_finance failed for symbol: {}".format(symbol))
+        print(f"get_base_info_from_yahoo_finance failed for symbol: {symbol}")
 
     return symbol_info
 
@@ -44,20 +65,27 @@ def get_market_cap_from_yahoo_finance(symbol):
         symbol_info = get_base_info_from_yahoo_finance(symbol)
 
     except:
-        print("get_market_cap_from_yahoo_finance failed for symbol: {}".format(symbol))
+        print(f"get_market_cap_from_yahoo_finance failed for symbol: {symbol}")
 
-    market_cap = symbol_info["marketCap"]
+    try:
+        market_cap = symbol_info["marketCap"]
+
+        if market_cap is None:
+            print(f"not data for market_cap - since None was returned for symbol {symbol}")
+
+    except:
+        print(f"The call symbol_info[marketCap] failed for symbol: {symbol}")
 
     return market_cap
+
 
 def get_index_value_from_yahoo_finance(symbol):
     try:
         symbol_info = get_base_info_from_yahoo_finance(symbol)
 
     except:
-        print("get_index_value_from_yahoo_finance failed for symbol: {}".format(symbol))
+        print(f"get_index_value_from_yahoo_finance failed for symbol: {symbol}")
 
     price = symbol_info["regularMarketPrice"]
 
     return price
-

@@ -35,9 +35,9 @@ analyze_finnhub_data = 0
 
 get_alpha_data = 0
 analyze_alpha_data = 0
-analyze_alpha_data_compare_companies = 0
+analyze_alpha_data_compare_companies = 1
 
-build_own_json = 1
+build_own_json = 0
 analyze_my_json_data = 0
 analyze_my_json_data_compare_companies = 0
 # END USER CONFIG SWITCHES
@@ -52,7 +52,7 @@ analyze_my_json_data_compare_companies = 0
 '''
 finnhub_symbols = ["LOM"]
 
-alpha_vantage_symbols = ["LHX","NOC","GD","LMT","RTX"]
+alpha_vantage_symbols = ["GSK","JNJ", "PFE", "ABBV", "MRK","TAK"]
 
 my_json_symbols = ["LHX","NOC","GD","LMT","RTX"]
 # END COMPANIES TO ANALYZE
@@ -81,6 +81,10 @@ analyze_live_with_my_json = 1
   # START PARAMETERS FOR INDEX CALCULATION
 sp_500_divisor = 8451.33
 usa_gdp = 19731.10  # billion
+germany_gdp = 3806  # billion
+dax_40_test = ["SY1.DE","1COV.DE","SHL.DE"]
+
+dax_40 = ["SY1.DE","1COV.DE","SHL.DE","DPW.DE","CON.DE","PUM.DE","AIR.DE","BEI.DE","DDAIF","HEN.DE","IFX.DE","ADS.DE","HNR1.DE","SIE.DE","FME.DE","VOW3.DE","LIN.DE","DBK.DE","BAS.DE","MRK.DE","DB1.DE","ZAL.DE","FRE.DE","RWE.DE","DTE.DE","BAYN.DE","BMW.DE","MTX.DE","ALV.DE","HEI.DE","HFG.DE","DTG.DE","BNR.DE","CON.DE","EOAN.DE","QGEN","PAH3.DE","SAP.DE","VNA.DE","ZAL.DE"]
   # END PARAMETERS FOR INDEX CALCULATION
 
 # END ADVANCED PARAMETERS
