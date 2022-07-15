@@ -61,7 +61,7 @@ def compare_companies(symbols, source):
                             all_symbols_quaterly_absolute_data_with_income_statement.append(temp_data)
 
                         except BaseException:
-                            print("error in quaterly data {}".format(s))
+                            print(f"error in quaterly data {s}")
 
                 if global_vars.analyze_percentage_income_statement:
 
@@ -83,7 +83,7 @@ def compare_companies(symbols, source):
                             all_symbols_quaterly_relative_percentage_with_income_statement.append(temp_data)
 
                         except:
-                            print("-{}- calculate quotient of {} didnt work for".format(s, i))
+                            print(f"-{s}- calculate quotient of {i} didnt work")
 
                 if global_vars.analyze_absolute_cash_flow:
 
@@ -95,7 +95,7 @@ def compare_companies(symbols, source):
                             all_symbols_quaterly_absolute_data_with_cash_flow.append(temp_data)
 
                         except:
-                            print("error in quaterly data {}".format(s))
+                            print(f"error in quaterly data {s}")
 
                 if global_vars.analyze_percentage_balance_sheet:
                     balance_sheet = read_data_from_file(
@@ -113,7 +113,7 @@ def compare_companies(symbols, source):
                             all_symbols_quaterly_relative_percentage_with_balance_sheet.append(temp_data)
 
                         except:
-                            print("-{}- calculate quotient of {} didnt work".format(s, i))
+                            print(f"-{s}- calculate quotient of {i} didnt work")
 
                 if global_vars.analyze_live_with_income_statement:
 
@@ -138,7 +138,7 @@ def compare_companies(symbols, source):
 
 
                         except:
-                            print("-{}- calculate quotient of {} didnt work".format(s, i))
+                            print(f"-{s}- calculate quotient of {i} didnt work")
 
                 if global_vars.analyze_live_with_balance_sheet:
 
@@ -159,7 +159,7 @@ def compare_companies(symbols, source):
 
 
                         except:
-                            print("-{}- calculate quotient of {} didnt work".format(s, i))
+                            print(f"-{s}- calculate quotient of {i} didnt work")
 
             case "my_json":
                 if global_vars.analyze_live_with_my_json:
@@ -186,7 +186,7 @@ def compare_companies(symbols, source):
                             all_symbols_quaterly_relative_live_data_with_my_json.append(temp_data)
 
                         except:
-                            print("-{}- calculate quotient of {} didnt work".format(s, i))
+                            print(f"-{s}- calculate quotient of {i} didnt work")
 
             case _:
                 raise Exception("invalid source")
@@ -238,7 +238,7 @@ def one_company_only(symbol):
                 temp_data = extract_quarterly_report_data_from_alpha(income_statement, i, symbol=s)
                 quaterly_absolute_data_per_symbol.append(temp_data)
             except Exception:
-                print("error in quaterly data {}".format(s))
+                print(f"error in quaterly data {s}")
 
     if global_vars.analyze_percentage_income_statement:
 
@@ -260,7 +260,7 @@ def one_company_only(symbol):
 
 
             except:
-                print("-{}- calculate quotient of {} didnt work for".format(s, i))
+                print(f"-{s}- calculate quotient of {i} didnt work")
 
     if global_vars.analyze_absolute_cash_flow:
 
@@ -272,7 +272,7 @@ def one_company_only(symbol):
                 quaterly_absolute_data_per_symbol.append(temp_data)
 
             except:
-                print("error in quaterly data {}".format(s))
+                print(f"error in quaterly data {s}")
 
     if global_vars.analyze_percentage_balance_sheet:
         balance_sheet = read_data_from_file(global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
@@ -289,7 +289,7 @@ def one_company_only(symbol):
 
                 quaterly_relative_data_per_symbol.append(temp_data)
             except:
-                print("-{}- calculate quotient of {} didnt work".format(s, i))
+                print(f"-{s}- calculate quotient of {i} didnt work")
 
     quaterly_relative_live_data_per_symbol = []
 
@@ -314,7 +314,7 @@ def one_company_only(symbol):
                 quaterly_relative_live_data_per_symbol.append(temp_data)
 
             except:
-                print("-{}- calculate quotient of {} didnt work".format(s, i))
+                print(f"-{s}- calculate quotient of {i} didnt work")
 
     if global_vars.analyze_live_with_balance_sheet:
         indicator_live_with_balance_sheet = ["totalAssets_to_marketCap"]
@@ -336,7 +336,7 @@ def one_company_only(symbol):
                 quaterly_relative_live_data_per_symbol.append(temp_data)
 
             except:
-                print("-{}- calculate quotient of {} didnt work".format(s, i))
+                print(f"-{s}- calculate quotient of {i} didnt work")
 
     source = "alpha_vantage"
 

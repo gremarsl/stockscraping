@@ -15,7 +15,9 @@ consumer_alpha = ["PRG", "KO", "MCD", "NKE", "DIS", "OR.PA"]  # spencer
 
 mobility_alpha = ["BA"]
 
-pharma_companies_alpha = ["JNJ", "PFE", "ABBV", "MRK", "GSK"]
+pharma_companies_alpha = ["JNJ", "PFE", "ABBV", "MRK", "GSK","TAK"]
+#GSK = GlaxoSmithKline
+#Takeda Pharmaceutical Company Limited (TAK)
 
 finance_alpha = ["V"]
 

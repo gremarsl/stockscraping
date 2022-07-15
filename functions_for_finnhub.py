@@ -25,7 +25,7 @@ def calling_finnhub_api(symbols: list):
         fundamental_data_response_json: requests.models.Response = fundamental_data_response.json()  # maybe redundant
         write_to_file_in_json_format(fundamental_data_response_json, path_to_file)
 
-        print("Successful finnhub api scraping for {}".format(s))
+        print(f"Successful finnhub api scraping for {s}")
 
     pass
 

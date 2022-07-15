@@ -102,12 +102,12 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
             plt.scatter(x, y, color=options_for_plot_color[indicator]())
 
         else:
-            print("ERROR - Length of x is {} and length of y is {} - must be same".format(len(x), len(y)))
+            print(f"ERROR - Length of x is {len(x)} and length of y is {len(y)} - must be same")
 
     # show grid
     plt.grid(b=None, which='major', axis='both')
     plt.xticks(data_list[0][0], rotation="vertical")
-    plt.title('{} source: {}'.format(symbol, source))
+    plt.title(f'{symbol} source: {source}')
     plt.xlabel('Year')
 
     #plot_full_screen()
@@ -136,7 +136,7 @@ def plot_compare_symbols_one_indicator(data_list, source):
         indicator = i[3]
 
         if len(x) != len(y):
-            raise print("ERROR - Length of x is {} and length of y is {} - must be same".format(len(x), len(y)))
+            raise print(f"ERROR - Length of x is {len(x)} and length of y is {len(y)} - must be same")
         else:
             if len(data_list) > 6:
                 y_lim_top = 200
@@ -150,7 +150,7 @@ def plot_compare_symbols_one_indicator(data_list, source):
 
     plt.grid(b=None, which='major', axis='both')
     plt.xticks(data_list[0][0], rotation="vertical")
-    plt.title('{} source: {}'.format(indicator, source))
+    plt.title(f'{symbol} source: {source}')
     plt.xlabel('Year')
 
     #plot_full_screen()

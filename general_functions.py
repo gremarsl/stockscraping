@@ -63,7 +63,7 @@ def get_data(input_data, indicator, symbol):
 
         return data
     except:
-        print("function call: get data failed - parameter:{}; {} ".format(indicator, symbol))
+        print(f"function call: get data failed - parameter:{indicator}; {symbol} ")
     return 1 # error if 1 is returned
 
 

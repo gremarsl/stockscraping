@@ -44,7 +44,7 @@ def analyze_data_from_finnhub(symbols: list):
                     all_symbols_absolute_indicator.append(temp_data)
                     counter = 1
             except NoData:
-                print(" no {} data for {} ".format(i, s))
+                print(f"no {i} data for {s} ")
 
         counter = 0
         for i in indicators_per_share:
@@ -56,7 +56,7 @@ def analyze_data_from_finnhub(symbols: list):
                     all_symbols_per_share_indicator.append(temp_data)
                     counter = 1
             except NoData:
-                print("no {} data for {} ".format(i, s))
+                print(f"no {i} data for {s} ")
 
         counter = 0
         for i in indicators_ratio:
@@ -69,7 +69,7 @@ def analyze_data_from_finnhub(symbols: list):
                     counter = 1
 
             except NoData:
-                print("no {} data  for  {} ".format(i, s))
+                print(f"no {i} data  for  {s} ")
 
         counter = 0
         for i in indicators_percentage:
@@ -82,7 +82,7 @@ def analyze_data_from_finnhub(symbols: list):
                     counter = 1
 
             except NoData:
-                print("no {} data  for  {} ".format(i, s))
+                print(f"no {i} data  for  {s} ")
 
         if analyse_all_companies == 0:
             processor_filter_plot_data(data_per_symbol, relative_data=False, all_symbols=False, source=source)

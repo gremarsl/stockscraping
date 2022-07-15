@@ -63,7 +63,7 @@ def build_own_json_file(symbol_list):
                 # counter used to
                 if list_extracted[0][1] == output_quarter_array[counter]['fiscalDateEnding']:
                     if i in output_quarter_array[counter].items():
-                        print("key value pair of object is already added as a parameter to the object: {}".format(i))
+                        print(f"key value pair of object is already added as a parameter to the object: {i}")
 
                     # wenn nicht enthalte
                     else:
