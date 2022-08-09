@@ -35,11 +35,14 @@ analyze_finnhub_data = 0
 
 get_alpha_data = 0
 analyze_alpha_data = 0
-analyze_alpha_data_compare_companies = 1
+analyze_alpha_data_compare_companies = 0
 
 build_own_json = 0
 analyze_my_json_data = 0
 analyze_my_json_data_compare_companies = 0
+
+calculate_dax = 0
+calculate_sp500 = 1
 # END USER CONFIG SWITCHES
 
 
@@ -50,9 +53,9 @@ analyze_my_json_data_compare_companies = 0
 @param my_json_symbols          Companies to analyze with own data
 
 '''
-finnhub_symbols = ["LOM"]
+finnhub_symbols = ["NOK"]
 
-alpha_vantage_symbols = ["GSK","JNJ", "PFE", "ABBV", "MRK","TAK"]
+alpha_vantage_symbols = ["T","NOK","VZ"]
 
 my_json_symbols = ["LHX","NOC","GD","LMT","RTX"]
 # END COMPANIES TO ANALYZE
