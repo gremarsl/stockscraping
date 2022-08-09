@@ -150,7 +150,7 @@ def plot_compare_symbols_one_indicator(data_list, source):
 
     plt.grid(b=None, which='major', axis='both')
     plt.xticks(data_list[0][0], rotation="vertical")
-    plt.title(f'{symbol} source: {source}')
+    plt.title(f'{indicator} source: {source}')
     plt.xlabel('Year')
 
     #plot_full_screen()

@@ -26,7 +26,8 @@ def alpha_vantage_analysis():
         calling_alpha_vantage_api(global_vars.alpha_vantage_symbols)
 
     if global_vars.analyze_alpha_data == 1 or global_vars.analyze_alpha_data_compare_companies == 1:
-        analyze_data_from_alpha_vantage(global_vars.alpha_vantage_symbols, global_vars.analyze_alpha_data_compare_companies)
+        analyze_data_from_alpha_vantage(global_vars.alpha_vantage_symbols,
+                                        global_vars.analyze_alpha_data_compare_companies)
     print("end alpha vantage analysis ...")
 
 
@@ -37,20 +38,20 @@ def own_json_analysis():
         build_own_json_file(global_vars.my_json_symbols)
 
     if global_vars.analyze_my_json_data == 1 or global_vars.analyze_my_json_data_compare_companies == 1:
-        analyze_data_from_local_json_file(global_vars.my_json_symbols, global_vars.analyze_my_json_data_compare_companies)
+        analyze_data_from_local_json_file(global_vars.my_json_symbols,
+                                          global_vars.analyze_my_json_data_compare_companies)
 
     print("end own json analysis  ...")
 
 
 def start():
-
     finnhub_analysis()
 
     alpha_vantage_analysis()
 
     own_json_analysis()
 
-    #gimmic
+    # gimmic
     calculate_dax_to_gdp_germany()
 
     calculate_sp_500_to_gdp_usa()

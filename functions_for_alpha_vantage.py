@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import json
 import global_vars
-from general_functions import write_to_file_in_json_format, reverse_lists
+from general_functions import write_to_file_in_json_format, reverse_lists, get_file_age_in_hours
 import time
 from keys import api_key_alpha
 
@@ -30,7 +30,8 @@ def calling_alpha_vantage_api(symbols):
         if symbols.index(s) == list_elem:
             return
 
-        print("Going to sleep for 60 Seconds now... Because you reached the maximum number of requests. (Free version is limited). Further infos unter alpha vantage website. ")
+        print(
+            "Going to sleep for 60 Seconds now... Because you reached the maximum number of requests. (Free version is limited). Further infos unter alpha vantage website. ")
         time.sleep(60)
 
     return
@@ -53,8 +54,6 @@ def request_overview_from_alpha(symbol):
     filename = "fundamental_alpha_data_" + symbol + ".json"
     path_to_file = global_vars.filepath_alpha + filename
     write_to_file_in_json_format(fundamental_data_response_json, path_to_file)
-
-    pass
 
 
 def append_line_to_file_and_save(line: str, filename: str):
@@ -180,15 +179,16 @@ def request_income_statement_from_alpha(symbol):
         "symbol": symbol,
         "apikey": api_key_alpha}
 
-    # TODO - implement other logic. "if file older then 5 days, then do a request to the server"
-    if os.path.isfile(path_to_file):
+    # If File is older than 24h then make a request to the server to fetch new data
+    age_of_file = get_file_age_in_hours(path_to_file)()
+    if os.path.isfile(path_to_file) and age_of_file < 24:
         with open(path_to_file) as json_file:
             income_statement = json.load(json_file)
 
     else:
         response = requests.get(API_URL, input)
 
-        income_statement = response.json()  # maybe redundant
+        income_statement = response.json()  # TODO maybe redundant
 
     write_to_file_in_json_format(income_statement, path_to_file)
 

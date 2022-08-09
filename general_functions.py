@@ -1,3 +1,5 @@
+import time
+
 import matplotlib.pyplot as plt
 import json
 import os
@@ -241,3 +243,10 @@ def save_figure(indicator):
 
     add_file_to_main_html_file(indicator, complete_string_svg)
     pass
+
+
+def get_file_age_in_hours(filepath) ->float:
+    delta = time.time() - os.path.getmtime(filepath)
+    delta_in_hours = delta /3600
+    print(delta_in_hours)
+    return delta_in_hours

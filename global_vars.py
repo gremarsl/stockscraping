@@ -33,7 +33,7 @@ import os
 get_finnhub_data = 0
 analyze_finnhub_data = 0
 
-get_alpha_data = 0
+get_alpha_data = 1
 analyze_alpha_data = 0
 analyze_alpha_data_compare_companies = 0
 
