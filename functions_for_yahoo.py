@@ -4,35 +4,36 @@ from general_functions import write_to_file_in_json_format
 
 
 def calculate_dax_to_gdp_germany():
-    # TODO if len is not 40 then error
-    print(len(global_vars.dax_40))
-    companies = global_vars.dax_40
+    if global_vars.calculate_dax ==1 and len(global_vars.dax_40) ==40:
 
-    list_of_market_cap = list(map(get_market_cap_from_yahoo_finance, companies))
-    print(list_of_market_cap)
+        companies = global_vars.dax_40
 
-    latest_sum_market_cap = sum(list_of_market_cap)
-    latest_sum_market_cap = latest_sum_market_cap / 1000000000  # now it is billion
-    print(latest_sum_market_cap)
+        list_of_market_cap = list(map(get_market_cap_from_yahoo_finance, companies))
+        print(list_of_market_cap)
 
-    latest_dax_value = get_index_value_from_yahoo_finance("^GDAXI")
+        latest_sum_market_cap = sum(list_of_market_cap)
+        latest_sum_market_cap = latest_sum_market_cap / 1000000000  # now it is billion
+        print(latest_sum_market_cap)
 
-    factor_sum_market_cap = latest_sum_market_cap / global_vars.germany_gdp
-    factor_latest_dax_value = latest_dax_value / global_vars.germany_gdp
+        latest_dax_value = get_index_value_from_yahoo_finance("^GDAXI")
 
-    print(
-        f"The quotient sum of market cap from all DAX40 to last Germany Gross Domestic Product (GDP) number is: {factor_sum_market_cap}")
-    print(
-        f"The quotient latest_dax_value to last Germany Gross Domestic Product (GDP) number is: {factor_latest_dax_value}")
+        factor_sum_market_cap = latest_sum_market_cap / global_vars.germany_gdp
+        factor_latest_dax_value = latest_dax_value / global_vars.germany_gdp
+
+        print(
+            f"The quotient sum of market cap from all DAX40 to last Germany Gross Domestic Product (GDP) number is: {factor_sum_market_cap}")
+        print(
+            f"The quotient latest_dax_value to last Germany Gross Domestic Product (GDP) number is: {factor_latest_dax_value}")
 
 
 def calculate_sp_500_to_gdp_usa():
-    price = get_index_value_from_yahoo_finance("^GSPC")
-    valuation = price * global_vars.sp_500_divisor / 1000  # now it is in unit: trillion
-    print(f"The latest valuation of S&P 500 is: {valuation} Trillion US-Dollar ")
+    if global_vars.calculate_sp500 ==1:
+        price = get_index_value_from_yahoo_finance("^GSPC")
+        valuation = price * global_vars.sp_500_divisor / 1000  # now it is in unit: trillion
+        print(f"The latest valuation of S&P 500 is: {valuation} Trillion US-Dollar ")
 
-    factor = valuation / global_vars.usa_gdp
-    print(f"The quotient S&P 500 to last US Gross Domestic Product (GDP) number is: {factor}")
+        factor = valuation / global_vars.usa_gdp
+        print(f"The quotient S&P 500 to last US Gross Domestic Product (GDP) number is: {factor}")
 
 
 def get_base_info_from_yahoo_finance(symbol):
