@@ -85,4 +85,3 @@ def analyze_data_from_local_json_file(symbols: list, analyze_my_json_data_compar
         for s in symbols:
             one_company_only(s)
 
-    pass

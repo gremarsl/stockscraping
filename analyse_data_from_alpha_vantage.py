@@ -32,7 +32,6 @@ def pdf_merger():
 
     merger.write(global_vars.filepath_my_json + "\\result.pdf")
     merger.close()
-    pass
 
 
 def compare_companies(symbols, source):
@@ -221,8 +220,6 @@ def compare_companies(symbols, source):
         case _:
             raise Exception("invalid source")
 
-    pass
-
 
 def one_company_only(symbol):
     s = symbol
@@ -322,7 +319,6 @@ def one_company_only(symbol):
         balance_sheet = read_data_from_file(global_vars.filepath_alpha + "balance_sheet_alpha_" + s + ".json")
         for i in indicator_live_with_balance_sheet:
 
-
             try:
                 dividend, divisor = split_indicator_in_two(i)
                 divisor_data = get_data(balance_sheet, indicator=divisor, symbol=s)
@@ -347,8 +343,6 @@ def one_company_only(symbol):
     if len(quaterly_relative_live_data_per_symbol) != 0:
         processor_filter_plot_data(quaterly_relative_live_data_per_symbol, True, False, source)
 
-    pass
-
 
 def analyze_data_from_alpha_vantage(symbols: list, analyze_alpha_data_compare_companies: int):
     if type(symbols) is not list:
@@ -360,4 +354,3 @@ def analyze_data_from_alpha_vantage(symbols: list, analyze_alpha_data_compare_co
     else:
         map(one_company_only, symbols)
 
-    pass
