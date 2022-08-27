@@ -5,6 +5,8 @@ import json
 import os
 import datetime as dt
 
+import requests
+
 import global_vars
 
 
@@ -66,7 +68,7 @@ def get_data(input_data, indicator, symbol):
         return data
     except:
         print(f"function call: get data failed - parameter:{indicator}; {symbol} ")
-    return 1 # error if 1 is returned
+    return 1  # error if 1 is returned
 
 
 def get_float_data(input_data, indicator, symbol):
@@ -85,7 +87,7 @@ def get_float_data(input_data, indicator, symbol):
 
     except:
         print("function call: get float data failed - parameter:{}; {} ".format(indicator, symbol))
-    return 1 # error if 1 is returned
+    return 1  # error if 1 is returned
 
 
 def calculate_quotient(dividend_data, divisor_data):
@@ -111,7 +113,7 @@ def filter_data(data_list, options):
             packed_indicators.append(indicator_list)
 
     # unpacking the list because with append to indicators - we have one list element to much - what we didnt have when doing list(filter(...))
-    #unpack one level
+    # unpack one level
     temp = packed_indicators[0]
 
     for i in temp:
@@ -129,8 +131,6 @@ def read_data_from_file(filename):
 
     except FileExistsError:
         print("File does not exist")
-
-
 
 
 def only_plot(data, title):
@@ -246,9 +246,16 @@ def save_figure(indicator):
     pass
 
 
-def get_file_age_in_hours(filepath) ->float:
+def get_file_age_in_hours(filepath) -> float:
     delta = time.time() - os.path.getmtime(filepath)
-    delta_in_hours = delta /3600
+    delta_in_hours = delta / 3600
     print(delta_in_hours)
     return delta_in_hours
 
+
+def http_basic_access_authentication():
+    try:
+        resp = requests.post('https://pes.ciplus.vi.vector.int/login/auth/', data={}, auth=('abc', 'abc'), verify=False)
+        print(resp)
+    except ValueError:
+        print("Auth login didnt work")
