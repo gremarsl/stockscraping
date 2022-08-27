@@ -121,15 +121,16 @@ def filter_data(data_list, options):
 
 
 def read_data_from_file(filename):
-    if os.path.isfile(filename):
-        with open(filename) as json_file:
-            data = json.load(json_file)
-    else:
-        print(filename)
-        print(
-            "WARNING: file not found - This should not be reached")
+    try:
+        if os.path.isfile(filename):
+            with open(filename) as json_file:
+                data = json.load(json_file)
+                return data
 
-    return data
+    except FileExistsError:
+        print("File does not exist")
+
+
 
 
 def only_plot(data, title):
@@ -250,3 +251,4 @@ def get_file_age_in_hours(filepath) ->float:
     delta_in_hours = delta /3600
     print(delta_in_hours)
     return delta_in_hours
+
