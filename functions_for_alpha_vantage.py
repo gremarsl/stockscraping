@@ -22,6 +22,8 @@ def calling_alpha_vantage_api(symbols):
 
     list_elem = len(symbols) - 1
     for s in symbols:
+        #TODO Since Alpha Vantage made income statement, balance sheet and cash flow to premium API Endpoints, those are not available anymore.
+        #TODO So this implementation is kind of useless now
         request_income_statement_from_alpha(s)
         request_balance_sheet_from_alpha(s)
         request_cash_flow_from_alpha(s)
@@ -180,10 +182,15 @@ def request_income_statement_from_alpha(symbol):
         "apikey": api_key_alpha}
 
     # If File is older than 24h then make a request to the server to fetch new data
-    age_of_file = get_file_age_in_hours(path_to_file)()
-    if os.path.isfile(path_to_file) and age_of_file < 24:
-        with open(path_to_file) as json_file:
-            income_statement = json.load(json_file)
+
+    file_exists = os.path.exists(path_to_file)
+
+    if file_exists:
+        age_of_file = get_file_age_in_hours(path_to_file)
+
+        if os.path.isfile(path_to_file) and age_of_file < 24:
+            with open(path_to_file) as json_file:
+                income_statement = json.load(json_file)
 
     else:
         response = requests.get(API_URL, input)
@@ -250,6 +257,32 @@ def request_cash_flow_from_alpha(symbol):
 
 def request_earnings_from_alpha(symbol):
     # https://www.alphavantage.co/query?function=CASH_FLOW&symbol=IBM&apikey=demo
+    API_URL = "https://www.alphavantage.co/query?"
+    filename = "earnings_alpha_" + symbol + ".json"
+
+    path_to_file = global_vars.filepath_alpha + filename
+
+    input = {
+        "function": "EARNINGS",
+        "symbol": symbol,
+        "apikey": api_key_alpha}
+
+    if os.path.isfile(path_to_file):
+        with open(path_to_file) as json_file:
+            earnings = json.load(json_file)
+
+    else:
+        response = requests.get(API_URL, input)
+
+        earnings = response.json()  # maybe redundant
+
+    write_to_file_in_json_format(earnings, path_to_file)
+
+    pass
+
+
+def request_earnings_from_alpha(symbol):
+    # https://www.alphavantage.co/query?function=EARNINGS&symbol=IBM&apikey=demo
     API_URL = "https://www.alphavantage.co/query?"
     filename = "earnings_alpha_" + symbol + ".json"
 

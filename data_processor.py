@@ -168,6 +168,19 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
                 except IncorrectJsonData:
                     print("analyzing my_json data failed")
 
+            #TODO analyse all option
+            if (not relative_data) and all_symbols is False:
+                try:
+                    # filter
+                    indicators = filter_data(data_list, options.options_abs_indicator)
+                    # plot data
+                    plot_compare_symbols_one_indicator(data_list, source)
+
+                    # stupid_plot_data_lists(indicators, source)
+
+                except IncorrectJsonData:
+                    print("analyzing my_json data failed")
+
         case _:
             raise Exception("data is not from source alpha_vantage, finnhub or my_json")
 
