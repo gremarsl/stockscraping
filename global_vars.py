@@ -33,16 +33,16 @@ import os
 get_finnhub_data = 0
 analyze_finnhub_data = 0
 
-get_alpha_data = 1
+get_alpha_data = 0
 analyze_alpha_data = 0
 analyze_alpha_data_compare_companies = 0
 
 build_own_json = 0
-analyze_my_json_data = 0
-analyze_my_json_data_compare_companies = 0
+analyze_my_json_data = 1
+analyze_my_json_data_compare_companies = 0 #TODO plot also when compare companies are 0
 
 calculate_dax = 0
-calculate_sp500 = 1
+calculate_sp500 = 0
 # END USER CONFIG SWITCHES
 
 
@@ -53,11 +53,11 @@ calculate_sp500 = 1
 @param my_json_symbols          Companies to analyze with own data
 
 '''
-finnhub_symbols = ["NOK"]
+finnhub_symbols = ["AMD","NVDA"]
 
-alpha_vantage_symbols = ["T","NOK","VZ"]
+alpha_vantage_symbols = ["AMD","NVDA"] # GOOGL, , "FB", "AMD", "NVDA"
 
-my_json_symbols = ["LHX","NOC","GD","LMT","RTX"]
+my_json_symbols = ["MSFT"]
 # END COMPANIES TO ANALYZE
 
 
@@ -74,9 +74,9 @@ analyze_live_with_balance_sheet = 1
 
 
   # START SWITCHES FOR JSON ANALYSIS
-analyze_absolute_my_json = 1
-analyze_percentage_my_json = 1
-analyze_live_with_my_json = 1
+analyze_absolute_my_json = 0
+analyze_percentage_my_json = 0
+analyze_live_with_my_json = 0
   # END SWITCHES FOR JSON ANALYSIS
 
 

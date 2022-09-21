@@ -4,6 +4,7 @@ from options import *
 
 options_for_plot_limit = {
     "totalRevenue": option_abs_50_to_30_billion,
+    "TotalAssets": option_abs_50_to_30_billion,
     "grossProfit": option_gross_profit,
     "operatingIncome": option_operating_income,
     "incomeBeforeTax": option_abs_50_to_30_billion,
@@ -31,8 +32,10 @@ options_for_plot_limit = {
     "totalShareholdersEquity_to_totalAssets": option_quotient_100_to_0,
 }
 
+#TODO color Total assets
 options_for_plot_color = {
     "totalRevenue": option_color_total_revenue,
+    "TotalAssets": option_color_total_revenue,
     # netSales
     # -costofgoods
     "grossProfit": option_color_gross_profit,

@@ -145,6 +145,10 @@ def reverse_lists(x: list, y: list) -> list:
 
     return x, y
 
+def write_to_file_in_csv_format(data, name_of_file:str)-> None:
+    f = open(name_of_file, "w")
+    f.write(str(data))
+    f.close()
 
 def write_to_file_in_json_format(data, name_of_file: str) -> None:
     f = open(name_of_file, "w")
@@ -193,6 +197,14 @@ def add_keys_values_to_object(list_filtered):
         obj[elem[0]] = elem[1]
 
     return obj
+
+
+# add key value to an object
+def append_key_value_to_object(object,key,value):
+
+    object[key] = value
+
+    return object
 
 
 def get_key_value_from_local_file(indicator, s):

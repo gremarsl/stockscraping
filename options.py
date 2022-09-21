@@ -1,4 +1,5 @@
 options_abs_indicator = [
+    "TotalAssets",
     "grossMargin",
     "netMargin",
     "grossProfit",
