@@ -37,8 +37,8 @@ get_alpha_data = 0
 analyze_alpha_data = 0
 analyze_alpha_data_compare_companies = 0
 
-build_own_json = 0
-analyze_my_json_data = 1
+build_own_json =0
+analyze_my_json_data = 0
 analyze_my_json_data_compare_companies = 0 #TODO plot also when compare companies are 0
 
 calculate_dax = 0

@@ -1,3 +1,4 @@
+import csv
 import time
 
 import matplotlib.pyplot as plt
@@ -145,10 +146,12 @@ def reverse_lists(x: list, y: list) -> list:
 
     return x, y
 
-def write_to_file_in_csv_format(data, name_of_file:str)-> None:
+
+def write_to_file_in_csv_format(data, name_of_file: str) -> None:
     f = open(name_of_file, "w")
     f.write(str(data))
     f.close()
+
 
 def write_to_file_in_json_format(data, name_of_file: str) -> None:
     f = open(name_of_file, "w")
@@ -200,8 +203,7 @@ def add_keys_values_to_object(list_filtered):
 
 
 # add key value to an object
-def append_key_value_to_object(object,key,value):
-
+def append_key_value_to_object(object, key, value):
     object[key] = value
 
     return object
@@ -271,3 +273,33 @@ def http_basic_access_authentication():
         print(resp)
     except ValueError:
         print("Auth login didnt work")
+
+
+def convert_and_save_to_csv(data, name_of_file):
+    data_csv = data.to_csv()
+    write_to_file_in_csv_format(data_csv, name_of_file)
+
+
+def yahoo_csv_data_formatting(file):
+    # this function makes some operations on csv data
+    csvreader = csv.reader(file)
+    header = next(csvreader)
+
+    # remove list elements which are empty
+    header = list(filter(None, header))
+
+    # extract rows and filter empty lists from the base list
+    rows = []
+    for row in csvreader:
+        rows.append(row)
+
+    rows = list(filter(None, rows))
+
+    # remove spaces from indicators
+    for row in rows:
+        row_stripped = row[0].replace(" ", "")
+
+        row[0] = row_stripped
+
+    return header, rows
+

@@ -5,7 +5,7 @@ from analyze_data_from_finnhub import analyze_data_from_finnhub
 from build_own_json import build_own_json_file
 from functions_for_finnhub import calling_finnhub_api
 from functions_for_alpha_vantage import calling_alpha_vantage_api
-from functions_for_yahoo import calculate_sp_500_to_gdp_usa, calculate_dax_to_gdp_germany, stub
+from functions_for_yahoo import calculate_sp_500_to_gdp_usa, calculate_dax_to_gdp_germany, get_yahoo_data
 
 
 def finnhub_analysis():
@@ -45,16 +45,16 @@ def own_json_analysis():
 
 
 def start():
+    get_yahoo_data(["MSFT"])
     own_json_analysis()
     finnhub_analysis()
     alpha_vantage_analysis()
 
     # gimmic
-    #calculate_dax_to_gdp_germany()
+    # calculate_dax_to_gdp_germany()
+    # calculate_sp_500_to_gdp_usa()
 
-    #calculate_sp_500_to_gdp_usa()
 
-    stub()
 
 
 if __name__ == '__main__':

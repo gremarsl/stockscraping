@@ -3,7 +3,7 @@ import csv
 import yfinance as yf
 import global_vars
 from general_functions import write_to_file_in_json_format, write_to_file_in_csv_format, create_json_object_finance, \
-    append_key_value_to_object
+    append_key_value_to_object, convert_and_save_to_csv, yahoo_csv_data_formatting
 
 
 def calculate_dax_to_gdp_germany():
@@ -41,15 +41,14 @@ def calculate_sp_500_to_gdp_usa():
 def get_earnings(base, symbol: str):
     balance = base.balance_sheet
 
-    balance_csv = balance.to_csv()
+    # convert and save data to csv format
+    name_of_file = "yahoo_balance_" + symbol + ".csv"
+    convert_and_save_to_csv(balance, name_of_file)
 
-    name_of_file_csv = "yahoo_balance_" + symbol + ".csv"
+    file = open(name_of_file)
 
-    write_to_file_in_csv_format(balance_csv, name_of_file_csv)
-
-    file = open(name_of_file_csv)
-
-    header = []
+    # execute formatting commands on yahoo csv data
+    #TODO there is gernal function for this: yahoo_csv_data_formatting - START
     csvreader = csv.reader(file)
     header = next(csvreader)
 
@@ -64,19 +63,19 @@ def get_earnings(base, symbol: str):
     rows = list(filter(None, rows))
 
     # remove spaces from indicators
-    new_rows = []
     for row in rows:
         row_stripped = row[0].replace(" ", "")
 
         row[0] = row_stripped
 
+    #TODO there is gernal function for this: yahoo_csv_data_formatting - END
     # create basic financial json object
     basic_object = create_json_object_finance(symbol)
 
-    # zugriff auf das array vom basic object
+    # Access to the basic object
     output_quarter_array = basic_object["quarterlyReports"]
 
-    # zusammenbau des objects
+    # Assembling
     quater_idx = 0
     for quater in header:
         object = {}
@@ -97,10 +96,54 @@ def get_earnings(base, symbol: str):
     return balance
 
 
-def stub():
-    base = get_base_ticker_from_yahoo_finance("MSFT")
+def get_financials(base, symbol):
+    financials = base.financials
 
-    earnings = get_earnings(base, "MSFT")
+    # convert and save data to csv format
+    name_of_file = "yahoo_financial_" + symbol + ".csv"
+    convert_and_save_to_csv(financials, name_of_file)
+
+    file = open(name_of_file)
+
+    # execute formatting commands on yahoo csv data
+    header, rows = yahoo_csv_data_formatting(file)
+
+    # create basic financial json object
+    basic_object = create_json_object_finance(symbol)
+
+    # Access to the basic object
+    output_quarter_array = basic_object["quarterlyReports"]
+
+    # Assembling
+    quater_idx = 0
+    for quater in header:
+        object = {}
+
+        append_key_value_to_object(object, "fiscalDateEnding", header[quater_idx])
+
+        for row in rows:
+            append_key_value_to_object(object, row[0], row[quater_idx + 1])
+
+        # hinzufügen des objects zu dem array
+        output_quarter_array.append(object)
+
+        quater_idx += 1
+
+    name_of_file_json = "yahoo_fiancials_" + symbol + ".json"
+    write_to_file_in_json_format(basic_object, name_of_file_json)
+
+    pass
+
+
+def get_yahoo_data(symbols):
+    for symbol in symbols:
+        try:
+            base = get_base_ticker_from_yahoo_finance(symbol)
+            get_earnings(base, symbol)
+            get_financials(base, symbol)
+
+        except:
+            print("Get yahoo earnings failed")
 
 
 def get_base_ticker_from_yahoo_finance(symbol):
