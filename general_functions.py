@@ -109,7 +109,7 @@ def filter_data(data_list, options):
     for i in options:
         indicator = filter(lambda x: x[3] == i, data_list)
         indicator_list = list(indicator)
-        if (len(indicator_list) != 0):
+        if len(indicator_list) != 0:
             packed_indicators.append(indicator_list)
 
     # unpacking the list because with append to indicators - we have one list element to much - what we didnt have when doing list(filter(...))

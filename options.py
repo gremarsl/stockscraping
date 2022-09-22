@@ -1,5 +1,4 @@
 options_abs_indicator = [
-    "TotalAssets",
     "grossMargin",
     "netMargin",
     "grossProfit",
@@ -9,7 +8,9 @@ options_abs_indicator = [
     "operatingIncome",
     "totalRevenue",
     "operatingCashflow",
-    "changeInCashAndCashEquivalents"
+    "changeInCashAndCashEquivalents",
+    #yahoo:
+    "TotalAssets"
 
 ]
 
@@ -27,11 +28,17 @@ options_rel_indicator = [
     "researchAndDevelopment_to_totalRevenue",
     "totalLiabilities_to_totalAssets",
     "marketCap_to_totalAssets",
+    #yahoo:
+    "marketCap_to_TotalAssets",
+
     "netIncome_to_totalRevenue",
     "totalCurrentLiabilities_to_totalCurrentAssets",
     "grossProfit_to_totalRevenue",
     "operatingIncome_to_totalRevenue",
-    "totalShareholdersEquity_to_totalAssets"
+    "totalShareholdersEquity_to_totalAssets",
+    #yahoo
+    "TotalLiab_to_TotalAssets",
+    "TotalCurrentLiabilities_to_TotalCurrentAssets",
 
 ]
 

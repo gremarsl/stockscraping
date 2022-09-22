@@ -45,16 +45,14 @@ def own_json_analysis():
 
 
 def start():
+    own_json_analysis()
     finnhub_analysis()
-
     alpha_vantage_analysis()
 
-    own_json_analysis()
-
     # gimmic
-    calculate_dax_to_gdp_germany()
+    #calculate_dax_to_gdp_germany()
 
-    calculate_sp_500_to_gdp_usa()
+    #calculate_sp_500_to_gdp_usa()
 
     stub()
 

@@ -16,15 +16,24 @@ options_for_plot_limit = {
     "cashRatio": option_ratio_50_to_0,
     "currentRatio": option_ratio_50_to_0,
     "totalCurrentLiabilities_to_totalCurrentAssets": option_ratio_50_to_0,
+    #yahoo:
+    "TotalCurrentLiab_to_TotalCurrentAssets": option_ratio_50_to_0,
+
     "researchAndDevelopment_to_totalRevenue": option_ratio_50_to_0,
     "ebitPerShare": option_per_share_30_to_minus_5,
     "netMargin": option_per_share_30_to_minus_5,
     "grossMargin": option_quotient_100_to_0,
     "totalDebtToEquity": option_quotient_2_to_0,
     "totalLiabilities_to_totalAssets": option_quotient_2_to_0,
+    #yahoo:
+    "TotalLiab_to_TotalAssets": option_quotient_2_to_0,
+
     "marketCap_to_totalRevenue": option_quotient_100_to_0,
     "marketCap_to_netIncome": option_quotient_100_to_0,
     "marketCap_to_totalAssets": option_quotient_100_to_0,
+    #yahoo
+    "marketCap_to_TotalAssets": option_quotient_100_to_0,
+
     "netIncome_to_totalRevenue": option_quotient_100_to_0,  # ROS
     "grossProfit_to_totalRevenue": option_quotient_100_to_0,
     "operatingIncome_to_totalRevenue": option_quotient_100_to_0,
@@ -52,15 +61,23 @@ options_for_plot_color = {
     "cashRatio": option_color_cash_ratio,
     "currentRatio": option_color_current_ratio,
     "totalCurrentLiabilities_to_totalCurrentAssets": option_color_current_ratio,
+    #yahoo
+    "TotalCurrentLiab_to_TotalCurrentAssets": option_color_current_ratio,
     "ebitPerShare": option_color_ebit_per_share,
     "grossMargin": option_color_gross_margin,
     "netMargin": option_color_net_margin,
     "totalDebtToEquity": option_color_totalDebtToEquity,
     "researchAndDevelopment_to_totalRevenue": option_color_quotient_research_and_development_revenue,
     "totalLiabilities_to_totalAssets": option_color_quotient_totalLiabilities_to_totalAssets,
+    #yahoo
+    "TotalLiab_to_TotalAssets": option_color_quotient_totalLiabilities_to_totalAssets,
+
     "marketCap_to_netIncome": option_color_quotient_marketCap_to_netIncome,
     "marketCap_to_totalRevenue": option_color_quotient_marketCap_to_totalRevenue,
     "marketCap_to_totalAssets": option_color_quotient_marketCap_to_totalAssets,
+    #yahoo:
+    "marketCap_to_TotalAssets": option_color_quotient_marketCap_to_totalAssets,
+
     "netIncome_to_totalRevenue": option_color_quotient_netIncome_to_totalRevenue,
     "grossProfit_to_totalRevenue": option_color_gross_margin,
     "operatingIncome_to_totalRevenue": option_color_quotient_operationsIncome_to_totalRevenue,
@@ -95,12 +112,6 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
         indicator = transform_indicator(indicator)
 
         if len(x) == len(y):
-            if len(data_list) > 6:
-                y_lim_top = 200
-                y_lim_bottom = 0
-            else:
-                y_lim_top, y_lim_bottom = options_for_plot_limit[indicator]()
-
             plt.plot(x, y, label=indicator, color=options_for_plot_color[indicator]())
             plt.scatter(x, y, color=options_for_plot_color[indicator]())
 
