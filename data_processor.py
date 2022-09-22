@@ -52,8 +52,26 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
 
     if len(data_list) == 0:
         raise Exception("No data")
-
     match source:
+        case "my_json":
+            #TODO implement analyzing all symbols
+            if (not relative_data) and all_symbols is False:
+                try:
+                    # plot data
+                    stupid_plot_data_lists(data_list, source)
+
+                except IncorrectJsonData:
+                    print("analyzing my_json data failed")
+
+            # if one symbol and multiple indicators
+            if relative_data and all_symbols is False:
+                try:
+                    # plot data
+                    stupid_plot_data_lists(data_list, source)
+
+                except IncorrectJsonData:
+                    print("analyzing my_json data failed")
+
         case "alpha_vantage":
             if all_symbols is True:
                 if data_list[0][3] != data_list[1][3]:
@@ -130,58 +148,9 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
                 else:
                     print("ERROR - this case is not catched")
 
-        case "my_json":
-            if (not relative_data) and all_symbols is True:
-                try:
-                    # filter
-                    indicators = filter_data(data_list, options.options_abs_indicator)
-                    # plot data
-                    plot_compare_symbols_one_indicator(data_list, source)
-
-                    # stupid_plot_data_lists(indicators, source)
-
-                except IncorrectJsonData:
-                    print("analyzing my_json data failed")
-
-            if relative_data and all_symbols is True:
-                try:
-                    # filter
-                    indicators = filter_data(data_list, options.options_rel_indicator)
-                    # plot data
-                    plot_compare_symbols_one_indicator(data_list, source)
-
-                    # stupid_plot_data_lists(indicators, source)
-
-                except IncorrectJsonData:
-                    print("analyzing my_json data failed")
-
-            # if one symbol and multiple indicators
-            if relative_data and all_symbols is False:
-                try:
-                    # filter
-                    indicators = filter_data(data_list, options.options_rel_indicator)
-                    # plot data
-                    stupid_plot_data_lists(data_list, source)
-
-                    # stupid_plot_data_lists(indicators, source)
-
-                except IncorrectJsonData:
-                    print("analyzing my_json data failed")
-
-            #TODO analyse all option
-            if (not relative_data) and all_symbols is False:
-                try:
-                    # filter
-                    indicators = filter_data(data_list, options.options_abs_indicator)
-                    # plot data
-                    plot_compare_symbols_one_indicator(data_list, source)
-
-                    # stupid_plot_data_lists(indicators, source)
-
-                except IncorrectJsonData:
-                    print("analyzing my_json data failed")
 
         case _:
             raise Exception("data is not from source alpha_vantage, finnhub or my_json")
+
 
 
