@@ -38,76 +38,11 @@ def calculate_sp_500_to_gdp_usa():
         print(f"The quotient S&P 500 to last US Gross Domestic Product (GDP) number is: {factor}")
 
 
-def get_earnings(base, symbol: str):
-    balance = base.balance_sheet
-
-    # convert and save data to csv format
-    name_of_file = "yahoo_balance_" + symbol + ".csv"
-    convert_and_save_to_csv(balance, name_of_file)
-
-    file = open(name_of_file)
-
-    # execute formatting commands on yahoo csv data
-    #TODO there is gernal function for this: yahoo_csv_data_formatting - START
-    csvreader = csv.reader(file)
-    header = next(csvreader)
-
-    # remove list elements which are empty
-    header = list(filter(None, header))
-
-    # extract rows and filter empty lists from the base list
-    rows = []
-    for row in csvreader:
-        rows.append(row)
-
-    rows = list(filter(None, rows))
-
-    # remove spaces from indicators
-    for row in rows:
-        row_stripped = row[0].replace(" ", "")
-
-        row[0] = row_stripped
-
-    #TODO there is gernal function for this: yahoo_csv_data_formatting - END
-    # create basic financial json object
-    basic_object = create_json_object_finance(symbol)
-
-    # Access to the basic object
-    output_quarter_array = basic_object["quarterlyReports"]
-
-    # Assembling
-    quater_idx = 0
-    for quater in header:
-        object = {}
-
-        append_key_value_to_object(object, "fiscalDateEnding", header[quater_idx])
-
-        for row in rows:
-            append_key_value_to_object(object, row[0], row[quater_idx + 1])
-
-        # hinzufügen des objects zu dem array
-        output_quarter_array.append(object)
-
-        quater_idx += 1
-
-    name_of_file_json = "yahoo_balance_" + symbol + ".json"
-    write_to_file_in_json_format(basic_object, name_of_file_json)
-
-    return balance
-
-
-def get_financials(base, symbol):
-    financials = base.financials
-
-    # convert and save data to csv format
-    name_of_file = "yahoo_financial_" + symbol + ".csv"
-    convert_and_save_to_csv(financials, name_of_file)
-
-    file = open(name_of_file)
+def operate_csv_data_and_convert_to_json(filename: str, symbol):
+    file = open(filename)
 
     # execute formatting commands on yahoo csv data
     header, rows = yahoo_csv_data_formatting(file)
-
     # create basic financial json object
     basic_object = create_json_object_finance(symbol)
 
@@ -115,32 +50,58 @@ def get_financials(base, symbol):
     output_quarter_array = basic_object["quarterlyReports"]
 
     # Assembling
-    quater_idx = 0
-    for quater in header:
+    quarter_idx = 0
+    for quarter in header:
         object = {}
 
-        append_key_value_to_object(object, "fiscalDateEnding", header[quater_idx])
+        append_key_value_to_object(object, "fiscalDateEnding", header[quarter_idx])
 
         for row in rows:
-            append_key_value_to_object(object, row[0], row[quater_idx + 1])
+            append_key_value_to_object(object, row[0], row[quarter_idx + 1])
 
         # hinzufügen des objects zu dem array
         output_quarter_array.append(object)
 
-        quater_idx += 1
+        quarter_idx += 1
 
-    name_of_file_json = "yahoo_fiancials_" + symbol + ".json"
+    # Slice string to remove 4 last characters
+    name_of_file_json = filename[:-4] + ".json"
     write_to_file_in_json_format(basic_object, name_of_file_json)
 
-    pass
+
+def get_quarterly_balance_sheet(base, symbol: str):
+    quarterly_balance_sheet = base.quarterly_balance_sheet
+
+    # convert and save data to csv format
+    filename = "yahoo_quarterly_balance_sheet_" + symbol + ".csv"
+    convert_and_save_to_csv(quarterly_balance_sheet, filename)
+
+    operate_csv_data_and_convert_to_json(filename, symbol)
+
+    return filename
+
+
+def get_quarterly_financials(base, symbol):
+    financials = base.quarterly_financials
+
+    # convert and save data to csv format
+    filename = "yahoo_quarterly_financials_" + symbol + ".csv"
+    convert_and_save_to_csv(financials, filename)
+
+    operate_csv_data_and_convert_to_json(filename, symbol)
+
+    return filename
 
 
 def get_yahoo_data(symbols):
     for symbol in symbols:
         try:
+            files = []
             base = get_base_ticker_from_yahoo_finance(symbol)
-            get_earnings(base, symbol)
-            get_financials(base, symbol)
+            files.append(get_quarterly_financials(base, symbol))
+            files.append(get_quarterly_balance_sheet(base, symbol))
+
+            print(files)
 
         except:
             print("Get yahoo earnings failed")

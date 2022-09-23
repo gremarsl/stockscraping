@@ -209,6 +209,12 @@ def append_key_value_to_object(object, key, value):
     return object
 
 
+def append_object_to_json_array(merge_object,base_object):
+    base_object.append(merge_object)
+    print(base_object)
+    pass
+
+
 def get_key_value_from_local_file(indicator, s):
     try:
         symbol_info = read_data_from_file("yahoo_info_data_" + s[0] + ".json")
@@ -302,4 +308,3 @@ def yahoo_csv_data_formatting(file):
         row[0] = row_stripped
 
     return header, rows
-

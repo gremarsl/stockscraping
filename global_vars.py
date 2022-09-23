@@ -37,6 +37,11 @@ get_alpha_data = 0
 analyze_alpha_data = 0
 analyze_alpha_data_compare_companies = 0
 
+get_yahoo_data = 0
+analyze_yahoo_data = 0
+analyze_yahoo_compare_companies = 0 #TODO plot also when compare companies are 0
+
+
 build_own_json =0
 analyze_my_json_data = 0
 analyze_my_json_data_compare_companies = 0 #TODO plot also when compare companies are 0
@@ -58,6 +63,7 @@ finnhub_symbols = ["AMD","NVDA"]
 alpha_vantage_symbols = ["AMD","NVDA"] # GOOGL, , "FB", "AMD", "NVDA"
 
 my_json_symbols = ["MSFT"]
+yahoo_symbols = ["MSFT"]
 # END COMPANIES TO ANALYZE
 
 
