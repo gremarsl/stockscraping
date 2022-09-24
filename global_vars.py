@@ -38,7 +38,7 @@ analyze_alpha_data = 0
 analyze_alpha_data_compare_companies = 0
 
 get_yahoo_data = 0
-analyze_yahoo_data = 0
+analyze_yahoo_data = 1
 analyze_yahoo_compare_companies = 0 #TODO plot also when compare companies are 0
 
 
@@ -108,6 +108,9 @@ filepath_alpha = directory_of_execution + "\\alpha_vantage\\"
 filepath_finnhub = directory_of_execution + "\\finnhub\\"
 
 filepath_my_json = directory_of_execution + "\\reports_json\\"
+
+#TODO
+filepath_yahoo =  directory_of_execution
 
 filepath_yahoo = directory_of_execution + "\\yahoo_info\\"
 

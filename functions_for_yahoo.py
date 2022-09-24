@@ -68,6 +68,8 @@ def operate_csv_data_and_convert_to_json(filename: str, symbol):
     name_of_file_json = filename[:-4] + ".json"
     write_to_file_in_json_format(basic_object, name_of_file_json)
 
+    return name_of_file_json
+
 
 def get_quarterly_balance_sheet(base, symbol: str):
     quarterly_balance_sheet = base.quarterly_balance_sheet
@@ -76,9 +78,9 @@ def get_quarterly_balance_sheet(base, symbol: str):
     filename = "yahoo_quarterly_balance_sheet_" + symbol + ".csv"
     convert_and_save_to_csv(quarterly_balance_sheet, filename)
 
-    operate_csv_data_and_convert_to_json(filename, symbol)
+    filename_json = operate_csv_data_and_convert_to_json(filename, symbol)
 
-    return filename
+    return filename_json
 
 
 def get_quarterly_financials(base, symbol):
@@ -88,9 +90,9 @@ def get_quarterly_financials(base, symbol):
     filename = "yahoo_quarterly_financials_" + symbol + ".csv"
     convert_and_save_to_csv(financials, filename)
 
-    operate_csv_data_and_convert_to_json(filename, symbol)
+    filename_json = operate_csv_data_and_convert_to_json(filename, symbol)
 
-    return filename
+    return filename_json
 
 
 def get_quarterly_cashflow(base, symbol):
@@ -100,9 +102,9 @@ def get_quarterly_cashflow(base, symbol):
     filename = "yahoo_quarterly_cashflow_" + symbol + ".csv"
     convert_and_save_to_csv(cashflow, filename)
 
-    operate_csv_data_and_convert_to_json(filename, symbol)
+    filename_json = operate_csv_data_and_convert_to_json(filename, symbol)
 
-    return filename
+    return filename_json
 
 
 def get_yahoo_data(symbols):
@@ -114,8 +116,6 @@ def get_yahoo_data(symbols):
             file_list.append(get_quarterly_financials(base, symbol))
             file_list.append(get_quarterly_balance_sheet(base, symbol))
             file_list.append(get_quarterly_cashflow(base, symbol))
-
-            print(file_list)
 
         except:
             print("Get yahoo earnings failed")

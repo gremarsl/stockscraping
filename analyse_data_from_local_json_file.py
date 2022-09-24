@@ -16,7 +16,12 @@ def compare_companies(symbol, source="my_json"):
 
 
 def one_company_only(symbol, source="my_json"):
-    data = read_data_from_file(global_vars.filepath_my_json + symbol + ".json")
+    # TODO save yahoo files in separate folder and then open it from the
+    # data = read_data_from_file(global_vars.filepath_my_json + symbol + ".json")
+    data = read_data_from_file("yahoo_total_data_" + symbol + ".json")
+    if data is None:
+        raise Exception("There was no data read from file. Please check if the file exists")
+
 
     ''' 
     my indicators for finnhub and alpha vantage indiactors I want to analyse from the json file
@@ -26,7 +31,7 @@ def one_company_only(symbol, source="my_json"):
                          "grossProfit_to_totalRevenue",
                          ]  # , "totalShareholdersEquity_to_totalAssets" == ,"totalAssets_minus_totalLiabilities"
     '''
-    abs_indicators = ["TotalAssets"]
+    abs_indicators = ["TotalRevenue"]
     rel_indicators = ["TotalLiab_to_TotalAssets", "TotalCurrentLiab_to_TotalCurrentAssets"]
     my_rel_indicators_live = ["marketCap_to_TotalAssets",
                               "marketCap_to_TotalLiab"]  # "marketCap_to_totalRevenue", ,"marketCap_to_netIncome"

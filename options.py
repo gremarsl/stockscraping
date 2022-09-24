@@ -10,7 +10,8 @@ options_abs_indicator = [
     "operatingCashflow",
     "changeInCashAndCashEquivalents",
     #yahoo:
-    "TotalAssets"
+    "TotalAssets",
+    "TotalRevenue",
 
 ]
 
