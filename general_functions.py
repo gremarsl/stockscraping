@@ -1,4 +1,5 @@
 import csv
+import shutil
 import time
 
 import matplotlib.pyplot as plt
@@ -209,7 +210,7 @@ def append_key_value_to_object(object, key, value):
     return object
 
 
-def append_object_to_json_array(merge_object,base_object):
+def append_object_to_json_array(merge_object, base_object):
     base_object.append(merge_object)
     print(base_object)
     pass
@@ -308,3 +309,41 @@ def yahoo_csv_data_formatting(file):
         row[0] = row_stripped
 
     return header, rows
+
+
+def copy_and_rename_file(src_file, dest_file):
+    shutil.copy(src_file, dest_file)
+
+
+def merge_file_list(file_list):
+
+    dest_file = "yahoo_total_data_MSFT.json"
+
+    copy_and_rename_file(file_list[0], dest_file)
+
+    # iterate over the array but start from the second element in the array
+    for item in file_list[1:]:
+        merge_two_json_files(dest_file, item)
+
+
+def merge_two_json_files(baseFile, mergeFile):
+    base_file_data = read_data_from_file(baseFile)
+    merge_file_data = read_data_from_file(mergeFile)
+
+    # TODO improve error logging
+    for quarter in merge_file_data["quarterlyReports"]:
+        date = quarter["fiscalDateEnding"]
+
+        # base_quarter is an object
+        for base_quarter in base_file_data["quarterlyReports"]:
+
+            base_date = base_quarter["fiscalDateEnding"]
+
+            if date == base_date:
+                for key_value_pair in quarter.items():
+
+                    # Iterate over key value pairs. Add to object if not already there.
+                    if key_value_pair not in base_quarter:
+                        append_key_value_to_object(base_quarter, key_value_pair[0], key_value_pair[1])
+
+    write_to_file_in_json_format(base_file_data, baseFile)
