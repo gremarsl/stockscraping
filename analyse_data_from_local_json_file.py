@@ -22,19 +22,10 @@ def one_company_only(symbol, source="my_json"):
     if data is None:
         raise Exception("There was no data read from file. Please check if the file exists")
 
-
-    ''' 
-    my indicators for finnhub and alpha vantage indiactors I want to analyse from the json file
-    my_abs_indicators = #,"totalRevenue", "grossProfit", "operatingIncome", "ebit", "netIncome"
-    my_rel_indicators = ["researchAndDevelopment_to_totalRevenue", "operatingIncome_to_totalRevenue",
-                         "totalLiabilities_to_totalAssets", "totalCurrentLiabilities_to_totalCurrentAssets",
-                         "grossProfit_to_totalRevenue",
-                         ]  # , "totalShareholdersEquity_to_totalAssets" == ,"totalAssets_minus_totalLiabilities"
-    '''
-    abs_indicators = ["TotalRevenue"]
-    rel_indicators = ["TotalLiab_to_TotalAssets", "TotalCurrentLiab_to_TotalCurrentAssets"]
-    my_rel_indicators_live = ["marketCap_to_TotalAssets",
-                              "marketCap_to_TotalLiab"]  # "marketCap_to_totalRevenue", ,"marketCap_to_netIncome"
+    abs_indicators = ["TotalRevenue", "GrossProfit"]
+    rel_indicators = ["ResearchDevelopment_to_TotalRevenue", "OperatingIncome_to_TotalRevenue",
+                      "TotalCurrentLiab_to_TotalCurrentAssets"]
+    my_rel_indicators_live = ["marketCap_to_TotalAssets"]
 
     abs_data = []
     if analyse_abs_indicator == 1:

@@ -315,15 +315,15 @@ def copy_and_rename_file(src_file, dest_file):
     shutil.copy(src_file, dest_file)
 
 
-def merge_file_list(file_list):
+def merge_file_list(file_list,symbol_list):
+    for symbol in symbol_list:
+        dest_file = "yahoo_total_data_"+ symbol +".json"
 
-    dest_file = "yahoo_total_data_MSFT.json"
+        copy_and_rename_file(file_list[0], dest_file)
 
-    copy_and_rename_file(file_list[0], dest_file)
-
-    # iterate over the array but start from the second element in the array
-    for item in file_list[1:]:
-        merge_two_json_files(dest_file, item)
+        # iterate over the array but start from the second element in the array
+        for item in file_list[1:]:
+            merge_two_json_files(dest_file, item)
 
 
 def merge_two_json_files(baseFile, mergeFile):

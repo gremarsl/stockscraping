@@ -1,5 +1,3 @@
-import shutil
-
 import global_vars
 from analyse_data_from_alpha_vantage import analyze_data_from_alpha_vantage
 from analyse_data_from_local_json_file import analyze_data_from_local_json_file
@@ -8,8 +6,7 @@ from build_own_json import build_own_json_file
 from functions_for_finnhub import calling_finnhub_api
 from functions_for_alpha_vantage import calling_alpha_vantage_api
 from functions_for_yahoo import calculate_sp_500_to_gdp_usa, calculate_dax_to_gdp_germany, get_yahoo_data
-from general_functions import read_data_from_file, append_key_value_to_object, append_object_to_json_array, \
-    write_to_file_in_json_format, merge_file_list
+from general_functions import merge_file_list
 
 
 def finnhub_analysis():
@@ -48,14 +45,12 @@ def own_json_analysis():
     print("end own json analysis  ...")
 
 
-
-
 def yahoo_data_analysis():
     print("start yahoo finance analysis ...")
     if global_vars.get_yahoo_data == 1:
         file_list = get_yahoo_data(global_vars.yahoo_symbols)
 
-        merge_file_list(file_list)
+        merge_file_list(file_list, global_vars.yahoo_symbols)
 
     if global_vars.analyze_yahoo_data == 1:
         analyze_data_from_local_json_file(global_vars.yahoo_symbols, global_vars.analyze_yahoo_compare_companies)

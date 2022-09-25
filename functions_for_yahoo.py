@@ -124,7 +124,7 @@ def get_yahoo_data(symbols):
 
 def get_base_ticker_from_yahoo_finance(symbol):
     try:
-        symbol_base = yf.Ticker("MSFT")
+        symbol_base = yf.Ticker(symbol)
 
     except:
         print(f"yf.Ticker failed for symbol: {symbol}")
