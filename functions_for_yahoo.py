@@ -75,7 +75,7 @@ def get_quarterly_balance_sheet(base, symbol: str):
     quarterly_balance_sheet = base.quarterly_balance_sheet
 
     # convert and save data to csv format
-    filename = "yahoo_quarterly_balance_sheet_" + symbol + ".csv"
+    filename = global_vars.filepath_yahoo + "yahoo_quarterly_balance_sheet_" + symbol + ".csv"
     convert_and_save_to_csv(quarterly_balance_sheet, filename)
 
     filename_json = operate_csv_data_and_convert_to_json(filename, symbol)
@@ -87,7 +87,7 @@ def get_quarterly_financials(base, symbol):
     financials = base.quarterly_financials
 
     # convert and save data to csv format
-    filename = "yahoo_quarterly_financials_" + symbol + ".csv"
+    filename = global_vars.filepath_yahoo + "yahoo_quarterly_financials_" + symbol + ".csv"
     convert_and_save_to_csv(financials, filename)
 
     filename_json = operate_csv_data_and_convert_to_json(filename, symbol)
@@ -99,7 +99,7 @@ def get_quarterly_cashflow(base, symbol):
     cashflow = base.quarterly_cashflow
 
     # convert and save data to csv format
-    filename = "yahoo_quarterly_cashflow_" + symbol + ".csv"
+    filename = global_vars.filepath_yahoo + "yahoo_quarterly_cashflow_" + symbol + ".csv"
     convert_and_save_to_csv(cashflow, filename)
 
     filename_json = operate_csv_data_and_convert_to_json(filename, symbol)
@@ -121,6 +121,7 @@ def get_yahoo_data(symbols):
             print("Get yahoo earnings failed")
 
     return file_list
+
 
 def get_base_ticker_from_yahoo_finance(symbol):
     try:

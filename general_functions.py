@@ -317,7 +317,7 @@ def copy_and_rename_file(src_file, dest_file):
 
 def merge_file_list(file_list,symbol_list):
     for symbol in symbol_list:
-        dest_file = "yahoo_total_data_"+ symbol +".json"
+        dest_file = global_vars.filepath_yahoo + "yahoo_total_data_"+ symbol +".json"
 
         copy_and_rename_file(file_list[0], dest_file)
 

@@ -16,9 +16,8 @@ def compare_companies(symbol, source="my_json"):
 
 
 def one_company_only(symbol, source="my_json"):
-    # TODO save yahoo files in separate folder and then open it from the
     # data = read_data_from_file(global_vars.filepath_my_json + symbol + ".json")
-    data = read_data_from_file("yahoo_total_data_" + symbol + ".json")
+    data = read_data_from_file(global_vars.filepath_yahoo + "yahoo_total_data_" + symbol + ".json")
     if data is None:
         raise Exception("There was no data read from file. Please check if the file exists")
 
