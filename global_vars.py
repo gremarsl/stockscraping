@@ -109,9 +109,6 @@ filepath_finnhub = directory_of_execution + "\\finnhub\\"
 
 filepath_my_json = directory_of_execution + "\\reports_json\\"
 
-#TODO
-filepath_yahoo =  directory_of_execution
-
 filepath_yahoo = directory_of_execution + "\\yahoo_info\\"
 
 market_cap = 0

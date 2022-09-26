@@ -54,7 +54,6 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
         raise Exception("No data")
     match source:
         case "my_json":
-            #TODO implement analyzing all symbols
             if (not relative_data) and all_symbols is False:
                 try:
                     # plot data
