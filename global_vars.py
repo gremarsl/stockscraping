@@ -37,14 +37,14 @@ get_alpha_data = 0
 analyze_alpha_data = 0
 analyze_alpha_data_compare_companies = 0
 
-get_yahoo_data = 1
+get_yahoo_data = 0
 analyze_yahoo_data = 1
-analyze_yahoo_compare_companies = 0 #TODO plot also when compare companies are 0
+analyze_yahoo_compare_companies = 1 #TODO plot also when compare companies are 0
 
 
-build_own_json =0
-analyze_my_json_data = 0
-analyze_my_json_data_compare_companies = 0 #TODO plot also when compare companies are 0
+build_own_json =get_yahoo_data
+analyze_my_json_data = analyze_yahoo_data
+analyze_my_json_data_compare_companies = analyze_yahoo_compare_companies #TODO plot also when compare companies are 0
 
 calculate_dax = 0
 calculate_sp500 = 0
@@ -74,8 +74,8 @@ analyze_absolute_income_statement = 0
 analyze_absolute_cash_flow = 0
 analyze_percentage_income_statement = 0
 analyze_percentage_balance_sheet = 0
-analyze_live_with_income_statement = 1
-analyze_live_with_balance_sheet = 1
+analyze_live_with_income_statement = 0
+analyze_live_with_balance_sheet = 0
   # END SWITCHES FOR ALPHA VANTAGE ANALYSIS
 
 
@@ -85,7 +85,11 @@ analyze_percentage_my_json = 0
 analyze_live_with_my_json = 0
   # END SWITCHES FOR JSON ANALYSIS
 
-
+  # START SWITCHES FOR JSON ANALYSIS
+analyze_abs_yahoo = 1
+analyze_rel_yahoo = 0
+analyze_rel_live_yahoo = 0
+  # END SWITCHES FOR JSON ANALYSIS
 
   # START PARAMETERS FOR INDEX CALCULATION
 sp_500_divisor = 8451.33

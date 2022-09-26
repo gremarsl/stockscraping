@@ -54,6 +54,22 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
         raise Exception("No data")
     match source:
         case "my_json":
+            if all_symbols is True:
+                if data_list[0][3] != data_list[1][3]:
+
+                    number_of_symbols_in_data_list = get_number_of_elements_in_list(data_list)
+                    number_of_indicators_per_symbol = count_number_of_entries(data_list)
+
+                    for x in range (0,number_of_symbols_in_data_list):
+                        new_data_list = data_list[::(number_of_indicators_per_symbol+x)]
+                        plot_compare_symbols_one_indicator(new_data_list, source)
+
+                else:
+                    try:
+                        plot_compare_symbols_one_indicator(data_list, source)
+                    except IncorrectAlphaData:
+                        print("analyzing alpha data failed")
+
             if (not relative_data) and all_symbols is False:
                 try:
                     # plot data

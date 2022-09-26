@@ -1,6 +1,3 @@
-from PyPDF2 import PdfFileMerger
-import glob
-import os
 import global_vars
 from data_processor import processor_filter_plot_data
 from functions_for_alpha_vantage import extract_quarterly_report_data_from_alpha
@@ -20,18 +17,6 @@ indicator_percentage_with_balance_sheet = ["totalLiabilities_to_totalAssets",
 
 indicator_live_with_income_statement = ["marketCap_to_totalRevenue", "marketCap_to_netIncome"]
 indicator_live_with_balance_sheet = ["marketCap_to_totalAssets"]
-
-
-def pdf_merger():
-    merger = PdfFileMerger()
-
-    os.chdir(global_vars.filepath_my_json)
-    for file in glob.glob("*.pdf"):
-        print(file)
-        merger.append(file)
-
-    merger.write(global_vars.filepath_my_json + "\\result.pdf")
-    merger.close()
 
 
 def compare_companies(symbols, source):
@@ -353,4 +338,3 @@ def analyze_data_from_alpha_vantage(symbols: list, analyze_alpha_data_compare_co
 
     else:
         map(one_company_only, symbols)
-
