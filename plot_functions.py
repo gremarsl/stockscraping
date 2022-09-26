@@ -2,6 +2,14 @@ import matplotlib.pyplot as plt
 from general_functions import convert_list_elements_to_float, convert_list_elements_to_date_instance
 from options import *
 
+def transform_indicator(indicator: str):
+    if indicator == "grossProfit_to_totalRevenue":
+        indicator = "grossMargin"
+
+    if indicator == "operatingIncome_to_totalRevenue":
+        indicator = "operatingMargin"
+    return indicator
+
 
 def stupid_plot_data_lists(data_list: list, source: str) -> None:
     # x: list, y: list, symbol: str, indicator: str
@@ -17,6 +25,8 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
         symbol = i[2]
         indicator = i[3]
 
+        indicator = transform_indicator(indicator)
+
         if len(x) == len(y):
             plt.plot(x, y, label=indicator, color=options_for_plot_color[indicator]())
             plt.scatter(x, y, color=options_for_plot_color[indicator]())
@@ -30,7 +40,7 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
     plt.title(f'{symbol} source: {source}')
     plt.xlabel('Year')
 
-    # plot_full_screen()
+    #plot_full_screen()
     plt.legend()
 
     plt.show()
@@ -57,19 +67,26 @@ def plot_compare_symbols_one_indicator(data_list, source):
 
         if len(x) != len(y):
             raise print(f"ERROR - Length of x is {len(x)} and length of y is {len(y)} - must be same")
+        else:
+            if len(data_list) > 6:
+                y_lim_top = 200
+                y_lim_bottom = 0
+            else:
+                y_lim_top, y_lim_bottom = options_for_plot_limit[indicator]()
 
             plt.plot(x, y, label=symbol)
             plt.scatter(x, y)
+
 
     plt.grid(b=None, which='major', axis='both')
     plt.xticks(data_list[0][0], rotation="vertical")
     plt.title(f'{indicator} source: {source}')
     plt.xlabel('Year')
 
-    # plot_full_screen()
+    #plot_full_screen()
 
     plt.legend()
-    # save_figure(indicator)
-    # print("plt.show is commented, this is why the plot will not show up")
+    #save_figure(indicator)
+    #print("plt.show is commented, this is why the plot will not show up")
     plt.show()
     plt.cla()
