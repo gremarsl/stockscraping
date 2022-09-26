@@ -2,14 +2,6 @@ import matplotlib.pyplot as plt
 from general_functions import convert_list_elements_to_float, convert_list_elements_to_date_instance
 from options import *
 
-def transform_indicator(indicator: str):
-    if indicator == "grossProfit_to_totalRevenue":
-        indicator = "grossMargin"
-
-    if indicator == "operatingIncome_to_totalRevenue":
-        indicator = "operatingMargin"
-    return indicator
-
 
 def stupid_plot_data_lists(data_list: list, source: str) -> None:
     # x: list, y: list, symbol: str, indicator: str
@@ -24,8 +16,6 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
         y = convert_list_elements_to_float(y)
         symbol = i[2]
         indicator = i[3]
-
-        indicator = transform_indicator(indicator)
 
         if len(x) == len(y):
             plt.plot(x, y, label=indicator, color=options_for_plot_color[indicator]())
@@ -68,11 +58,6 @@ def plot_compare_symbols_one_indicator(data_list, source):
         if len(x) != len(y):
             raise print(f"ERROR - Length of x is {len(x)} and length of y is {len(y)} - must be same")
         else:
-            if len(data_list) > 6:
-                y_lim_top = 200
-                y_lim_bottom = 0
-            else:
-                y_lim_top, y_lim_bottom = options_for_plot_limit[indicator]()
 
             plt.plot(x, y, label=symbol)
             plt.scatter(x, y)

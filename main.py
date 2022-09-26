@@ -9,28 +9,6 @@ from functions_for_yahoo import calculate_sp_500_to_gdp_usa, calculate_dax_to_gd
 from general_functions import merge_file_list
 
 
-def finnhub_analysis():
-    print("start finnhub analysis ...")
-    if global_vars.get_finnhub_data == 1:
-        calling_finnhub_api(global_vars.finnhub_symbols)
-
-    if global_vars.analyze_finnhub_data == 1:
-        analyze_data_from_finnhub(global_vars.finnhub_symbols)
-
-    print("end finnhub analysis ...")
-
-
-def alpha_vantage_analysis():
-    print("start alpha vantage analysis ...")
-
-    if global_vars.get_alpha_data == 1:
-        calling_alpha_vantage_api(global_vars.alpha_vantage_symbols)
-
-    if global_vars.analyze_alpha_data == 1 or global_vars.analyze_alpha_data_compare_companies == 1:
-        analyze_data_from_alpha_vantage(global_vars.alpha_vantage_symbols,
-                                        global_vars.analyze_alpha_data_compare_companies)
-    print("end alpha vantage analysis ...")
-
 
 def own_json_analysis():
     print("start own json analysis ...")
@@ -60,8 +38,6 @@ def yahoo_data_analysis():
 def start():
     yahoo_data_analysis()
     own_json_analysis()
-    finnhub_analysis()
-    alpha_vantage_analysis()
 
     # gimmic
     # calculate_dax_to_gdp_germany()
