@@ -39,12 +39,12 @@ analyze_alpha_data_compare_companies = 0
 
 get_yahoo_data = 0
 analyze_yahoo_data = 1
-analyze_yahoo_compare_companies = 1 #TODO plot also when compare companies are 0
+analyze_yahoo_compare_companies = 1
 
 
 build_own_json =get_yahoo_data
 analyze_my_json_data = analyze_yahoo_data
-analyze_my_json_data_compare_companies = analyze_yahoo_compare_companies #TODO plot also when compare companies are 0
+analyze_my_json_data_compare_companies = analyze_yahoo_compare_companies
 
 calculate_dax = 0
 calculate_sp500 = 0
