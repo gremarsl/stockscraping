@@ -11,20 +11,17 @@ import os
                                                 entered companies. If enabled / set to 1 every company get evaluated 
                                                 and can be interpreted with the help of grafics showing financial 
                                                 indicators separately.
-@param analyze_my_json_data_compare_companies   Evaluates the available data from  the json-files. 
+@param compare_companies   Evaluates the available data from  the json-files. 
                                                 If enabled the entered companies are evaluated and shown 
                                                 together in one graphic for easier comparison.
 '''
 
+build_own_json =0
+analyze_my_json_data=0
 
 get_yahoo_data = 0
 analyze_yahoo_data = 1
-analyze_yahoo_compare_companies = 1
-
-
-build_own_json =get_yahoo_data
-analyze_my_json_data = analyze_yahoo_data
-analyze_my_json_data_compare_companies = analyze_yahoo_compare_companies
+compare_companies = 1
 
 calculate_dax = 0
 calculate_sp500 = 0
@@ -33,25 +30,13 @@ calculate_sp500 = 0
 
 # START COMPANIES TO ANALYZE
 '''
-@param my_json_symbols          Companies to analyze with own data
+@param symbol_list          Companies to analyze
 '''
-
-
-my_json_symbols = ["MSFT"]
-yahoo_symbols = ["MSFT","AAPL"]
+symbol_list = ["MSFT", "AAPL"]
 # END COMPANIES TO ANALYZE
 
 
 # START ADVANCED PARAMETERS
-
-
-
-  # START SWITCHES FOR JSON ANALYSIS
-analyze_absolute_my_json = 0
-analyze_percentage_my_json = 0
-analyze_live_with_my_json = 0
-  # END SWITCHES FOR JSON ANALYSIS
-
   # START SWITCHES FOR JSON ANALYSIS
 analyze_abs_yahoo = 1
 analyze_rel_yahoo = 0

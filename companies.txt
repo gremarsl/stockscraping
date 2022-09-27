@@ -9,22 +9,16 @@ energy = ["CVX"]  # "COP","XOM" ,"RDS-B","BP"
 
 automotive_alpha = ["TSLA"]
 
-network_alpha = ["NOK", "VZ", "T"]
+network = ["NOK", "VZ", "T"]
 
-consumer_alpha = ["PRG", "KO", "MCD", "NKE", "DIS", "OR.PA"]  # spencer
+consumer = ["PRG", "KO", "MCD", "NKE", "DIS", "OR.PA"]  # spencer
 
-mobility_alpha = ["BA"]
+mobility = ["BA"]
 
-pharma_companies_alpha = ["JNJ", "PFE", "ABBV", "MRK", "GSK","TAK"]
+pharma_companies = ["JNJ", "PFE", "ABBV", "MRK", "GSK","TAK"]
 #GSK = GlaxoSmithKline
 #Takeda Pharmaceutical Company Limited (TAK)
 
-finance_alpha = ["V"]
+finance = ["V"]
 
 defence =  ["LHX","NOC","GD","LMT","RTX"]
-
-# LMT = Lockheed Martin
-automotive_finnhub = ["DAI.DE", "BMW.DE", "VOW.DE", "PAH3.DE"]
-chemicals_finnhub = ["BAS.DE", "BAYN.DE", "LIN.DE", "HEN3.DE", "1COV.DE"]
-industry_finnhub = ["SIE.DE"]
-consumer_finnhub = ["BEI.DE"]

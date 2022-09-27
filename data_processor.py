@@ -60,8 +60,8 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
                     number_of_symbols_in_data_list = get_number_of_elements_in_list(data_list)
                     number_of_indicators_per_symbol = count_number_of_entries(data_list)
 
-                    for x in range (0,number_of_symbols_in_data_list):
-                        new_data_list = data_list[::(number_of_indicators_per_symbol+x)]
+                    for x in range(0, number_of_symbols_in_data_list):
+                        new_data_list = data_list[::(number_of_indicators_per_symbol + x)]
                         plot_compare_symbols_one_indicator(new_data_list, source)
 
                 else:
@@ -87,85 +87,5 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
                 except IncorrectJsonData:
                     print("analyzing my_json data failed")
 
-        case "alpha_vantage":
-            if all_symbols is True:
-                if data_list[0][3] != data_list[1][3]:
-
-                    number_of_symbols_in_data_list = get_number_of_elements_in_list(data_list)
-                    number_of_indicators_per_symbol = count_number_of_entries(data_list)
-
-                    for x in range (0,number_of_symbols_in_data_list):
-                        new_data_list = data_list[::(number_of_indicators_per_symbol+x)]
-                        plot_compare_symbols_one_indicator(new_data_list, source)
-
-                else:
-                    try:
-                        plot_compare_symbols_one_indicator(data_list, source)
-                    except IncorrectAlphaData:
-                        print("analyzing alpha data failed")
-
-            else:
-                if relative_data is True:
-                    if data_list[0][3] != data_list[1][3]:
-
-                        number_of_symbols_in_data_list = get_number_of_elements_in_list(data_list)
-                        number_of_indicators_per_symbol = count_number_of_entries(data_list)
-
-                        for x in range(0, number_of_symbols_in_data_list):
-                            new_data_list = data_list[::(number_of_indicators_per_symbol + x)]
-                            plot_compare_symbols_one_indicator(new_data_list, source)
-                    else:
-                        try:
-                            stupid_plot_data_lists(filter_data(data_list, options.options_rel_indicator), source)
-
-                        except IncorrectAlphaData:
-                            print("analyzing alpha data failed")
-
-                if relative_data is False:
-                    if data_list[0][3] != data_list[1][3]:
-
-                        number_of_symbols_in_data_list = get_number_of_elements_in_list(data_list)
-                        number_of_indicators_per_symbol = count_number_of_entries(data_list)
-
-                        for x in range(0, number_of_symbols_in_data_list):
-                            new_data_list = data_list[::(number_of_indicators_per_symbol + x)]
-                            plot_compare_symbols_one_indicator(new_data_list, source)
-                    else:
-                        try:
-                            stupid_plot_data_lists(filter_data(data_list, options.options_abs_indicator), source)
-
-                        except NoWorkingIndicatorData:
-                            print("no working indicators data")
-
-        case "finnhub":
-            if all_symbols is True:
-                try:
-                    plot_compare_symbols_one_indicator(data_list, source)
-                except NotWorkingToPlot:
-                    print("Not working to plot")
-
-            else:
-                if not relative_data:
-                    except_grossmargin = list(filter(lambda x: (x[3] != "grossMargin"), data_list))
-                    except_grossmargin_debt = list(filter(lambda x: x[3] != "totalDebtToEquity", except_grossmargin))
-
-                    eps_ebit_per_share_plot_data = list(
-                        filter(lambda x: x[3] == "eps" or x[3] == "ebitPerShare", data_list))
-
-                    try:
-                        stupid_plot_data_lists(except_grossmargin_debt, source)
-                    except NotWorkingToPlot:
-                        print(
-                            "Not working to plot ratios_eps_ebit_net_margin_data data in one plot {}".format(data_list))
-
-                    if len(eps_ebit_per_share_plot_data) == 0:
-                        raise NoEbitData()
-                else:
-                    print("ERROR - this case is not catched")
-
-
         case _:
             raise Exception("data is not from source alpha_vantage, finnhub or my_json")
-
-
-

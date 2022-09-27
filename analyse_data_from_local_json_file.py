@@ -3,8 +3,7 @@ from data_processor import processor_filter_plot_data
 from functions_for_alpha_vantage import extract_quarterly_report_data_from_alpha
 from functions_for_yahoo import get_market_cap_from_yahoo_finance
 from general_functions import read_data_from_file, split_indicator_in_two, calculate_quotient, \
-    extract_quarterly_report_data_from_my_json_file, get_float_data, \
-    get_key_value_from_local_file, get_data
+    extract_quarterly_report_data_from_my_json_file, get_float_data, get_data
 
 
 '''
