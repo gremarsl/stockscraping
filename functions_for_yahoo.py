@@ -108,19 +108,21 @@ def get_quarterly_cashflow(base, symbol):
 
 
 def get_yahoo_data(symbols):
-    file_list = []
+    complete_file_list = []
     for symbol in symbols:
+        file_list_per_symbol = []
         try:
 
             base = get_base_ticker_from_yahoo_finance(symbol)
-            file_list.append(get_quarterly_financials(base, symbol))
-            file_list.append(get_quarterly_balance_sheet(base, symbol))
-            file_list.append(get_quarterly_cashflow(base, symbol))
+            file_list_per_symbol.append(get_quarterly_financials(base, symbol))
+            file_list_per_symbol.append(get_quarterly_balance_sheet(base, symbol))
+            file_list_per_symbol.append(get_quarterly_cashflow(base, symbol))
 
         except:
             print("Get yahoo earnings failed")
 
-    return file_list
+        complete_file_list.append(file_list_per_symbol)
+    return complete_file_list
 
 
 def get_base_ticker_from_yahoo_finance(symbol):

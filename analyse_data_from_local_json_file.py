@@ -9,7 +9,7 @@ from general_functions import read_data_from_file, split_indicator_in_two, calcu
 '''
 Improvement: Merge of json data to one file -> this reduces the effort of different files -> having different data in different files
 '''
-abs_indicators = ["TotalRevenue", "NetIncome"]
+abs_indicators = ["TotalRevenue","NetIncome"]
 rel_indicators = ["NetIncome_to_TotalRevenue", "ResearchDevelopment_to_TotalRevenue", "TotalLiab_to_TotalAssets",
                   "TotalCurrentLiab_to_TotalCurrentAssets"]  # ,
 
@@ -140,11 +140,11 @@ def one_company_only(symbol, source="my_json"):
 
     # plotdata
 
-    if global_vars.analyze_abs_yahoo == 1:
+    if global_vars.analyze_abs_yahoo:
         processor_filter_plot_data(data_list=abs_data, relative_data=False, all_symbols=False, source=source)
-    if global_vars.analyze_rel_yahoo == 1:
+    if global_vars.analyze_rel_yahoo:
         processor_filter_plot_data(data_list=rel_data, relative_data=True, all_symbols=False, source=source)
-    if global_vars.analyze_rel_live_yahoo == 1:
+    if global_vars.analyze_rel_live_yahoo:
         processor_filter_plot_data(data_list=rel_data_live, relative_data=True, all_symbols=False, source=source)
 
 

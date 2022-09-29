@@ -143,6 +143,10 @@ def only_plot(data, title):
     plt.show()
 
 
+def keep_every_nth(start,lst, n):
+    a = lst[start::n]
+    return a
+
 def reverse_lists(x: list, y: list) -> list:
     x = x[::-1]
     y = y[::-1]
@@ -331,13 +335,15 @@ def copy_and_rename_file(src_file, dest_file):
 
 
 def merge_file_list(file_list,symbol_list):
-    for symbol in symbol_list:
+    #TODO Für jedes symbol - zur logicprogrammierung -> breakpoint setzen
+    for idx,symbol in enumerate(symbol_list):
         dest_file = global_vars.filepath_yahoo + "yahoo_total_data_"+ symbol +".json"
 
-        copy_and_rename_file(file_list[0], dest_file)
+        #copy and rename the first file
+        copy_and_rename_file(file_list[idx][0], dest_file)
 
         # iterate over the array but start from the second element in the array
-        for item in file_list[1:]:
+        for item in file_list[idx][1:]:
             merge_two_json_files(dest_file, item)
 
 

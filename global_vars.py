@@ -11,17 +11,18 @@ import os
                                                 entered companies. If enabled / set to 1 every company get evaluated 
                                                 and can be interpreted with the help of grafics showing financial 
                                                 indicators separately.
-@param compare_companies   Evaluates the available data from  the json-files. 
+@param compare_companies                        Evaluates the available data from  the json-files. 
                                                 If enabled the entered companies are evaluated and shown 
                                                 together in one graphic for easier comparison.
 '''
 
 build_own_json =0
 analyze_my_json_data=0
+compare_companies_my_json = 0
 
-get_yahoo_data = 0
-analyze_yahoo_data = 1
-compare_companies = 1
+get_yahoo_data = 1
+analyze_yahoo_data = 0
+compare_companies_yahoo = 1
 
 calculate_dax = 0
 calculate_sp500 = 0

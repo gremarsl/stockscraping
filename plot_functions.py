@@ -30,7 +30,7 @@ def stupid_plot_data_lists(data_list: list, source: str) -> None:
     plt.title(f'{symbol} source: {source}')
     plt.xlabel('Year')
 
-    #plot_full_screen()
+    # plot_full_screen()
     plt.legend()
 
     plt.show()
@@ -46,32 +46,33 @@ def plot_full_screen():
 def plot_compare_symbols_one_indicator(data_list, source):
     # show grid
     indicator = data_list[0][3]
+    #time is fixed and for all symbols equal
+    x = data_list[0][0]
+    x = convert_list_elements_to_date_instance(x)
+
+    plt.figure()
 
     for i in data_list:
-        x = i[0]
-        x = convert_list_elements_to_date_instance(x)
+
         y = i[1]
         y = convert_list_elements_to_float(y)
         symbol = i[2]
-        indicator = i[3]
 
-        if len(x) != len(y):
-            raise print(f"ERROR - Length of x is {len(x)} and length of y is {len(y)} - must be same")
-        else:
-
+        if len(x) == len(y):
             plt.plot(x, y, label=symbol)
             plt.scatter(x, y)
-
+        else:
+            raise print(f"ERROR - Length of x is {len(x)} and length of y is {len(y)} - must be same")
 
     plt.grid(b=None, which='major', axis='both')
     plt.xticks(data_list[0][0], rotation="vertical")
     plt.title(f'{indicator} source: {source}')
     plt.xlabel('Year')
 
-    #plot_full_screen()
+    # plot_full_screen()
 
     plt.legend()
-    #save_figure(indicator)
-    #print("plt.show is commented, this is why the plot will not show up")
+    # save_figure(indicator)
+    # print("plt.show is commented, this is why the plot will not show up")
     plt.show()
     plt.cla()
