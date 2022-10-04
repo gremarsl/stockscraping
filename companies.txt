@@ -3,7 +3,7 @@
 
 semiconductor = ["INTC", "AMD"]  # "NVDA", "AAPL", "MSFT", "QCOM", "MRVL", "ASML","KLAC","STM","SNPS", "AMBA",  "TEAM","TSM", "NVDA", "ZS", "SNPS", "CDNS"
 
-big_five = ["MSFT", "AAPL"] # GOOGL, , "FB", "AMD", "NVDA"
+big_six = ["MSFT", "AAPL", "GOOGL" , "FB", "AMD", "NVDA"]
 
 energy = ["CVX"]  # "COP","XOM" ,"RDS-B","BP"
 

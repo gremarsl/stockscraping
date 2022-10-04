@@ -65,7 +65,7 @@ def get_data(input_data, indicator, symbol):
         list_dividend = extract_quarterly_report_data(input_data, indicator, symbol=symbol)
 
         # convert to int
-        list_dividend_converted = convert_list_elements_to_int(list_dividend[1])
+        list_dividend_converted = convert_list_of_strings_to_int(list_dividend[1])
 
         data = [list_dividend[0], list_dividend_converted, symbol, indicator]
 
@@ -84,7 +84,7 @@ def get_float_data(input_data, indicator, symbol):
 
         # convert to int
         temp_converted = convert_list_elements_to_float(list_dividend[1])
-        list_dividend_converted = convert_list_elements_to_int(temp_converted)
+        list_dividend_converted = convert_list_of_strings_to_int(temp_converted)
 
         data = [list_dividend[0], list_dividend_converted, symbol, indicator]
         return data
@@ -187,8 +187,8 @@ def convert_list_elements_to_float(y):
     return y_converted
 
 
-def convert_list_elements_to_int(y):
-    return [int(x) for x in y]
+def convert_list_of_strings_to_int(y):
+    return [int(float(x)) for x in y]
 
 
 def convert_list_elements_to_date_instance(dates_as_strings):

@@ -33,15 +33,15 @@ calculate_sp500 = 0
 '''
 @param symbol_list          Companies to analyze
 '''
-symbol_list = ["MSFT", "AAPL"]
+symbol_list = ["MSFT", "AAPL", "GOOGL" , "FB", "AMD", "NVDA"]
 # END COMPANIES TO ANALYZE
 
 
 # START ADVANCED PARAMETERS
   # START SWITCHES FOR JSON ANALYSIS
-analyze_abs_yahoo = 1
+analyze_abs_yahoo = 0
 analyze_rel_yahoo = 0
-analyze_rel_live_yahoo = 0
+analyze_rel_live_yahoo = 1
   # END SWITCHES FOR JSON ANALYSIS
 
   # START PARAMETERS FOR INDEX CALCULATION
