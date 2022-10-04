@@ -1,14 +1,12 @@
-import csv
-
 import yfinance as yf
 import global_vars
-from general_functions import write_to_file_in_json_format, write_to_file_in_csv_format, create_json_object_finance, \
+from general_functions import write_to_file_in_json_format, create_json_object_finance, \
     append_key_value_to_object, convert_and_save_to_csv, yahoo_csv_data_formatting
 
 
 def calculate_dax_to_gdp_germany():
-    if global_vars.CALC_DAX == 1 and len(global_vars.dax_40) == 40:
-        companies = global_vars.dax_40
+    if global_vars.CALC_DAX == 1 and len(global_vars.DAX) == 40:
+        companies = global_vars.DAX
 
         list_of_market_cap = list(map(get_market_cap_from_yahoo_finance, companies))
         print(list_of_market_cap)
@@ -19,8 +17,8 @@ def calculate_dax_to_gdp_germany():
 
         latest_dax_value = get_index_value_from_yahoo_finance("^GDAXI")
 
-        factor_sum_market_cap = latest_sum_market_cap / global_vars.germany_gdp
-        factor_latest_dax_value = latest_dax_value / global_vars.germany_gdp
+        factor_sum_market_cap = latest_sum_market_cap / global_vars.GDP_GERMANY
+        factor_latest_dax_value = latest_dax_value / global_vars.GDP_GERMANY
 
         print(
             f"The quotient sum of market cap from all DAX40 to last Germany Gross Domestic Product (GDP) number is: {factor_sum_market_cap}")
@@ -31,10 +29,10 @@ def calculate_dax_to_gdp_germany():
 def calculate_sp_500_to_gdp_usa():
     if global_vars.CALC_SP500 == 1:
         price = get_index_value_from_yahoo_finance("^GSPC")
-        valuation = price * global_vars.sp_500_divisor / 1000  # now it is in unit: trillion
+        valuation = price * global_vars.SP_500_DIVISOR / 1000  # now it is in unit: trillion
         print(f"The latest valuation of S&P 500 is: {valuation} Trillion US-Dollar ")
 
-        factor = valuation / global_vars.usa_gdp
+        factor = valuation / global_vars.GDP_USA
         print(f"The quotient S&P 500 to last US Gross Domestic Product (GDP) number is: {factor}")
 
 
