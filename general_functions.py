@@ -23,9 +23,9 @@ def extract_quarterly_report_data_from_my_json_file(data_json: dict, indicator: 
         try:
             time_points.append(i['fiscalDateEnding'])  # releaseDate
             value_points.append(i[indicator])
-        except:
-            print("Appending data element to array didn´t work with indicator {}. Is the indicator in the data?".format(
-                indicator))
+        except Exception as e:
+            print(f" {e} ### Appending data element to array didn't work with indicator {indicator}. "
+                  f"Is the indicator in the data?")
             exit()
     value_points, time_points = reverse_lists(value_points, time_points)
 
@@ -35,7 +35,8 @@ def extract_quarterly_report_data_from_my_json_file(data_json: dict, indicator: 
 
 
 def extract_quarterly_report_data(data_json: dict, indicator: str, symbol: str) -> list:
-    # this function is a direct copy of extract_quarterly_report_data_from_alpha!! and based on the namings in alpha data
+    # this function is a direct copy of extract_quarterly_report_data_from_alpha!
+    # And based on the namings in alpha data
     reports = data_json['quarterlyReports']
     time_points = []
     value_points = []
@@ -45,11 +46,11 @@ def extract_quarterly_report_data(data_json: dict, indicator: str, symbol: str) 
             time_points.append(i['fiscalDateEnding'])
             value_point = i[indicator]
             if value_point == "None":
-                print("Analyzing of {} not possible, since no data available - data == None".format(indicator))
+                print(f"Analyzing of {indicator} not possible, since no data available - data == None")
             value_points.append(i[indicator])
-        except:
-            print("Appending data element to array didn´t work with indicator {}. Is the indicator in the data?".format(
-                indicator))
+        except Exception as e:
+            print(f"{e} ## Appending data element to array didn't work with indicator {indicator}. "
+                  f"Is the indicator in the data?")
             exit()
     value_points, time_points = reverse_lists(value_points, time_points)
 
@@ -70,8 +71,8 @@ def get_data(input_data, indicator, symbol):
         data = [list_dividend[0], list_dividend_converted, symbol, indicator]
 
         return data
-    except:
-        print(f"function call: get data failed - parameter:{indicator}; {symbol} ")
+    except Exception as e:
+        print(f" {e} ### Function call: get data failed - parameter:{indicator}; {symbol} ")
     return 1  # error if 1 is returned
 
 
@@ -89,8 +90,8 @@ def get_float_data(input_data, indicator, symbol):
         data = [list_dividend[0], list_dividend_converted, symbol, indicator]
         return data
 
-    except:
-        print("function call: get float data failed - parameter:{}; {} ".format(indicator, symbol))
+    except Exception as e:
+        print(f"{e} ## Function call: get float data failed - parameter:{indicator}; {symbol} ")
     return 1  # error if 1 is returned
 
 
@@ -116,7 +117,8 @@ def filter_data(data_list, options):
         if len(indicator_list) != 0:
             packed_indicators.append(indicator_list)
 
-    # unpacking the list because with append to indicators - we have one list element to much - what we didnt have when doing list(filter(...))
+    # unpacking the list because with append to indicators -
+    # we have one list element too much - what we didn't have when doing list(filter(...))
     # unpack one level
     temp = packed_indicators[0]
 
@@ -143,11 +145,12 @@ def only_plot(data, title):
     plt.show()
 
 
-def keep_every_nth(start,lst, n):
+def keep_every_nth(start, lst, n):
     a = lst[start::n]
     return a
 
-def reverse_lists(x: list, y: list) -> list:
+
+def reverse_lists(x: list, y: list) -> tuple:
     x = x[::-1]
     y = y[::-1]
 
@@ -164,7 +167,6 @@ def write_to_file_in_json_format(data, name_of_file: str) -> None:
     f = open(name_of_file, "w")
     f.write(str(json.dumps(data, indent=4)))
     f.close()
-
 
 
 def pdf_merger():
@@ -203,30 +205,26 @@ def delete_object_key(json_data_object, key):
 
 
 def create_json_object_finance(s):
-    d = {}
-    d['symbol'] = s
-    d["quarterlyReports"] = []
-    array = d["quarterlyReports"]
+    d = {'symbol': s, "quarterlyReports": []}
     return d
 
 
-# füge jedes quarter in dem input_file_object - füge das quarter mit den wichtigen parameter als object hinzu
 def add_keys_values_to_object(list_filtered):
-    # erstelle ein object für das aktuelle quarter
+    # create object
     obj = {}
 
     for elem in list_filtered:
-        # füge key und value zu dem object hinzu
+        # add key und value to obj
         obj[elem[0]] = elem[1]
 
     return obj
 
 
 # add key value to an object
-def append_key_value_to_object(object, key, value):
-    object[key] = value
+def append_key_value_to_object(obj, key, value):
+    obj[key] = value
 
-    return object
+    return obj
 
 
 def append_object_to_json_array(merge_object, base_object):
@@ -240,17 +238,15 @@ def get_key_value_from_local_file(indicator, s):
         symbol_info = read_data_from_file("yahoo_info_data_" + s[0] + ".json")
         i = symbol_info[indicator]
 
-    except:
-        print(i)
-        print("live data from yahoo failed and no locally data for {} available".format(indicator))
+        return i
 
-    return i
+    except Exception as e:
+        print(f" {e} ### live data from yahoo failed and no locally data for {indicator} available")
 
 
 def delete_all_lines_from_file():
     with open(global_vars.filepath_my_json + "\\atestsite.html", "w") as file:
         file.truncate()
-    pass
 
 
 def add_file_to_main_html_file(indicator, complete_string):
@@ -289,7 +285,6 @@ def save_figure(indicator):
 def get_file_age_in_hours(filepath) -> float:
     delta = time.time() - os.path.getmtime(filepath)
     delta_in_hours = delta / 3600
-    print(delta_in_hours)
     return delta_in_hours
 
 
@@ -334,12 +329,11 @@ def copy_and_rename_file(src_file, dest_file):
     shutil.copy(src_file, dest_file)
 
 
-def merge_file_list(file_list,symbol_list):
-    #TODO Für jedes symbol - zur logicprogrammierung -> breakpoint setzen
-    for idx,symbol in enumerate(symbol_list):
-        dest_file = global_vars.filepath_yahoo + "yahoo_total_data_"+ symbol +".json"
+def merge_file_list(file_list, symbol_list):
+    for idx, symbol in enumerate(symbol_list):
+        dest_file = global_vars.filepath_yahoo + "yahoo_total_data_" + symbol + ".json"
 
-        #copy and rename the first file
+        # copy and rename the first file
         copy_and_rename_file(file_list[idx][0], dest_file)
 
         # iterate over the array but start from the second element in the array
@@ -347,9 +341,9 @@ def merge_file_list(file_list,symbol_list):
             merge_two_json_files(dest_file, item)
 
 
-def merge_two_json_files(baseFile, mergeFile):
-    base_file_data = read_data_from_file(baseFile)
-    merge_file_data = read_data_from_file(mergeFile)
+def merge_two_json_files(base_file, merge_file):
+    base_file_data = read_data_from_file(base_file)
+    merge_file_data = read_data_from_file(merge_file)
 
     # TODO improve error logging
     for quarter in merge_file_data["quarterlyReports"]:
@@ -367,4 +361,4 @@ def merge_two_json_files(baseFile, mergeFile):
                     if key_value_pair not in base_quarter:
                         append_key_value_to_object(base_quarter, key_value_pair[0], key_value_pair[1])
 
-    write_to_file_in_json_format(base_file_data, baseFile)
+    write_to_file_in_json_format(base_file_data, base_file)
