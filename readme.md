@@ -1,5 +1,5 @@
 # Fundamental Stock Analysis - An approach
-
+#TODO - UPDATE README! 
 ## Motivation
 I am kind of interested in programming and economics. Both combined, has led me to write irregularly but every now and then on this little Python script.
 

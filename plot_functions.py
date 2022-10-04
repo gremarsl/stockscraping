@@ -46,7 +46,7 @@ def plot_full_screen():
 def plot_compare_symbols_one_indicator(data_list, source):
     # show grid
     indicator = data_list[0][3]
-    #time is fixed and for all symbols equal
+    # time is fixed and for all symbols equal
     x = data_list[0][0]
     x = convert_list_elements_to_date_instance(x)
 
