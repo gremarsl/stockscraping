@@ -2,17 +2,16 @@ import csv
 import glob
 import shutil
 import time
-
 import matplotlib.pyplot as plt
 import json
 import os
 import datetime as dt
-
 import requests
 from PyPDF2 import PdfFileMerger
-
 import global_vars
 
+
+# TODO function signature
 
 def extract_quarterly_report_data_from_my_json_file(data_json: dict, indicator: str, symbol: str) -> list:
     reports = data_json['quarterlyReports']

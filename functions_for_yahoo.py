@@ -12,7 +12,7 @@ def calculate_dax_to_gdp_germany():
         print(list_of_market_cap)
 
         latest_sum_market_cap = sum(list_of_market_cap)
-        latest_sum_market_cap = latest_sum_market_cap / 1000000000  # now it is billion
+        latest_sum_market_cap = latest_sum_market_cap / 1000000000  # now it is a billion
         print(latest_sum_market_cap)
 
         latest_dax_value = get_index_value_from_yahoo_finance("^GDAXI")
@@ -21,9 +21,11 @@ def calculate_dax_to_gdp_germany():
         factor_latest_dax_value = latest_dax_value / global_vars.GDP_GERMANY
 
         print(
-            f"The quotient sum of market cap from all DAX40 to last Germany Gross Domestic Product (GDP) number is: {factor_sum_market_cap}")
+            f"The quotient sum of market cap from all DAX40 to last Germany "
+            f"Gross Domestic Product (GDP) number is: {factor_sum_market_cap}")
         print(
-            f"The quotient latest_dax_value to last Germany Gross Domestic Product (GDP) number is: {factor_latest_dax_value}")
+            f"The quotient latest_dax_value to last Germany "
+            f"Gross Domestic Product (GDP) number is: {factor_latest_dax_value}")
 
 
 def calculate_sp_500_to_gdp_usa():
@@ -50,15 +52,15 @@ def operate_csv_data_and_convert_to_json(filename: str, symbol):
     # Assembling
     quarter_idx = 0
     for quarter in header:
-        object = {}
+        obj = {}
 
-        append_key_value_to_object(object, "fiscalDateEnding", header[quarter_idx])
+        append_key_value_to_object(obj, "fiscalDateEnding", header[quarter_idx])
 
         for row in rows:
-            append_key_value_to_object(object, row[0], row[quarter_idx + 1])
+            append_key_value_to_object(obj, row[0], row[quarter_idx + 1])
 
-        # hinzufügen des objects zu dem array
-        output_quarter_array.append(object)
+        # add objects to this array
+        output_quarter_array.append(obj)
 
         quarter_idx += 1
 
