@@ -6,16 +6,6 @@ from general_functions import read_data_from_file, split_indicator_in_two, calcu
     extract_quarterly_report_data_from_my_json_file, get_float_data, get_data
 
 
-'''
-Improvement: Merge of json data to one file -> this reduces the effort of different files -> having different data in different files
-'''
-abs_indicators = ["TotalRevenue","NetIncome"]
-rel_indicators = ["NetIncome_to_TotalRevenue", "ResearchDevelopment_to_TotalRevenue", "TotalLiab_to_TotalAssets",
-                  "TotalCurrentLiab_to_TotalCurrentAssets"]  # ,
-
-rel_live_indicators = ["marketCap_to_TotalRevenue", "marketCap_to_NetIncome", "marketCap_to_TotalAssets"]
-
-
 def compare_companies(symbols, source):
     all_symbols_quarterly_abs_data = []
 
@@ -30,17 +20,17 @@ def compare_companies(symbols, source):
 
                 if global_vars.ANALYZE_YAHOO_ABS:
 
-                    for i in abs_indicators:
+                    for i in global_vars.ABS_INDICATOR_LIST:
                         try:
                             temp_data = extract_quarterly_report_data_from_alpha(data, i, symbol=s)
                             all_symbols_quarterly_abs_data.append(temp_data)
 
-                        except BaseException:
-                            print(f"error in quaterly data {s}")
+                        except Exception:
+                            raise print(f"error in quarterly data {s}")
 
                 if global_vars.ANALYZE_YAHOO_REL:
 
-                    for i in rel_indicators:
+                    for i in global_vars.REL_INDICATORS_LIST:
 
                         try:
                             # extract data for every indicator
@@ -55,11 +45,11 @@ def compare_companies(symbols, source):
                             all_symbols_quarterly_rel_data.append(temp_data)
 
                         except:
-                            print(f"-{s}- calculate quotient of {i} didnt work")
+                            print(f"-{s}- calculate quotient of {i} didn't work")
 
                 if global_vars.ANALYZE_YAHOO_REL_LIVE:
 
-                    for i in rel_live_indicators:
+                    for i in global_vars.REL_LIVE_INDICATOR_LIST:
 
                         try:
                             dividend, divisor = split_indicator_in_two(i)
@@ -74,18 +64,18 @@ def compare_companies(symbols, source):
 
 
                         except:
-                            print(f"-{s}- calculate quotient of {i} didnt work")
+                            print(f"-{s}- calculate quotient of {i} didn't work")
 
     match source:
         case "my_json":
             if global_vars.ANALYZE_YAHOO_ABS:
-                processor_filter_plot_data(all_symbols_quarterly_abs_data, False, True,source)
+                processor_filter_plot_data(all_symbols_quarterly_abs_data, False, True, source)
 
             if global_vars.ANALYZE_YAHOO_REL:
-                processor_filter_plot_data(all_symbols_quarterly_rel_data, True, True,source)
+                processor_filter_plot_data(all_symbols_quarterly_rel_data, True, True, source)
 
             if global_vars.ANALYZE_YAHOO_REL_LIVE:
-                processor_filter_plot_data(all_symbols_quarterly_rel_live_data, True, True,source)
+                processor_filter_plot_data(all_symbols_quarterly_rel_live_data, True, True, source)
 
         case _:
             raise Exception("invalid source")
@@ -126,20 +116,19 @@ def one_company_only(symbol, source="my_json"):
         for i in my_rel_indicators_live:
             dividend, divisor = split_indicator_in_two(i)
             divisor_data = get_float_data(data, indicator=divisor, symbol=symbol)
-            # try to get data live from yahooo
+            # try to get data live from yahoo
             try:
                 marketCap = get_market_cap_from_yahoo_finance(symbol)
 
-            except:
-                raise Exception("No market cap available")
+            except Exception:
+                raise print("No market cap available")
 
             quotient = list(map(lambda x: marketCap / x, divisor_data[1]))
             temp_data = [divisor_data[0], quotient, symbol, i]
 
             rel_data_live.append(temp_data)
 
-    # plotdata
-
+    # plot data
     if global_vars.ANALYZE_YAHOO_ABS:
         processor_filter_plot_data(data_list=abs_data, relative_data=False, all_symbols=False, source=source)
     if global_vars.ANALYZE_YAHOO_REL:

@@ -34,11 +34,22 @@ SYMBOL_LIST = ["MSFT", "AAPL", "GOOGL" , "FB", "AMD", "NVDA"]
 # END COMPANIES TO ANALYZE
 
 
+#TODO add description
 # START ADVANCED PARAMETERS
 ANALYZE_YAHOO_ABS       = 0
 ANALYZE_YAHOO_REL       = 0
 ANALYZE_YAHOO_REL_LIVE  = 1
 # END ADVANCED PARAMETERS
+
+
+#TODO
+# START ADVANCED PARAMETERS
+ABS_INDICATOR_LIST = ["TotalRevenue", "NetIncome"]
+REL_INDICATORS_LIST = ["NetIncome_to_TotalRevenue", "ResearchDevelopment_to_TotalRevenue", "TotalLiab_to_TotalAssets",
+                  "TotalCurrentLiab_to_TotalCurrentAssets"]  # ,
+
+REL_LIVE_INDICATOR_LIST = ["marketCap_to_TotalRevenue", "marketCap_to_NetIncome", "marketCap_to_TotalAssets"]
+
 
 # START FILEPATH PARAMETER
 directory_of_execution  = os.getcwd()
