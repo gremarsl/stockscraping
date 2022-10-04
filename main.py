@@ -8,24 +8,24 @@ from general_functions import merge_file_list
 def own_json_analysis():
     print("start own json analysis ...")
 
-    if global_vars.build_own_json == 1:
+    if global_vars.BUILD_MY_JSON == 1:
         build_own_json_file(global_vars.symbol_list)
 
-    if global_vars.analyze_my_json_data == 1 or global_vars.compare_companies_my_json == 1:
-        analyze_data_from_local_json_file(global_vars.symbol_list,global_vars.compare_companies_my_json)
+    if global_vars.ANALYZE_MY_JSON_DATA == 1 or global_vars.COMPARE_MY_JSON_COMPANIES == 1:
+        analyze_data_from_local_json_file(global_vars.symbol_list, global_vars.COMPARE_MY_JSON_COMPANIES)
 
     print("end own json analysis  ...")
 
 
 def yahoo_data_analysis():
     print("start yahoo finance analysis ...")
-    if global_vars.get_yahoo_data == 1:
+    if global_vars.GET_YAHOO_DATA == 1:
         file_list = get_yahoo_data(global_vars.symbol_list)
 
         merge_file_list(file_list, global_vars.symbol_list)
 
-    if global_vars.analyze_yahoo_data == 1 or global_vars.compare_companies_yahoo == 1:
-        analyze_data_from_local_json_file(global_vars.symbol_list, global_vars.compare_companies_yahoo)
+    if global_vars.ANALYZE_YAHOO_DATA == 1 or global_vars.COMPARE_YAHOO_COMPANIES == 1:
+        analyze_data_from_local_json_file(global_vars.symbol_list, global_vars.COMPARE_YAHOO_COMPANIES)
     print("end yahoo finance analysis ...")
 
 

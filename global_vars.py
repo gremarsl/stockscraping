@@ -4,28 +4,28 @@ import os
 # set value to 1, to enable an analysis and calculation. set value to 0 to disable it.
 
 '''
-
-@param build_own_json                           Builds a json file for the entered companies with data 
-                                                from alpha vantage. If enabled / set to 1.
-@param analyze_my_json_data                     Evaluates the available data from the json-files for the 
-                                                entered companies. If enabled / set to 1 every company get evaluated 
-                                                and can be interpreted with the help of grafics showing financial 
-                                                indicators separately.
-@param compare_companies                        Evaluates the available data from  the json-files. 
-                                                If enabled the entered companies are evaluated and shown 
-                                                together in one graphic for easier comparison.
+# TODO 
+@param GET_YAHOO_DATA                     Requests / Gets data from yahoo finance for the entered companies. 
+                                          If enabled / set to 1.
+@param ANALYZE_YAHOO_DATA                 Evaluates the available data from yahoo finance for the 
+                                          entered companies. If enabled / set to 1 every company get evaluated and 
+                                          can be interpreted with the help of graphics showing financial indicators 
+                                          separately.
+@param COMPARE_YAHOO_COMPANIES            Evaluates the available data from alpha vantage. 
+                                          If enabled the entered companies are evaluated and shown 
+                                          together in one graphic for easier comparison.
 '''
 
-build_own_json =0
-analyze_my_json_data=0
-compare_companies_my_json = 0
+GET_YAHOO_DATA            = 1
+ANALYZE_YAHOO_DATA        = 0
+COMPARE_YAHOO_COMPANIES   = 1
 
-get_yahoo_data = 1
-analyze_yahoo_data = 0
-compare_companies_yahoo = 1
+BUILD_MY_JSON             = 0
+ANALYZE_MY_JSON_DATA      = 0
+COMPARE_MY_JSON_COMPANIES = 0
 
-calculate_dax = 0
-calculate_sp500 = 0
+CALC_DAX                  = 0
+CALC_SP500                = 0
 # END USER CONFIG SWITCHES
 
 
