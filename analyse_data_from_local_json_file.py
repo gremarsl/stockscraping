@@ -28,7 +28,7 @@ def compare_companies(symbols, source):
             case "my_json":
                 data = read_data_from_file(global_vars.filepath_yahoo + "yahoo_total_data_" + s + ".json")
 
-                if global_vars.analyze_abs_yahoo:
+                if global_vars.ANALYZE_YAHOO_ABS:
 
                     for i in abs_indicators:
                         try:
@@ -38,7 +38,7 @@ def compare_companies(symbols, source):
                         except BaseException:
                             print(f"error in quaterly data {s}")
 
-                if global_vars.analyze_rel_yahoo:
+                if global_vars.ANALYZE_YAHOO_REL:
 
                     for i in rel_indicators:
 
@@ -57,7 +57,7 @@ def compare_companies(symbols, source):
                         except:
                             print(f"-{s}- calculate quotient of {i} didnt work")
 
-                if global_vars.analyze_rel_live_yahoo:
+                if global_vars.ANALYZE_YAHOO_REL_LIVE:
 
                     for i in rel_live_indicators:
 
@@ -78,13 +78,13 @@ def compare_companies(symbols, source):
 
     match source:
         case "my_json":
-            if global_vars.analyze_abs_yahoo:
+            if global_vars.ANALYZE_YAHOO_ABS:
                 processor_filter_plot_data(all_symbols_quarterly_abs_data, False, True,source)
 
-            if global_vars.analyze_rel_yahoo:
+            if global_vars.ANALYZE_YAHOO_REL:
                 processor_filter_plot_data(all_symbols_quarterly_rel_data, True, True,source)
 
-            if global_vars.analyze_rel_live_yahoo:
+            if global_vars.ANALYZE_YAHOO_REL_LIVE:
                 processor_filter_plot_data(all_symbols_quarterly_rel_live_data, True, True,source)
 
         case _:
@@ -104,13 +104,13 @@ def one_company_only(symbol, source="my_json"):
     my_rel_indicators_live = ["marketCap_to_TotalAssets"]
 
     abs_data = []
-    if global_vars.analyze_abs_yahoo == 1:
+    if global_vars.ANALYZE_YAHOO_ABS == 1:
         for i in abs_indicators:
             extracted_data = extract_quarterly_report_data_from_my_json_file(data_json=data, indicator=i, symbol=symbol)
             abs_data.append(extracted_data)
 
     rel_data = []
-    if global_vars.analyze_rel_yahoo == 1:
+    if global_vars.ANALYZE_YAHOO_REL == 1:
         for i in rel_indicators:
             dividend, divisor = split_indicator_in_two(i)
             dividend_data = get_float_data(data, indicator=dividend, symbol=symbol)
@@ -122,7 +122,7 @@ def one_company_only(symbol, source="my_json"):
             rel_data.append(temp_data)
 
     rel_data_live = []
-    if global_vars.analyze_rel_live_yahoo == 1:
+    if global_vars.ANALYZE_YAHOO_REL_LIVE == 1:
         for i in my_rel_indicators_live:
             dividend, divisor = split_indicator_in_two(i)
             divisor_data = get_float_data(data, indicator=divisor, symbol=symbol)
@@ -140,11 +140,11 @@ def one_company_only(symbol, source="my_json"):
 
     # plotdata
 
-    if global_vars.analyze_abs_yahoo:
+    if global_vars.ANALYZE_YAHOO_ABS:
         processor_filter_plot_data(data_list=abs_data, relative_data=False, all_symbols=False, source=source)
-    if global_vars.analyze_rel_yahoo:
+    if global_vars.ANALYZE_YAHOO_REL:
         processor_filter_plot_data(data_list=rel_data, relative_data=True, all_symbols=False, source=source)
-    if global_vars.analyze_rel_live_yahoo:
+    if global_vars.ANALYZE_YAHOO_REL_LIVE:
         processor_filter_plot_data(data_list=rel_data_live, relative_data=True, all_symbols=False, source=source)
 
 

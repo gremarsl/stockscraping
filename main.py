@@ -9,10 +9,10 @@ def own_json_analysis():
     print("start own json analysis ...")
 
     if global_vars.BUILD_MY_JSON == 1:
-        build_own_json_file(global_vars.symbol_list)
+        build_own_json_file(global_vars.SYMBOL_LIST)
 
     if global_vars.ANALYZE_MY_JSON_DATA == 1 or global_vars.COMPARE_MY_JSON_COMPANIES == 1:
-        analyze_data_from_local_json_file(global_vars.symbol_list, global_vars.COMPARE_MY_JSON_COMPANIES)
+        analyze_data_from_local_json_file(global_vars.SYMBOL_LIST, global_vars.COMPARE_MY_JSON_COMPANIES)
 
     print("end own json analysis  ...")
 
@@ -20,12 +20,12 @@ def own_json_analysis():
 def yahoo_data_analysis():
     print("start yahoo finance analysis ...")
     if global_vars.GET_YAHOO_DATA == 1:
-        file_list = get_yahoo_data(global_vars.symbol_list)
+        file_list = get_yahoo_data(global_vars.SYMBOL_LIST)
 
-        merge_file_list(file_list, global_vars.symbol_list)
+        merge_file_list(file_list, global_vars.SYMBOL_LIST)
 
     if global_vars.ANALYZE_YAHOO_DATA == 1 or global_vars.COMPARE_YAHOO_COMPANIES == 1:
-        analyze_data_from_local_json_file(global_vars.symbol_list, global_vars.COMPARE_YAHOO_COMPANIES)
+        analyze_data_from_local_json_file(global_vars.SYMBOL_LIST, global_vars.COMPARE_YAHOO_COMPANIES)
     print("end yahoo finance analysis ...")
 
 
