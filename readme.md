@@ -1,5 +1,4 @@
 # Fundamental Stock Analysis - An approach
-#TODO - UPDATE README! 
 ## Motivation
 I am kind of interested in programming and economics. Both combined, has led me to write irregularly but every now and then on this little Python script.
 
@@ -17,21 +16,14 @@ The Python packages are installed and ready for usage.The necessary packages are
 Preparations are required so that the program can be used successfully and companies can be analyzed for key figures. 
 These are described in this section. 
 
-[TLDR]: In order to use the finnhub and alpha vantage stock api you need keys. You can find out how to get a key on the web page I referenced above.
-In `keys.py` you have to enter the keys. `api_key` for using the finnhub api and `api_key_alpha` for alpha vantage.
-
 #### What approaches are available to me?
-For a better understanding, here a few words about the selectable approaches of the user. 
-1. Using a stock API in order to analyze the enterprise data afterwards.
-2. Creating your own format, with individually / customized data to be evaluated afterwards. Current format: JSON.
+1. Using the yahoo stock API.
+2. Creating your own format, with individually / customized data. Current format: JSON.
 
 #### Where does the data for a company analysis come from ?
-For an in-depth look at financial metrics, four data sources are available: 
-1. finnhub stock API (https://finnhub.io/)
-2. alpha vantage stock API (https://www.alphavantage.co/)
-3. yahoo finance (https://pypi.org/project/yfinance/)
-4. use of a standalone data filled file (currently json format).
-
+For an in-depth look at financial metrics, two data sources are available: 
+1. Yahoo finance (https://pypi.org/project/yfinance/)
+2. Use of a standalone data filled file (currently json format).
 
 ### Usage
 Before the program execution an individual adjustment of the parameters and the companies can be made. 
@@ -47,14 +39,11 @@ After a few seconds, graphs should be displayed one after the other, showing you
 If you want to continue to the next graph, press X to close the current graphic.
 
 ### Hints
-* When the program goes to sleep for 60 seconds, don´t cancel execution. (rationale: limited amount of requests per time)
 * The file `companies.txt` contains some symbols of other companies.
 
 ## Possible Improvements
 - Simplified extension of additional indicators. The extension of additional indicators is currently time-consuming, since the extension must be made in several places within the implementation.
 - Error Handling.
-- Python package and dependency management.
-- Possible modularization in 3 tools. Each API own handling
 
 ## Contribution
 If you like and use this program, feel free to donate here: 
