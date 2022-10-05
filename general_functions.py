@@ -1,3 +1,6 @@
+# **********************************************************************************************************************
+# Imports
+# **********************************************************************************************************************
 import csv
 import glob
 import shutil
@@ -12,6 +15,9 @@ import global_vars
 
 
 # TODO function signature
+# **********************************************************************************************************************
+# Functions
+# **********************************************************************************************************************
 
 def extract_quarterly_report_data_from_my_json_file(data_json: dict, indicator: str, symbol: str) -> list:
     reports = data_json['quarterlyReports']
@@ -344,7 +350,6 @@ def merge_two_json_files(base_file, merge_file):
     base_file_data = read_data_from_file(base_file)
     merge_file_data = read_data_from_file(merge_file)
 
-    # TODO improve error logging
     for quarter in merge_file_data["quarterlyReports"]:
         date = quarter["fiscalDateEnding"]
 

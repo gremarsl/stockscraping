@@ -1,5 +1,8 @@
-import options
-from general_functions import filter_data, keep_every_nth
+# **********************************************************************************************************************
+# Imports
+# **********************************************************************************************************************
+
+from general_functions import keep_every_nth
 from plot_functions import stupid_plot_data_lists, plot_compare_symbols_one_indicator
 
 

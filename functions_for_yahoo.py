@@ -1,8 +1,15 @@
+# **********************************************************************************************************************
+# Imports
+# **********************************************************************************************************************
 import yfinance as yf
 import global_vars
 from general_functions import write_to_file_in_json_format, create_json_object_finance, \
     append_key_value_to_object, convert_and_save_to_csv, yahoo_csv_data_formatting
 
+
+# **********************************************************************************************************************
+# Functions
+# **********************************************************************************************************************
 
 def calculate_dax_to_gdp_germany():
     if global_vars.CALC_DAX == 1 and len(global_vars.DAX) == 40:

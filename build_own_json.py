@@ -1,13 +1,14 @@
+# **********************************************************************************************************************
+# Imports
+# ********************************************************************************************************************
 import global_vars
 from general_functions import read_data_from_file, write_to_file_in_json_format, delete_object_key, \
     create_json_object_finance, add_keys_values_to_object
 
 
-# build own json data based on extracting data from alpha vantage files
-
-# paramter I want to get be inserted in my file:
-# input
-
+# **********************************************************************************************************************
+# Functions
+# **********************************************************************************************************************
 def build_own_json_file(symbol_list):
 
     for s in symbol_list:

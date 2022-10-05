@@ -1,5 +1,6 @@
-
-## The purpose of this file is to give a few list of companies with their symbols. Also separated among industries
+# **********************************************************************************************************************
+# The purpose of this file is to give a few list of companies with their symbols. Also separated among industries
+# **********************************************************************************************************************
 
 semiconductor = ["INTC", "AMD"]  # "NVDA", "AAPL", "MSFT", "QCOM", "MRVL", "ASML","KLAC","STM","SNPS", "AMBA",  "TEAM","TSM", "NVDA", "ZS", "SNPS", "CDNS"
 

@@ -1,9 +1,17 @@
+# **********************************************************************************************************************
+# Imports
+# **********************************************************************************************************************
+
 import global_vars
 from analyse_data_from_local_json_file import analyze_data_from_local_json_file
 from build_own_json import build_own_json_file
 from functions_for_yahoo import calculate_sp_500_to_gdp_usa, calculate_dax_to_gdp_germany, get_yahoo_data
 from general_functions import merge_file_list
 
+
+# **********************************************************************************************************************
+# Functions
+# **********************************************************************************************************************
 
 def own_json_analysis():
     print("start own json analysis ...")
@@ -29,14 +37,19 @@ def yahoo_data_analysis():
     print("end yahoo finance analysis ...")
 
 
-def start():
+# ----------------------------------------------------------------------------------------------------------------------
+# main()
+# ----------------------------------------------------------------------------------------------------------------------
+def main() -> None:
     yahoo_data_analysis()
     own_json_analysis()
 
-    # gimmic
     # calculate_dax_to_gdp_germany()
     # calculate_sp_500_to_gdp_usa()
 
 
+# ----------------------------------------------------------------------------------------------------------------------
+# Entrypoint
+# ----------------------------------------------------------------------------------------------------------------------
 if __name__ == '__main__':
-    start()
+    main()
