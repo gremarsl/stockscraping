@@ -44,6 +44,7 @@ If you want to continue to the next graph, press X to close the current graphic.
 ## Possible Improvements
 - Simplified extension of additional indicators. The extension of additional indicators is currently time-consuming, since the extension must be made in several places within the implementation.
 - Error Handling.
+- future usage as module? Execution via CLI?
 
 ## Contribution
 If you like and use this program, feel free to donate here: 
