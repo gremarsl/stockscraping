@@ -125,8 +125,8 @@ def get_yahoo_data(symbols):
             file_list_per_symbol.append(get_quarterly_balance_sheet(base, symbol))
             file_list_per_symbol.append(get_quarterly_cashflow(base, symbol))
 
-        except:
-            print("Get yahoo earnings failed")
+        except Exception as e:
+            print(f"{e} ## Get yahoo earnings failed")
 
         complete_file_list.append(file_list_per_symbol)
     return complete_file_list
@@ -135,11 +135,9 @@ def get_yahoo_data(symbols):
 def get_base_ticker_from_yahoo_finance(symbol):
     try:
         symbol_base = yf.Ticker(symbol)
-
-    except:
-        print(f"yf.Ticker failed for symbol: {symbol}")
-
-    return symbol_base
+        return symbol_base
+    except Exception as e:
+        print(f"{e} ## yf.Ticker failed for symbol: {symbol}")
 
 
 def get_info_from_yahoo_finance(symbol):

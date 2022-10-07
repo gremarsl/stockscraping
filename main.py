@@ -1,7 +1,6 @@
 # **********************************************************************************************************************
 # Imports
 # **********************************************************************************************************************
-
 import global_vars
 from analyse_data_from_local_json_file import analyze_data_from_local_json_file
 from build_own_json import build_own_json_file
@@ -14,7 +13,7 @@ from general_functions import merge_file_list
 # **********************************************************************************************************************
 
 def own_json_analysis():
-    print("start own json analysis ...")
+    print("### START OWN JSON ANALYSIS ###")
 
     if global_vars.BUILD_MY_JSON == 1:
         build_own_json_file(global_vars.SYMBOL_LIST)
@@ -22,11 +21,11 @@ def own_json_analysis():
     if global_vars.ANALYZE_MY_JSON_DATA == 1 or global_vars.COMPARE_MY_JSON_COMPANIES == 1:
         analyze_data_from_local_json_file(global_vars.SYMBOL_LIST, global_vars.COMPARE_MY_JSON_COMPANIES)
 
-    print("end own json analysis  ...")
+    print("### END OWN JSON ANALYSIS ###")
 
 
 def yahoo_data_analysis():
-    print("start yahoo finance analysis ...")
+    print("### START YAHOO FINANCE ANALYSIS ###")
     if global_vars.GET_YAHOO_DATA == 1:
         file_list = get_yahoo_data(global_vars.SYMBOL_LIST)
 
@@ -34,7 +33,8 @@ def yahoo_data_analysis():
 
     if global_vars.ANALYZE_YAHOO_DATA == 1 or global_vars.COMPARE_YAHOO_COMPANIES == 1:
         analyze_data_from_local_json_file(global_vars.SYMBOL_LIST, global_vars.COMPARE_YAHOO_COMPANIES)
-    print("end yahoo finance analysis ...")
+
+    print("### END YAHOO FINANCE ANALYSIS ###")
 
 
 # ----------------------------------------------------------------------------------------------------------------------

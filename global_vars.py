@@ -19,7 +19,7 @@ import os
 '''
 
 # set value to 1, to enable an analysis and calculation. set value to 0 to disable it.
-GET_YAHOO_DATA = 0
+GET_YAHOO_DATA = 1
 ANALYZE_YAHOO_DATA = 0
 COMPARE_YAHOO_COMPANIES = 1
 
@@ -33,7 +33,7 @@ CALC_SP500 = 0
 '''
 @param symbol_list          Companies to analyze
 '''
-SYMBOL_LIST = ["MSFT", "AAPL", "GOOGL", "FB", "AMD", "NVDA"]
+SYMBOL_LIST = ["MSFT", "AAPL"]
 
 # TODO
 ANALYZE_YAHOO_ABS = 0
