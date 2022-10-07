@@ -173,8 +173,8 @@ def get_market_cap_from_yahoo_finance(symbol: str):
     try:
         symbol_info = get_info_from_yahoo_finance(symbol)
 
-    except:
-        print(f"get_market_cap_from_yahoo_finance failed for symbol: {symbol}")
+    except Exception as e:
+        print(f"{e} ## get_market_cap_from_yahoo_finance failed for symbol: {symbol}")
 
     try:
         market_cap = symbol_info["marketCap"]

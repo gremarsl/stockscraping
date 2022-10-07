@@ -8,10 +8,10 @@ from functions_for_yahoo import get_market_cap_from_yahoo_finance
 from general_functions import read_data_from_file, split_indicator_in_two, calculate_quotient, \
     extract_quarterly_report_data_from_my_json_file, get_float_data, get_data
 
+
 # **********************************************************************************************************************
 # Functions
 # **********************************************************************************************************************
-
 
 def compare_companies(symbols, source):
     all_symbols_quarterly_abs_data = []
