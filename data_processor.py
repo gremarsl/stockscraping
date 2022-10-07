@@ -65,9 +65,6 @@ def processor_filter_plot_data(data_list: list, relative_data: bool, all_symbols
 
                     for x in range(0,number_of_indicators_per_symbol):
                         new_data_list = keep_every_nth(x,data_list,number_of_indicators_per_symbol)
-                        print("###########")
-                        print(new_data_list)
-
                         plot_compare_symbols_one_indicator(new_data_list,source)
 
                 else:

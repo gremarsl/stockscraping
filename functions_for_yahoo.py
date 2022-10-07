@@ -1,6 +1,7 @@
 # **********************************************************************************************************************
 # Imports
 # **********************************************************************************************************************
+import yfinance
 import yfinance as yf
 import global_vars
 from general_functions import write_to_file_in_json_format, create_json_object_finance, \
@@ -11,7 +12,7 @@ from general_functions import write_to_file_in_json_format, create_json_object_f
 # Functions
 # **********************************************************************************************************************
 
-def calculate_dax_to_gdp_germany():
+def calculate_dax_to_gdp_germany() -> None:
     if global_vars.CALC_DAX == 1 and len(global_vars.DAX) == 40:
         companies = global_vars.DAX
 
@@ -35,7 +36,7 @@ def calculate_dax_to_gdp_germany():
             f"Gross Domestic Product (GDP) number is: {factor_latest_dax_value}")
 
 
-def calculate_sp_500_to_gdp_usa():
+def calculate_sp_500_to_gdp_usa() -> None:
     if global_vars.CALC_SP500 == 1:
         price = get_index_value_from_yahoo_finance("^GSPC")
         valuation = price * global_vars.SP_500_DIVISOR / 1000  # now it is in unit: trillion
@@ -45,7 +46,7 @@ def calculate_sp_500_to_gdp_usa():
         print(f"The quotient S&P 500 to last US Gross Domestic Product (GDP) number is: {factor}")
 
 
-def operate_csv_data_and_convert_to_json(filename: str, symbol):
+def operate_csv_data_and_convert_to_json(filename: str, symbol: str) -> str:
     file = open(filename)
 
     # execute formatting commands on yahoo csv data
@@ -78,7 +79,7 @@ def operate_csv_data_and_convert_to_json(filename: str, symbol):
     return name_of_file_json
 
 
-def get_quarterly_balance_sheet(base, symbol: str):
+def get_quarterly_balance_sheet(base: yfinance.Ticker, symbol: str) -> str:
     quarterly_balance_sheet = base.quarterly_balance_sheet
 
     # convert and save data to csv format
@@ -90,7 +91,7 @@ def get_quarterly_balance_sheet(base, symbol: str):
     return filename_json
 
 
-def get_quarterly_financials(base, symbol):
+def get_quarterly_financials(base: yfinance.Ticker, symbol: str) -> str:
     financials = base.quarterly_financials
 
     # convert and save data to csv format
@@ -102,7 +103,7 @@ def get_quarterly_financials(base, symbol):
     return filename_json
 
 
-def get_quarterly_cashflow(base, symbol):
+def get_quarterly_cashflow(base: yfinance.Ticker, symbol: str) -> str:
     cashflow = base.quarterly_cashflow
 
     # convert and save data to csv format
@@ -114,13 +115,14 @@ def get_quarterly_cashflow(base, symbol):
     return filename_json
 
 
-def get_yahoo_data(symbols):
+def get_yahoo_data(symbols: list) -> list:
     complete_file_list = []
     for symbol in symbols:
         file_list_per_symbol = []
         try:
 
             base = get_base_ticker_from_yahoo_finance(symbol)
+
             file_list_per_symbol.append(get_quarterly_financials(base, symbol))
             file_list_per_symbol.append(get_quarterly_balance_sheet(base, symbol))
             file_list_per_symbol.append(get_quarterly_cashflow(base, symbol))
@@ -132,7 +134,7 @@ def get_yahoo_data(symbols):
     return complete_file_list
 
 
-def get_base_ticker_from_yahoo_finance(symbol):
+def get_base_ticker_from_yahoo_finance(symbol: str) -> yfinance.Ticker:
     try:
         symbol_base = yf.Ticker(symbol)
         return symbol_base
@@ -140,28 +142,26 @@ def get_base_ticker_from_yahoo_finance(symbol):
         print(f"{e} ## yf.Ticker failed for symbol: {symbol}")
 
 
-def get_info_from_yahoo_finance(symbol):
+def get_info_from_yahoo_finance(symbol: str) -> yfinance.Ticker:
     try:
         try:
             symbol_base = yf.Ticker(symbol)
 
-            name_of_ticker_file = "yahoo_ticker_data_" + symbol + ".json"
+        except Exception as e:
+            print(f"{e} ## yf.Ticker failed for symbol: {symbol}")
 
-            write_to_file_in_json_format(symbol_base, name_of_ticker_file)
-        except:
-            print(f"yf.Ticker failed for symbol: {symbol}")
         symbol_info = symbol_base.info
 
         name_of_info_file = "yahoo_info_data_" + symbol + ".json"
 
         write_to_file_in_json_format(symbol_info, name_of_info_file)
-    except:
-        print(f"get_base_info_from_yahoo_finance failed for symbol: {symbol}")
+    except Exception as e:
+        print(f"{e} ## get_base_info_from_yahoo_finance failed for symbol: {symbol}")
 
     return symbol_info
 
 
-def get_last_price_for_symbol_from_yahoo_finance(symbol):
+def get_last_price_for_symbol_from_yahoo_finance(symbol: str):
     ticker_yahoo = yf.Ticker(symbol)
     data = ticker_yahoo.history()
     last_quote = (data.tail(1)['Close'].iloc[0])
@@ -169,7 +169,7 @@ def get_last_price_for_symbol_from_yahoo_finance(symbol):
     return last_quote
 
 
-def get_market_cap_from_yahoo_finance(symbol):
+def get_market_cap_from_yahoo_finance(symbol: str):
     try:
         symbol_info = get_info_from_yahoo_finance(symbol)
 
@@ -182,18 +182,18 @@ def get_market_cap_from_yahoo_finance(symbol):
         if market_cap is None:
             print(f"not data for market_cap - since None was returned for symbol {symbol}")
 
-    except:
-        print(f"The call symbol_info[marketCap] failed for symbol: {symbol}")
+    except Exception as e:
+        print(f"{e} ## The call symbol_info[marketCap] failed for symbol: {symbol}")
 
     return market_cap
 
 
-def get_index_value_from_yahoo_finance(symbol):
+def get_index_value_from_yahoo_finance(symbol: str):
     try:
         symbol_info = get_info_from_yahoo_finance(symbol)
 
-    except:
-        print(f"get_index_value_from_yahoo_finance failed for symbol: {symbol}")
+    except Exception as e:
+        print(f"{e} ## get_index_value_from_yahoo_finance failed for symbol: {symbol}")
 
     price = symbol_info["regularMarketPrice"]
 
