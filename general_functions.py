@@ -169,9 +169,13 @@ def write_to_file_in_csv_format(data, name_of_file: str) -> None:
 
 
 def write_to_file_in_json_format(data, name_of_file: str) -> None:
-    f = open(name_of_file, "w")
-    f.write(str(json.dumps(data, indent=4)))
-    f.close()
+    try:
+        f = open(name_of_file, "w")
+        json_data = json.dumps(data, indent=4)
+        f.write(str(json_data))
+        f.close()
+    except Exception as e:
+        print(f"{e} ## Serialization was not successful for file: {name_of_file}")
 
 
 def pdf_merger():
