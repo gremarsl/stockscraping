@@ -113,6 +113,13 @@ def split_indicator_in_two(indicator):
     return dividend_str, divisor_str
 
 
+def split_line(line):
+    a = line.split(',')[0]
+    b = line.split(',')[1]
+
+    return a, b
+
+
 def filter_data(data_list, options):
     packed_indicators = []
     indicators = []
@@ -144,9 +151,28 @@ def read_data_from_file(filename):
         print("File does not exist")
 
 
-def only_plot(data, title):
-    data.plot()
-    plt.title(title)
+def read_lines_data_from_file(filename):
+    try:
+        if os.path.isfile(filename):
+            with open(filename) as file:
+                lines = file.readlines()
+                return lines
+
+    except FileExistsError:
+        print("File does not exist")
+
+
+def only_plot(data):
+    plt.figure()
+
+    x = data[0]
+    y = data[1]
+
+    if len(x) == len(y):
+        plt.plot(x, y, )
+        plt.scatter(x, y)
+
+    plt.legend()
     plt.show()
 
 
@@ -176,6 +202,10 @@ def write_to_file_in_json_format(data, name_of_file: str) -> None:
         f.close()
     except Exception as e:
         print(f"{e} ## Serialization was not successful for file: {name_of_file}")
+
+
+def remove_string(line):
+    return line[:-2]
 
 
 def pdf_merger():

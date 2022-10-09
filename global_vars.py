@@ -10,7 +10,7 @@ import os
 '''
 @param symbol_list          Companies to analyze
 '''
-SYMBOL_LIST = ["MSFT", "AAPL"]
+SYMBOL_LIST = ["MSFT", "AAPL","AMD","NVDA"]
 
 
 '''
@@ -25,7 +25,7 @@ SYMBOL_LIST = ["MSFT", "AAPL"]
                                           together in one graphic for easier comparison.
 '''
 
-GET_YAHOO_DATA = 0
+GET_YAHOO_DATA = 1
 ANALYZE_YAHOO_DATA = 0
 COMPARE_YAHOO_COMPANIES = 1
 
