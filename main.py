@@ -26,7 +26,9 @@ def own_json_analysis():
 
 def yahoo_data_analysis():
     print("### START YAHOO FINANCE ANALYSIS ###")
-    if global_vars.GET_YAHOO_DATA == 1:
+    # set global variable SOURCE to yahoo
+    global_vars.SOURCE = "yahoo"
+    if global_vars.GET_YAHOO_DATA:
         file_list = get_yahoo_data(global_vars.SYMBOL_LIST)
 
         merge_file_list(file_list, global_vars.SYMBOL_LIST)

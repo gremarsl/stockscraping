@@ -51,7 +51,8 @@ def plot_full_screen():
     pass
 
 
-def plot_compare_symbols_one_indicator(data_list, source):
+def plot_compare_symbols_one_indicator(data_list):
+    source = "yahoo"
     # show grid
     indicator = data_list[0][3]
     # time is fixed and for all symbols equal

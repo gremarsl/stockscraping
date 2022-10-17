@@ -4,6 +4,8 @@
 import yfinance
 import yfinance as yf
 import global_vars
+import ipdb
+
 from general_functions import write_to_file_in_json_format, create_json_object_finance, \
     append_key_value_to_object, convert_and_save_to_csv, yahoo_csv_data_formatting
 
@@ -103,6 +105,54 @@ def get_quarterly_financials(base: yfinance.Ticker, symbol: str) -> str:
     return filename_json
 
 
+def get_actions(base: yfinance.Ticker, symbol: str) -> str:
+    actions = base.actions
+
+    # convert and save data to csv format
+    filename = global_vars.filepath_yahoo + "yahoo_actions_" + symbol + ".csv"
+    convert_and_save_to_csv(actions, filename)
+
+    filename_json = operate_csv_data_and_convert_to_json(filename, symbol)
+
+    return filename_json
+
+
+def get_dividends(base: yfinance.Ticker, symbol: str) -> str:
+    dividends = base.dividends
+
+    # convert and save data to csv format
+    filename = global_vars.filepath_yahoo + "yahoo_dividends_" + symbol + ".csv"
+    convert_and_save_to_csv(dividends, filename)
+
+    filename_json = operate_csv_data_and_convert_to_json(filename, symbol)
+
+    return filename_json
+
+
+def get_splits(base: yfinance.Ticker, symbol: str) -> str:
+    splits = base.splits
+
+    # convert and save data to csv format
+    filename = global_vars.filepath_yahoo + "yahoo_splits_" + symbol + ".csv"
+    convert_and_save_to_csv(splits, filename)
+
+    filename_json = operate_csv_data_and_convert_to_json(filename, symbol)
+
+    return filename_json
+
+
+def get_sustainability(base: yfinance.Ticker, symbol: str) -> str:
+    sustainability = base.sustainability
+
+    # convert and save data to csv format
+    filename = global_vars.filepath_yahoo + "yahoo_sustainability_" + symbol + ".csv"
+    convert_and_save_to_csv(sustainability, filename)
+
+    filename_json = operate_csv_data_and_convert_to_json(filename, symbol)
+
+    return filename_json
+
+
 def get_quarterly_cashflow(base: yfinance.Ticker, symbol: str) -> str:
     cashflow = base.quarterly_cashflow
 
@@ -122,10 +172,18 @@ def get_yahoo_data(symbols: list) -> list:
         try:
 
             base = get_base_ticker_from_yahoo_finance(symbol)
-
+            # ipdb.set_trace()
             file_list_per_symbol.append(get_quarterly_financials(base, symbol))
             file_list_per_symbol.append(get_quarterly_balance_sheet(base, symbol))
             file_list_per_symbol.append(get_quarterly_cashflow(base, symbol))
+
+            get_sustainability(base, symbol)
+
+            get_splits(base, symbol)
+
+            get_dividends(base, symbol)
+
+            get_actions(base, symbol)
 
         except Exception as e:
             print(f"{e} ## Get yahoo earnings failed")

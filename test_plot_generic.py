@@ -19,18 +19,19 @@ file = "D:\\Desktop\\GOOGL\\balanceAnnual_total.csv"
 df = pd.read_csv(file, sep=';', decimal=",")
 print(df.columns)
 
-# check if all data has the same data length
+# TODO transform lists - so that latest quater is last element in the list
+# TODO check if all data has the same data length
 
 # Plot Types
 plot_list = [
     # PLOT 1
     ["TotalRevenue", "CostOfRevenue", "GrossProfit","GrossMargin"],
     # PLOT 2
-    ["OperatingExpenses", "OperatingIncome"]
+    ["OperatingExpenses", "OperatingIncome","NetIncome","OperatingMargin"]
 ]  # calc gross margin
 color_list = ["blue", "green", "red", "cyan", "magenta", "yellow", "black"]
 
-plot_type = 0
+plot_type = 1
 
 relative_indicator = ["GrossProfit"]
 
@@ -54,15 +55,20 @@ match plot_type:
         for i, item in enumerate(plot_list[plot_type]):
             if item == "GrossMargin":
                 ax2.plot(ind + w, df[item], label=item, color=color_list[i])
+
+                #annotate the values
+                #TODO improve and round to 2 digit
+                for i, j in zip(ind + w, df[item]):
+                    ax2.annotate(str(j), xy=(i, j))
+
                 ax2.scatter(ind + w, df[item])
                 ax2.set_ylim([0, 1])
 
             else:
                 ax1.set_xticklabels(x)
                 ax1.bar(ind + w, df[item], width=0.15, label=item, color=color_list[i])
+
                 w += width
-
-
 
         # show grid
         plt.grid(visible=None, which='major', axis='both')
@@ -94,11 +100,22 @@ match plot_type:
         width = 0.15
 
         for i, item in enumerate(plot_list[plot_type]):
-            ax1.set_xticklabels(x)
-            print(x)
-            print(item)
-            ax1.bar(ind + w, df[item], width=0.15, label=item, color=color_list[i])
-            w += width
+            if item == "OperatingMargin":
+                ax2.plot(ind + w, df[item], label=item, color=color_list[i])
+
+                #annotate the values
+                #TODO improve and round to 2 digit
+                for i, j in zip(ind + w, df[item]):
+                    ax2.annotate(str(j), xy=(i, j))
+
+                ax2.scatter(ind + w, df[item])
+                ax2.set_ylim([0, 1])
+
+            else:
+                ax1.set_xticklabels(x)
+                ax1.bar(ind + w, df[item], width=0.15, label=item, color=color_list[i])
+
+                w += width
 
         # show grid
         plt.grid(visible=None, which='major', axis='both')

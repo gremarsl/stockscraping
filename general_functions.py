@@ -19,7 +19,7 @@ import global_vars
 # Functions
 # **********************************************************************************************************************
 
-def extract_quarterly_report_data_from_my_json_file(data_json: dict, indicator: str, symbol: str) -> list:
+def extract_indicator_from_my_json_file(data_json: dict, indicator: str, symbol: str) -> list:
     reports = data_json['quarterlyReports']
     time_points = []
     value_points = []
@@ -400,3 +400,14 @@ def merge_two_json_files(base_file, merge_file):
                         append_key_value_to_object(base_quarter, key_value_pair[0], key_value_pair[1])
 
     write_to_file_in_json_format(base_file_data, base_file)
+
+
+# reading the JSON data using json.load()
+file = global_vars.filepath_yahoo + "yahoo_quarterly_balance_sheet_" + symbol + ".json"
+with open(file) as train_file:
+    dict_train = json.load(train_file)
+
+# converting json dataset from dictionary to dataframe
+train = pd.DataFrame.from_dict(dict_train, orient='index')
+train.reset_index(level=0, inplace=True)
+

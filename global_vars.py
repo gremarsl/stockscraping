@@ -10,8 +10,8 @@ import os
 '''
 @param symbol_list          Companies to analyze
 '''
-SYMBOL_LIST = ["MSFT", "AAPL","AMD","NVDA"]
-
+SYMBOL_LIST = ["GOOGL"] # MSFT", "AAPL","AMD","NVDA
+SOURCE = "EMPTY"
 
 '''
 @param GET_YAHOO_DATA                     Requests data from yahoo finance for the entered companies. 
@@ -25,9 +25,9 @@ SYMBOL_LIST = ["MSFT", "AAPL","AMD","NVDA"]
                                           together in one graphic for easier comparison.
 '''
 
-GET_YAHOO_DATA = 1
-ANALYZE_YAHOO_DATA = 0
-COMPARE_YAHOO_COMPANIES = 1
+GET_YAHOO_DATA = 0
+ANALYZE_YAHOO_DATA = 1
+COMPARE_YAHOO_COMPANIES = 0
 
 BUILD_MY_JSON = 0
 ANALYZE_MY_JSON_DATA = 0
@@ -51,14 +51,14 @@ CALC_SP500 = 0
                                         together in one graphic for easier comparison.
                                         e.g. TotalRevenue/live_marketCap
 '''
-ANALYZE_YAHOO_ABS = 0
-ANALYZE_YAHOO_REL = 0
+ANALYZE_YAHOO_ABS = 1
+ANALYZE_YAHOO_REL = 1
 ANALYZE_YAHOO_REL_LIVE = 1
 
-ABS_INDICATOR_LIST = ["TotalRevenue", "NetIncome"]
+ABS_INDICATOR_LIST = ["TotalRevenue", "NetIncome","GrossProfit"]
 
 REL_INDICATORS_LIST = ["NetIncome_to_TotalRevenue", "ResearchDevelopment_to_TotalRevenue", "TotalLiab_to_TotalAssets",
-                       "TotalCurrentLiab_to_TotalCurrentAssets"]
+                       "TotalCurrentLiab_to_TotalCurrentAssets","OperatingIncome_to_TotalRevenue"]
 
 REL_LIVE_INDICATOR_LIST = ["marketCap_to_TotalRevenue", "marketCap_to_NetIncome", "marketCap_to_TotalAssets"]
 
