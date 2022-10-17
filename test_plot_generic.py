@@ -30,11 +30,48 @@ plot_list = [
 ]  # calc gross margin
 color_list = ["blue", "green", "red", "cyan", "magenta", "yellow", "black"]
 
-plot_type = 0
+plot_type = 1
 
 match plot_type:
 
     case 0:
+
+        # Create Figure Object
+        fig, ax1 = plt.subplots()
+        ax2 = ax1.twinx()
+
+        # Get Time Scale
+        x = df["index"]
+
+        ind = np.arange(len(x))
+
+        # Bar Plotting
+        w = 0
+        width = 0.15
+
+        for i, item in enumerate(plot_list[plot_type]):
+            ax1.set_xticklabels(x)
+            print(x)
+            print(item)
+            ax1.bar(ind + w, df[item], width=0.15, label=item, color=color_list[i])
+            w += width
+
+        # show grid
+        plt.grid(visible=None, which='major', axis='both')
+        plt.xticks(ind + width / 2, rotation="vertical")
+
+        plt.title(f'GOOGL Data')
+
+        ax1.set_ylabel('USD')
+        ax2.set_ylabel('Ratio')
+        # plot_full_screen()
+
+        ax1.legend(loc='center left', bbox_to_anchor=(0, 0.5))
+        ax2.legend(loc='center right', bbox_to_anchor=(1, 0.5))
+        plt.show()
+
+    case 1:
+
         # Create Figure Object
         fig, ax1 = plt.subplots()
         ax2 = ax1.twinx()
