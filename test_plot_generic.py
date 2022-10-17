@@ -18,6 +18,8 @@ file = "D:\\Desktop\\GOOGL\\balanceAnnual_total.csv"
 df = pd.read_csv(file, sep=';', decimal=",")
 print(df.columns)
 
+#check if all data has the same data length
+
 # Plot Types
 plot_list = [
     #PLOT 1
@@ -28,6 +30,7 @@ plot_list = [
 color_list = ["blue","green","red","cyan","magenta","yellow","black"]
 
 plot_type = 0
+
 
 match plot_type:
 
@@ -44,12 +47,16 @@ match plot_type:
         # Bar Plotting
         w = 0
         width = 0.15
+        print(x)
+
         for i, item in enumerate(plot_list[plot_type]):
-            ax1.bar(x_axis + w, df[item], width=width, label=item, color=color_list[i])
+            ax1.set_xticklabels(x)
+
+            ax1.bar(df[item], df[item], width=width, label=item, color=color_list[i])
             w +=0.3
 
         # show grid
-        plt.grid(b=None, which='major', axis='both')
+        plt.grid(visible=None, which='major', axis='both')
         plt.xticks(rotation="vertical")
         plt.title(f'GOOGL Data')
 
