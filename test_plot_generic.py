@@ -3,7 +3,8 @@ import pandas as pd
 from matplotlib import pyplot as plt
 
 import global_vars
-#TODO units - multiply with 1000
+
+# TODO units - multiply with 1000
 
 '''
 Pipeline / Procedure: From data to plot
@@ -18,19 +19,18 @@ file = "D:\\Desktop\\GOOGL\\balanceAnnual_total.csv"
 df = pd.read_csv(file, sep=';', decimal=",")
 print(df.columns)
 
-#check if all data has the same data length
+# check if all data has the same data length
 
 # Plot Types
 plot_list = [
-    #PLOT 1
-    ["TotalRevenue", "CostOfRevenue", "GrossProfit"], #GrossProfit
-    #PLOT 2
-    ["OperatingExpenses","OperatingIncome"]
-    ]# calc gross margin
-color_list = ["blue","green","red","cyan","magenta","yellow","black"]
+    # PLOT 1
+    ["TotalRevenue", "CostOfRevenue", "GrossProfit"],  # GrossProfit
+    # PLOT 2
+    ["OperatingExpenses", "OperatingIncome"]
+]  # calc gross margin
+color_list = ["blue", "green", "red", "cyan", "magenta", "yellow", "black"]
 
 plot_type = 0
-
 
 match plot_type:
 
@@ -42,26 +42,24 @@ match plot_type:
         # Get Time Scale
         x = df["index"]
 
-        x_axis = np.arange(len(x))
+        ind = np.arange(len(x))
 
         # Bar Plotting
         w = 0
         width = 0.15
-        print(x)
 
         for i, item in enumerate(plot_list[plot_type]):
             ax1.set_xticklabels(x)
-
-            ax1.bar(df[item], df[item], width=width, label=item, color=color_list[i])
-            w +=0.3
+            print(x)
+            print(item)
+            ax1.bar(ind + w, df[item], width=0.15, label=item, color=color_list[i])
+            w += width
 
         # show grid
         plt.grid(visible=None, which='major', axis='both')
-        plt.xticks(rotation="vertical")
-        plt.title(f'GOOGL Data')
+        plt.xticks(ind + width / 2, rotation="vertical")
 
-        plt.xlabel('Year')
-        plt.ylabel('USD')
+        plt.title(f'GOOGL Data')
 
         ax1.set_ylabel('USD')
         ax2.set_ylabel('Ratio')
@@ -70,4 +68,3 @@ match plot_type:
         ax1.legend(loc='center left', bbox_to_anchor=(0, 0.5))
         ax2.legend(loc='center right', bbox_to_anchor=(1, 0.5))
         plt.show()
-
