@@ -2,9 +2,8 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 
-import global_vars
-
 # TODO units - multiply with 1000
+# TODO check if all data has the same data length
 
 '''
 Pipeline / Procedure: From data to plot
@@ -17,12 +16,9 @@ file = "D:\\Desktop\\GOOGL\\balanceAnnual_total.csv"
 
 # Transform data to a panda dataframe;
 df = pd.read_csv(file, sep=';', decimal=",")
-print(df.columns)
 
 # reverse the rows - so that latest quarter is last element in the list
 df = df[::-1]
-# TODO check if all data has the same data length
-
 
 # Plot Types
 plot_list = [
@@ -33,21 +29,24 @@ plot_list = [
     # PLOT 3
     ["CurrentAssets", "CashAndEquivalents", "CurrentLiabilities", "CashRatio", "CurrentRatio"],
     # PLOT 4
-    ["TotalAssets", "StockholdersEquity", "TotalLiabilities",  "EquityRatio"],
+    ["TotalAssets", "StockholdersEquity", "TotalLiabilities", "EquityRatio"],
     # PLOT 5
     ["StockholdersEquity", "Goodwill", "IntangibleAssets", "GoodwillRatio"],
     # PLOT 6
     ["OperatingExpenses", "SellingGeneralAdministrative", "ResearchAndDevelopment"],
     # PLOT 7
-    ["TotalOtherExpenses", "TaxProvision", "NetInterestExpenses"] #TaxRate
+    ["TotalOtherExpenses", "TaxProvision", "NetInterestExpenses"] , # TaxRate
+    # PLOT 8
+    ["OperatingCashflow", "CapitalExpenditures", "FreeCashflow"]  # "FCFRatio","OCFRatio"
 
-]  # calc gross margin
+]
+
 color_list = ["blue", "green", "red", "cyan", "magenta", "yellow", "black"]
 
 plot_type = 3
 
 relative_indicator = ["GrossMargin", "OperatingMargin", "CashRatio", "CurrentRatio", "EquityRatio", "GoodwillRatio",
-                      "ResearchRatio", "InterestRatio", "TaxRate"]
+                      "ResearchRatio", "InterestRatio", "TaxRate","FCFratio","OCFRatio"]
 
 
 def plot(plot_idx):
@@ -65,30 +64,35 @@ def plot(plot_idx):
     width = 0.15
 
     for i, item in enumerate(plot_list[plot_idx]):
+        ax1.set_xticklabels(x)
+
         if item in relative_indicator:
             ax2.plot(ind + w, df[item], label=item, color=color_list[i])
-
+            ax2.scatter(ind + w, df[item], color=color_list[i])
             # annotate the values
-            # TODO improve and round to 2 digit
-            for i, j in zip(ind + w, df[item]):
-                ax2.annotate(str(j), xy=(i, j))
-
-            ax2.scatter(ind + w, df[item])
+            for i,j in zip(ind + w, df[item]):
+                ax2.annotate(str(round(j,2)), xy=(i, j))
 
             y_lim = max(df[item])
             if y_lim > 1:
-                ax2.set_ylim([0,y_lim])
+                ax2.set_ylim([0, y_lim])
             else:
                 ax2.set_ylim([0, 1])
 
         else:
-            ax1.set_xticklabels(x)
+            #series = df[item]
+            # TODO annotate the values
+            #change = series.pct_change(periods=1)
+            #array = change.to_numpy()
+            #print(array)
+            # annotate the values
+
             ax1.bar(ind + w, df[item], width=0.15, label=item, color=color_list[i])
 
             w += width
 
     # show grid
-    plt.grid(visible=None, which='major', axis='both')
+    ax1.grid(visible=None, which='major', axis='both')
     plt.xticks(ind + width / 2, rotation="vertical")
 
     plt.title(f'GOOGL Data')
@@ -102,5 +106,5 @@ def plot(plot_idx):
     plt.show()
 
 
-for idx in range(0,len(plot_list)):
+for idx in range(0, len(plot_list)):
     plot(idx)
