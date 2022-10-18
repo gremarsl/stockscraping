@@ -23,216 +23,84 @@ print(df.columns)
 df = df[::-1]
 # TODO check if all data has the same data length
 
+
 # Plot Types
 plot_list = [
     # PLOT 1
-    ["TotalRevenue", "CostOfRevenue", "GrossProfit","GrossMargin"],
+    ["TotalRevenue", "CostOfRevenue", "GrossProfit", "GrossMargin"],
     # PLOT 2
-    ["OperatingExpenses", "OperatingIncome","OperatingMargin"], # ,"NetIncome"
-    #PLOT 3
-    ["CurrentAssets","CashAndEquivalents", "CurrentLiabilities","CashRatio", "CurrentRatio"],
+    ["OperatingExpenses", "OperatingIncome", "OperatingMargin"],  # ,"NetIncome"
+    # PLOT 3
+    ["CurrentAssets", "CashAndEquivalents", "CurrentLiabilities", "CashRatio", "CurrentRatio"],
     # PLOT 4
-    ["TotalAssets", "TotalLiabilities", "StockholdersEquity", "EquityRatio"],
+    ["TotalAssets", "StockholdersEquity", "TotalLiabilities",  "EquityRatio"],
     # PLOT 5
     ["StockholdersEquity", "Goodwill", "IntangibleAssets", "GoodwillRatio"],
-    #PLOT 6
-    ["OperatingExpenses", "SellingGeneralAdministrative", "ResearchAndDevelopment","ResearchRatio"],
-    #PLOT 7
-    ["TotalOtherExpenses", "TaxProvision", "NetInterestExpenses","InterestRatio","TaxRate"]
+    # PLOT 6
+    ["OperatingExpenses", "SellingGeneralAdministrative", "ResearchAndDevelopment"],
+    # PLOT 7
+    ["TotalOtherExpenses", "TaxProvision", "NetInterestExpenses"] #TaxRate
 
 ]  # calc gross margin
 color_list = ["blue", "green", "red", "cyan", "magenta", "yellow", "black"]
 
-plot_type = 4
+plot_type = 3
 
-relative_indicator = ["GrossProfit"]
+relative_indicator = ["GrossMargin", "OperatingMargin", "CashRatio", "CurrentRatio", "EquityRatio", "GoodwillRatio",
+                      "ResearchRatio", "InterestRatio", "TaxRate"]
 
-match plot_type:
 
-    case 0:
+def plot(plot_idx):
+    # Create Figure Object
+    fig, ax1 = plt.subplots()
+    ax2 = ax1.twinx()
 
-        # Create Figure Object
-        fig, ax1 = plt.subplots()
-        ax2 = ax1.twinx()
+    # Get Time Scale
+    x = df["index"]
 
-        # Get Time Scale
-        x = df["index"]
+    ind = np.arange(len(x))
 
-        ind = np.arange(len(x))
+    # Bar Plotting
+    w = 0
+    width = 0.15
 
-        # Bar Plotting
-        w = 0
-        width = 0.15
+    for i, item in enumerate(plot_list[plot_idx]):
+        if item in relative_indicator:
+            ax2.plot(ind + w, df[item], label=item, color=color_list[i])
 
-        for i, item in enumerate(plot_list[plot_type]):
-            if item == "GrossMargin":
-                ax2.plot(ind + w, df[item], label=item, color=color_list[i])
+            # annotate the values
+            # TODO improve and round to 2 digit
+            for i, j in zip(ind + w, df[item]):
+                ax2.annotate(str(j), xy=(i, j))
 
-                #annotate the values
-                #TODO improve and round to 2 digit
-                for i, j in zip(ind + w, df[item]):
-                    ax2.annotate(str(j), xy=(i, j))
+            ax2.scatter(ind + w, df[item])
 
-                ax2.scatter(ind + w, df[item])
+            y_lim = max(df[item])
+            if y_lim > 1:
+                ax2.set_ylim([0,y_lim])
+            else:
                 ax2.set_ylim([0, 1])
 
-            else:
-                ax1.set_xticklabels(x)
-                ax1.bar(ind + w, df[item], width=0.15, label=item, color=color_list[i])
+        else:
+            ax1.set_xticklabels(x)
+            ax1.bar(ind + w, df[item], width=0.15, label=item, color=color_list[i])
 
-                w += width
+            w += width
 
-        # show grid
-        plt.grid(visible=None, which='major', axis='both')
-        plt.xticks(ind + width / 2, rotation="vertical")
+    # show grid
+    plt.grid(visible=None, which='major', axis='both')
+    plt.xticks(ind + width / 2, rotation="vertical")
 
-        plt.title(f'GOOGL Data')
+    plt.title(f'GOOGL Data')
 
-        ax1.set_ylabel('USD')
-        ax2.set_ylabel('Ratio')
-        # plot_full_screen()
+    ax1.set_ylabel('USD')
+    ax2.set_ylabel('Ratio')
+    # plot_full_screen()
 
-        ax1.legend(loc='center left', bbox_to_anchor=(0, 0.5))
-        ax2.legend(loc='center right', bbox_to_anchor=(1, 0.5))
-        plt.show()
+    ax1.legend(loc='center left', bbox_to_anchor=(0, 0.5))
+    ax2.legend(loc='center right', bbox_to_anchor=(1, 0.5))
+    plt.show()
 
-    case 1:
 
-        # Create Figure Object
-        fig, ax1 = plt.subplots()
-        ax2 = ax1.twinx()
-
-        # Get Time Scale
-        x = df["index"]
-
-        ind = np.arange(len(x))
-
-        # Bar Plotting
-        w = 0
-        width = 0.15
-
-        for i, item in enumerate(plot_list[plot_type]):
-            if item == "OperatingMargin":
-                ax2.plot(ind + w, df[item], label=item, color=color_list[i])
-
-                #annotate the values
-                #TODO improve and round to 2 digit
-                for i, j in zip(ind + w, df[item]):
-                    ax2.annotate(str(j), xy=(i, j))
-
-                ax2.scatter(ind + w, df[item])
-                ax2.set_ylim([0, 1])
-
-            else:
-                ax1.set_xticklabels(x)
-                ax1.bar(ind + w, df[item], width=0.15, label=item, color=color_list[i])
-
-                w += width
-
-        # show grid
-        plt.grid(visible=None, which='major', axis='both')
-        plt.xticks(ind + width / 2, rotation="vertical")
-
-        plt.title(f'GOOGL Data')
-
-        ax1.set_ylabel('USD')
-        ax2.set_ylabel('Ratio')
-        # plot_full_screen()
-
-        ax1.legend(loc='center left', bbox_to_anchor=(0, 0.5))
-        ax2.legend(loc='center right', bbox_to_anchor=(1, 0.5))
-        plt.show()
-
-    case 2:
-
-        # Create Figure Object
-        fig, ax1 = plt.subplots()
-        ax2 = ax1.twinx()
-
-        # Get Time Scale
-        x = df["index"]
-
-        ind = np.arange(len(x))
-
-        # Bar Plotting
-        w = 0
-        width = 0.15
-
-        for i, item in enumerate(plot_list[plot_type]):
-            if item == "CurrentRatio" or item == "CashRatio":
-                ax2.plot(ind + w, df[item], label=item, color=color_list[i])
-
-                #annotate the values
-                #TODO improve and round to 2 digit
-                for i, j in zip(ind + w, df[item]):
-                    ax2.annotate(str(j), xy=(i, j))
-
-                ax2.scatter(ind + w, df[item])
-                ax2.set_ylim([0, 1])
-
-            else:
-                ax1.set_xticklabels(x)
-                ax1.bar(ind + w, df[item], width=0.15, label=item, color=color_list[i])
-
-                w += width
-
-        # show grid
-        plt.grid(visible=None, which='major', axis='both')
-        plt.xticks(ind + width / 2, rotation="vertical")
-
-        plt.title(f'GOOGL Data')
-
-        ax1.set_ylabel('USD')
-        ax2.set_ylabel('Ratio')
-        # plot_full_screen()
-
-        ax1.legend(loc='center left', bbox_to_anchor=(0, 0.5))
-        ax2.legend(loc='center right', bbox_to_anchor=(1, 0.5))
-        plt.show()
-
-    case _:
-
-        # Create Figure Object
-        fig, ax1 = plt.subplots()
-        ax2 = ax1.twinx()
-
-        # Get Time Scale
-        x = df["index"]
-
-        ind = np.arange(len(x))
-
-        # Bar Plotting
-        w = 0
-        width = 0.15
-
-        for i, item in enumerate(plot_list[plot_type]):
-            if item == "CurrentRatio" or item == "CashRatio":
-                ax2.plot(ind + w, df[item], label=item, color=color_list[i])
-
-                #annotate the values
-                #TODO improve and round to 2 digit
-                for i, j in zip(ind + w, df[item]):
-                    ax2.annotate(str(j), xy=(i, j))
-
-                ax2.scatter(ind + w, df[item])
-                ax2.set_ylim([0, 1])
-
-            else:
-                ax1.set_xticklabels(x)
-                ax1.bar(ind + w, df[item], width=0.15, label=item, color=color_list[i])
-
-                w += width
-
-        # show grid
-        plt.grid(visible=None, which='major', axis='both')
-        plt.xticks(ind + width / 2, rotation="vertical")
-
-        plt.title(f'GOOGL Data')
-
-        ax1.set_ylabel('USD')
-        ax2.set_ylabel('Ratio')
-        # plot_full_screen()
-
-        ax1.legend(loc='center left', bbox_to_anchor=(0, 0.5))
-        ax2.legend(loc='center right', bbox_to_anchor=(1, 0.5))
-        plt.show()
+for idx in range(0,len(plot_list)):
+    plot(idx)
