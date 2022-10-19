@@ -80,14 +80,24 @@ def plot(plot_idx):
                 ax2.set_ylim([0, 1])
 
         else:
-            #series = df[item]
+            series = df[item]
             # TODO annotate the values
-            #change = series.pct_change(periods=1)
-            #array = change.to_numpy()
-            #print(array)
+            change = series.pct_change(periods=1)
+            change = change.replace(np.nan, 0.0)
+
+            array = change.tolist()
             # annotate the values
+            print(array)
+            array = list(map(int,array))
+            for i in array:
+                print(type(i))
 
             ax1.bar(ind + w, df[item], width=0.15, label=item, color=color_list[i])
+            # annotate the values
+            for i,j in zip(ind + w, series):
+                print(array[i])
+                rel_change = array[i]
+                ax1.annotate(str(rel_change), xy=(i, j))
 
             w += width
 
