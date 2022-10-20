@@ -75,7 +75,7 @@ def plot(plot_idx):
             # annotate the values on the data points
             for i, j in zip(ind + w, df[item]):
                 # multiply with 100 to plot in percentage
-                ax2.annotate(str(round(j*100, 2)), xy=(i, j))
+                ax2.annotate(str(round(j * 100, 2)), xy=(i, j))
 
             y_lim = max(df[item])
             if y_lim > 1:
@@ -128,18 +128,20 @@ for idx in range(0, len(plot_list)):
 # TODO error handling and check if all data has the same data length
 # TODO what is to be done when adding indicator: 1. add to list if relative
 
-# TICKERS
 
-tech = ["INTC", "AMD", "NVDA", "AAPL", "MSFT", "QCOM", "MRVL", "ASML","STM","SNPS", "AMBA", "ZS"]
+# **********************************************************************************************************************
+# TICKERS
+# **********************************************************************************************************************
+tech = ["INTC", "AMD", "NVDA", "AAPL", "MSFT", "QCOM", "MRVL", "ASML", "STM", "SNPS", "AMBA", "ZS"]
 
 network = ["NOK", "VZ", "T"]
 
-automotive = ["MBG.DE","VWAGY","TSLA","P911.DE"]
+automotive = ["MBG.DE", "VWAGY", "TSLA", "P911.DE"]
 
 consumer = ["PRG", "KO", "MCD", "NKE", "DIS"]
 
 pharma_companies = ["JNJ", "PFE", "ABBV", "MRK", "GSK"]
 
-energy = ["EQNR","CVX","COP","XOM" ,"RDS-B","BP","RWE.DE","ENEL.MI"]
+energy = ["EQNR", "CVX", "COP", "XOM", "RDS-B", "BP", "RWE.DE", "ENEL.MI"]
 
-chemestry = ["BASF","WCH.DE"]
+chemestry = ["BASF", "WCH.DE"]
