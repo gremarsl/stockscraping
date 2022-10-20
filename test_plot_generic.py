@@ -1,52 +1,51 @@
+# **********************************************************************************************************************
+# Imports
+# **********************************************************************************************************************
+import os
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 
-# TODO units - multiply with 1000
-# TODO check if all data has the same data length
+# **********************************************************************************************************************
+# Pipeline / Procedure: From data to plot
+# **********************************************************************************************************************
 
 '''
-Pipeline / Procedure: From data to plot
+1. Get data and transform to a panda data frame
 '''
-
+file = os.getcwd() + "\\yahoo_info\\" + "total_annual_data.csv"
 symbol = "GOOGL"
 
-# Get data - e.g. .csv
-file = "D:\\Desktop\\GOOGL\\balanceAnnual_total.csv"
-
-# Transform data to a panda dataframe;
 df = pd.read_csv(file, sep=';', decimal=",")
 
-# reverse the rows - so that latest quarter is last element in the list
+# reverse the rows - so that latest quarter is last element in the list. Goal: Improve plots
 df = df[::-1]
 
-# Plot Types
+# List of plot types
 plot_list = [
-    # PLOT 1
+    # PLOT TYPE 1
     ["TotalRevenue", "CostOfRevenue", "GrossProfit", "GrossMargin"],
-    # PLOT 2
+    # PLOT TYPE 2
     ["OperatingExpenses", "OperatingIncome", "OperatingMargin"],  # ,"NetIncome"
-    # PLOT 3
+    # PLOT TYPE 3
     ["CurrentAssets", "CashAndEquivalents", "CurrentLiabilities", "CashRatio", "CurrentRatio"],
-    # PLOT 4
+    # PLOT TYPE 4
     ["TotalAssets", "StockholdersEquity", "TotalLiabilities", "EquityRatio"],
-    # PLOT 5
+    # PLOT TYPE 5
     ["StockholdersEquity", "Goodwill", "IntangibleAssets", "GoodwillRatio"],
-    # PLOT 6
+    # PLOT TYPE 6
     ["OperatingExpenses", "SellingGeneralAdministrative", "ResearchAndDevelopment"],
-    # PLOT 7
-    ["TotalOtherExpenses", "TaxProvision", "NetInterestExpenses"] , # TaxRate
-    # PLOT 8
+    # PLOT TYPE 7
+    ["TotalOtherExpenses", "TaxProvision", "NetInterestExpenses"],  # TaxRate
+    # PLOT TYPE 8
     ["OperatingCashflow", "CapitalExpenditures", "FreeCashflow"]  # "FCFRatio","OCFRatio"
 
 ]
 
 color_list = ["blue", "green", "red", "cyan", "magenta", "yellow", "black"]
 
-plot_type = 3
-
 relative_indicator = ["GrossMargin", "OperatingMargin", "CashRatio", "CurrentRatio", "EquityRatio", "GoodwillRatio",
-                      "ResearchRatio", "InterestRatio", "TaxRate","FCFratio","OCFRatio"]
+                      "ResearchRatio", "InterestRatio", "TaxRate", "FCFratio", "OCFRatio"]
 
 
 def plot(plot_idx):
@@ -55,23 +54,28 @@ def plot(plot_idx):
     ax2 = ax1.twinx()
 
     # Get Time Scale
-    x = df["index"]
+    x_values = df["index"]
 
-    ind = np.arange(len(x))
+    ind = np.arange(len(x_values))
 
     # Bar Plotting
     w = 0
     width = 0.15
 
+    # iterate over every plot list
     for i, item in enumerate(plot_list[plot_idx]):
-        ax1.set_xticklabels(x)
+        # show dates as x ticks in plot
+        ax1.set_xticklabels(x_values)
 
+        # if current parameter is a relative indicator
         if item in relative_indicator:
             ax2.plot(ind + w, df[item], label=item, color=color_list[i])
             ax2.scatter(ind + w, df[item], color=color_list[i])
-            # annotate the values
-            for i,j in zip(ind + w, df[item]):
-                ax2.annotate(str(round(j,2)), xy=(i, j))
+
+            # annotate the values on the data points
+            for i, j in zip(ind + w, df[item]):
+                # multiply with 100 to plot in percentage
+                ax2.annotate(str(round(j*100, 2)), xy=(i, j))
 
             y_lim = max(df[item])
             if y_lim > 1:
@@ -80,24 +84,26 @@ def plot(plot_idx):
                 ax2.set_ylim([0, 1])
 
         else:
-            series = df[item]
-            # TODO annotate the values
-            change = series.pct_change(periods=1)
+            # plot indicator
+            ax1.bar(ind + w, df[item], width=0.15, label=item, color=color_list[i])
+
+            data = df[item]
+            # calculate percentage change and store return values in change
+            change = data.pct_change(periods=1)
             change = change.replace(np.nan, 0.0)
 
+            # convert to list and multiply to 100 to plot relative data
             array = change.tolist()
-            # annotate the values
-            print(array)
-            array = list(map(int,array))
-            for i in array:
-                print(type(i))
+            array = list(map(lambda x: x * 100, array))
 
-            ax1.bar(ind + w, df[item], width=0.15, label=item, color=color_list[i])
-            # annotate the values
-            for i,j in zip(ind + w, series):
-                print(array[i])
-                rel_change = array[i]
+            array = list(map(lambda x: round(x, 2), array))
+
+            # annotate relative data
+            counter = 0
+            for i, j in zip(ind + w, data):
+                rel_change = array[counter]
                 ax1.annotate(str(rel_change), xy=(i, j))
+                counter += 1
 
             w += width
 
@@ -105,7 +111,7 @@ def plot(plot_idx):
     ax1.grid(visible=None, which='major', axis='both')
     plt.xticks(ind + width / 2, rotation="vertical")
 
-    plt.title(f'GOOGL Data')
+    plt.title(f'{symbol} Data')
 
     ax1.set_ylabel('USD')
     ax2.set_ylabel('Ratio')
@@ -118,3 +124,8 @@ def plot(plot_idx):
 
 for idx in range(0, len(plot_list)):
     plot(idx)
+
+
+# TODO units - multiply with 1000
+# TODO check if all data has the same data length
+# TODO what is to be done when adding indicator: 1. add to list if relative
