@@ -125,7 +125,21 @@ def plot(plot_idx):
 for idx in range(0, len(plot_list)):
     plot(idx)
 
-
-# TODO units - multiply with 1000
-# TODO check if all data has the same data length
+# TODO error handling and check if all data has the same data length
 # TODO what is to be done when adding indicator: 1. add to list if relative
+
+# TICKERS
+
+tech = ["INTC", "AMD", "NVDA", "AAPL", "MSFT", "QCOM", "MRVL", "ASML","STM","SNPS", "AMBA", "ZS"]
+
+network = ["NOK", "VZ", "T"]
+
+automotive = ["MBG.DE","VWAGY","TSLA","P911.DE"]
+
+consumer = ["PRG", "KO", "MCD", "NKE", "DIS"]
+
+pharma_companies = ["JNJ", "PFE", "ABBV", "MRK", "GSK"]
+
+energy = ["EQNR","CVX","COP","XOM" ,"RDS-B","BP","RWE.DE","ENEL.MI"]
+
+chemestry = ["BASF","WCH.DE"]
