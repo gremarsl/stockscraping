@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 import json
 import os
 import datetime as dt
+
+import pandas as pd
 import requests
 from PyPDF2 import PdfFileMerger
 import global_vars
@@ -237,6 +239,11 @@ def convert_list_elements_to_date_instance(dates_as_strings):
 
     return dates_as_dates
 
+def convert_to_date(dates_as_string):
+    date_as_dates = dt.datetime.strptime(dates_as_string, '%Y-%m-%d').date()
+
+    return date_as_dates
+
 
 def delete_object_key(json_data_object, key):
     del json_data_object[key]
@@ -368,6 +375,14 @@ def copy_and_rename_file(src_file, dest_file):
     shutil.copy(src_file, dest_file)
 
 
+def merge_csv_file_list(file_list, symbol_list):
+    for idx, symbol in enumerate(symbol_list):
+        dest_file = global_vars.filepath_yahoo + "yahoo_df_total_data_" + symbol + ".csv"
+
+        combined_csv = pd.concat([pd.read_csv(f) for f in file_list])
+        combined_csv.to_csv(dest_file, index=True, encoding='utf-8-sig')
+
+
 def merge_file_list(file_list, symbol_list):
     for idx, symbol in enumerate(symbol_list):
         dest_file = global_vars.filepath_yahoo + "yahoo_total_data_" + symbol + ".json"
@@ -400,14 +415,3 @@ def merge_two_json_files(base_file, merge_file):
                         append_key_value_to_object(base_quarter, key_value_pair[0], key_value_pair[1])
 
     write_to_file_in_json_format(base_file_data, base_file)
-
-
-# reading the JSON data using json.load()
-file = global_vars.filepath_yahoo + "yahoo_quarterly_balance_sheet_" + symbol + ".json"
-with open(file) as train_file:
-    dict_train = json.load(train_file)
-
-# converting json dataset from dictionary to dataframe
-train = pd.DataFrame.from_dict(dict_train, orient='index')
-train.reset_index(level=0, inplace=True)
-

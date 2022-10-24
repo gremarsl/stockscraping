@@ -13,11 +13,14 @@ from matplotlib import pyplot as plt
 '''
 1. Get data and transform to a panda data frame
 '''
-file = os.getcwd() + "\\yahoo_info\\" + "total_annual_data.csv"
+# file = os.getcwd() + "\\yahoo_info\\" + "total_annual_data.csv"
 symbol = "GOOGL"
+file = os.getcwd() + "\\yahoo_info\\" + f"yahoo_df_quarterly_balance_sheet_{symbol}.csv"
 
-df = pd.read_csv(file, sep=';', decimal=",")
+df = pd.read_csv(file, sep=';', decimal=".")
 
+#transpose
+#df = df.T
 # reverse the rows - so that latest quarter is last element in the list. Goal: Improve plots
 df = df[::-1]
 
@@ -145,3 +148,5 @@ pharma_companies = ["JNJ", "PFE", "ABBV", "MRK", "GSK"]
 energy = ["EQNR", "CVX", "COP", "XOM", "RDS-B", "BP", "RWE.DE", "ENEL.MI"]
 
 chemestry = ["BASF", "WCH.DE"]
+
+

@@ -5,7 +5,7 @@ import global_vars
 from analyse_data_from_local_json_file import analyze_data_from_local_json_file
 from build_own_json import build_own_json_file
 from functions_for_yahoo import calculate_sp_500_to_gdp_usa, calculate_dax_to_gdp_germany, get_yahoo_data
-from general_functions import merge_file_list
+from general_functions import merge_file_list, merge_csv_file_list
 
 
 # **********************************************************************************************************************
@@ -31,7 +31,8 @@ def yahoo_data_analysis():
     if global_vars.GET_YAHOO_DATA:
         file_list = get_yahoo_data(global_vars.SYMBOL_LIST)
 
-        merge_file_list(file_list, global_vars.SYMBOL_LIST)
+        for i, s in enumerate(global_vars.SYMBOL_LIST):
+            merge_csv_file_list(file_list[i], global_vars.SYMBOL_LIST)
 
     if global_vars.ANALYZE_YAHOO_DATA == 1 or global_vars.COMPARE_YAHOO_COMPANIES == 1:
         analyze_data_from_local_json_file(global_vars.SYMBOL_LIST, global_vars.COMPARE_YAHOO_COMPANIES)

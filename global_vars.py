@@ -25,8 +25,8 @@ SOURCE = "EMPTY"
                                           together in one graphic for easier comparison.
 '''
 
-GET_YAHOO_DATA = 0
-ANALYZE_YAHOO_DATA = 1
+GET_YAHOO_DATA = 1
+ANALYZE_YAHOO_DATA = 0
 COMPARE_YAHOO_COMPANIES = 0
 
 BUILD_MY_JSON = 0
