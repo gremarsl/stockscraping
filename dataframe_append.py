@@ -1,11 +1,11 @@
+import os
 import pandas as pd
-
 from general_functions import convert_list_elements_to_date_instance
 
-fileA = 'C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\a.csv'
-fileC = 'C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\c.csv'
+fileA = os.getcwd() + "\\a.csv"
+fileC = os.getcwd() + "\\b.csv"
 
-output = 'C:\\Users\\marce\\PycharmProjects\\stockscraperFinnhub\\aa.csv'
+output = os.getcwd() + "\\aa.csv"
 
 df_csvA = pd.read_csv(fileA, sep=';')
 df_csvC = pd.read_csv(fileC, sep=';')
@@ -13,18 +13,15 @@ df_csvC = pd.read_csv(fileC, sep=';')
 # provided that their lengths match
 # df_csvA['columnD'] = df_csvC['columnD']
 
-# TODO add data for quarter
-# convert to date
-# if element is later then in the base array
-# add to array
+# if element is later then in the base array add to array
 
 # get values of column 1
-a = df_csvA.iloc[:, 0]
-c = df_csvC.iloc[:, 0]
+a_column_dates = df_csvA.iloc[:, 0]
+c_column_dates = df_csvC.iloc[:, 0]
 
 # convert to dates
-datesA = convert_list_elements_to_date_instance(a)
-datesC = convert_list_elements_to_date_instance(c)
+datesA = convert_list_elements_to_date_instance(a_column_dates)
+datesC = convert_list_elements_to_date_instance(c_column_dates)
 
 # sort base array A
 datesA.sort()
@@ -46,6 +43,8 @@ for dateC in datesC:
 
         # append row to base row
         concat = pd.concat([row,df_csvA], ignore_index=True)
+        print(concat)
+        concat.to_csv(output, sep=';')
 
 # check if quarterly dates are equal
 if df_csvA['index'].equals(df_csvC["index"]):
