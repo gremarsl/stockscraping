@@ -6,7 +6,7 @@ from data_processor import processor_filter_plot_data
 from functions_for_alpha_vantage import extract_quarterly_report_data_from_alpha
 from functions_for_yahoo import get_market_cap_from_yahoo_finance
 from general_functions import read_data_from_file, split_indicator_in_two, calculate_quotient, \
-    extract_indicator_from_my_json_file, get_float_data, get_data
+    extract_indicator_from_my_json_file, get_float_data, get_data, extract_quarterly_report_data
 
 
 # **********************************************************************************************************************
@@ -93,7 +93,7 @@ def compare_companies(symbols):
 
 def one_company_only(symbols):
     symbol = symbols[0]
-    data = read_data_from_file(global_vars.filepath_yahoo + "yahoo_total_data_" + symbol + ".json")
+    data = read_data_from_file(global_vars.filepath_yahoo + "yahoo_df_total_data_" + symbol + ".json")
     print(type(data))
     if data is None:
         raise Exception("There was no data read from file. Please check if the file exists")
@@ -101,7 +101,7 @@ def one_company_only(symbols):
     abs_data = []
     if global_vars.ANALYZE_YAHOO_ABS == 1:
         for i in global_vars.ABS_INDICATOR_LIST:
-            extracted_data = extract_quarterly_report_data_from_my_json_file(data_json=data, indicator=i, symbol=symbol)
+            extracted_data = extract_quarterly_report_data(data_json=data, indicator=i, symbol=symbol)
             abs_data.append(extracted_data)
 
     rel_data = []

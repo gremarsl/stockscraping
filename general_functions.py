@@ -379,7 +379,8 @@ def merge_csv_file_list(file_list, symbol_list):
     for idx, symbol in enumerate(symbol_list):
         dest_file = global_vars.filepath_yahoo + "yahoo_df_total_data_" + symbol + ".csv"
 
-        combined_csv = pd.concat([pd.read_csv(f) for f in file_list])
+        frames = [pd.read_csv(f) for f in file_list]
+        combined_csv = pd.concat(frames,axis="columns")
         combined_csv.to_csv(dest_file, index=True, encoding='utf-8-sig')
 
 
