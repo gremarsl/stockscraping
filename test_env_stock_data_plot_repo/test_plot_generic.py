@@ -13,10 +13,10 @@ from matplotlib import pyplot as plt
 '''
 1. Get data and transform to a panda data frame
 '''
-file = os.getcwd() + "\\yahoo_info\\" + "total_annual_data.csv"
-file = os.getcwd() + "\\yahoo_info\\" + "concat_new_GOOGL.csv"
-
 symbol = "GOOGL"
+
+file = os.getcwd() + f"\\merged_data_{symbol}.csv"
+
 
 # df = pd.read_csv(file, sep=';', decimal=",")
 df = pd.read_csv(file, sep=',', decimal=".")

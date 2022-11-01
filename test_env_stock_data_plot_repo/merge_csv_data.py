@@ -17,10 +17,7 @@ file_list = [
     os.getcwd() + "\\a.csv",
     os.getcwd() + "\\b.csv",
     os.getcwd() + "\\c.csv"]
-file_list = [
-    os.getcwd() + "\\GOOGL\\GOOGL\\" + "balanceSheetQuarterly.csv",
-    os.getcwd() + "\\GOOGL\\GOOGL\\" + "cashflowQuarterly.csv",
-    os.getcwd() + "\\GOOGL\\GOOGL\\" + "incomeStatementQuarterly.csv"]
+
 
 
 def merge_csv_file_list(file_list, s):
@@ -39,17 +36,15 @@ def merge_csv_file_list(file_list, s):
     concat_csv.to_csv(concat_dest_file, index=True, encoding='utf-8-sig')
 
 
-def merge_csv_file_list_new(file_list, symbol_list):
+def merge_csv_files(file_list, symbol_list):
     for idx, symbol in enumerate(symbol_list):
         dest_file = global_vars.filepath_yahoo + "concat_new_" + symbol + ".csv"
 
         frames = [pd.read_csv(f) for f in file_list]
-        combined_csv = pd.concat(frames,axis="columns")
+        combined_csv = pd.concat(frames, axis="columns")
         combined_csv.to_csv(dest_file, index=True, encoding='utf-8-sig')
-
-
 
 
 merge_csv_file_list(file_list,symbol)
 
-merge_csv_file_list_new(file_list,symbol_list)
+merge_csv_files(file_list,symbol_list)
