@@ -14,38 +14,48 @@ from matplotlib import pyplot as plt
 1. Get data and transform to a panda data frame
 '''
 file = os.getcwd() + "\\yahoo_info\\" + "total_annual_data.csv"
+file = os.getcwd() + "\\yahoo_info\\" + "concat_new_GOOGL.csv"
+
 symbol = "GOOGL"
 
-df = pd.read_csv(file, sep=';', decimal=",")
+# df = pd.read_csv(file, sep=';', decimal=",")
+df = pd.read_csv(file, sep=',', decimal=".")
 
 # reverse the rows - so that latest quarter is last element in the list. Goal: Improve plots
 df = df[::-1]
 
 # List of plot types
+
+# TODO improvements - ohne Leerzeichen
+# Stockholder Equity - StockholdersEquity
+# Total Operating Expenses
+# Research And Development
+#TODO discuss what to plot
 plot_list = [
     # PLOT TYPE 1
-    ["TotalRevenue", "CostOfRevenue", "GrossProfit", "GrossMargin"],
+    ["Total Revenue", "Cost Of Revenue", "Gross Profit", "Gross Margin"],
     # PLOT TYPE 2
-    ["OperatingExpenses", "OperatingIncome", "OperatingMargin"],  # ,"NetIncome"
+    ["Total Operating Expenses", "Operating Income", "Operating Margin"],  # ,"NetIncome"
     # PLOT TYPE 3
-    ["CurrentAssets", "CashAndEquivalents", "CurrentLiabilities", "CashRatio", "CurrentRatio"],
+    ["Total Current Assets", "Cash And Cash Equivalents", "Total Current Liabilities", "Current Ratio"],
+    # "Cash Ratio",
     # PLOT TYPE 4
-    ["TotalAssets", "StockholdersEquity", "TotalLiabilities", "EquityRatio"],
+    ["Total Assets", "Total Stockholder Equity", "Total Liabilities", "Debt To Equity Ratio"],
     # PLOT TYPE 5
-    ["StockholdersEquity", "Goodwill", "IntangibleAssets", "GoodwillRatio"],
+    ["Total Stockholder Equity", "Goodwill", "Intangible Assets"],  # "GoodwillRatio"
     # PLOT TYPE 6
-    ["OperatingExpenses", "SellingGeneralAdministrative", "ResearchAndDevelopment"],
+    ["Total Operating Expenses", "Selling General Administrative", "Research Development"],
     # PLOT TYPE 7
-    ["TotalOtherExpenses", "TaxProvision", "NetInterestExpenses"],  # TaxRate
+    ["Other Operating Expenses","Other Cashflows From Investing Activities","Total Other Income Expense Net" ],  # TaxRate "Tax Provision",  "Net Interest Expenses"
     # PLOT TYPE 8
-    ["OperatingCashflow", "CapitalExpenditures", "FreeCashflow"]  # "FCFRatio","OCFRatio"
+    ["Operating Cashflow", "Capital Expenditures", "Free Cashflow","Free Cashflow Ratio", "Operating Cashflow Ratio"]
 
 ]
 
 color_list = ["blue", "green", "red", "cyan", "magenta", "yellow", "black"]
 
-relative_indicator = ["GrossMargin", "OperatingMargin", "CashRatio", "CurrentRatio", "EquityRatio", "GoodwillRatio",
-                      "ResearchRatio", "InterestRatio", "TaxRate", "FCFratio", "OCFRatio"]
+relative_indicator = ["Gross Margin", "Operating Margin", "Cash Ratio", "Current Ratio", "Debt To Equity Ratio", "Goodwill Ratio",
+                      "Research Ratio", "Interest Ratio", "TaxRate", "Free Cashflow Ratio", "Operating Cashflow Ratio"]
 
 
 def plot(plot_idx):
@@ -54,7 +64,7 @@ def plot(plot_idx):
     ax2 = ax1.twinx()
 
     # Get Time Scale
-    x_values = df["index"]
+    x_values = df["Date"]
 
     ind = np.arange(len(x_values))
 
@@ -109,25 +119,27 @@ def plot(plot_idx):
 
     # show grid
     ax1.grid(visible=None, which='major', axis='both')
+    print("1")
     plt.xticks(ind + width / 2, rotation="vertical")
+    print("2")
 
     plt.title(f'{symbol} Data')
+    print("3")
 
     ax1.set_ylabel('USD')
     ax2.set_ylabel('Ratio')
     # plot_full_screen()
+    print("4")
 
     ax1.legend(loc='center left', bbox_to_anchor=(0, 0.5))
     ax2.legend(loc='center right', bbox_to_anchor=(1, 0.5))
-    plt.show()
+    print("5")
 
 
 for idx in range(0, len(plot_list)):
     plot(idx)
 
-# TODO error handling and check if all data has the same data length
 # TODO what is to be done when adding indicator: 1. add to list if relative
-
 
 # **********************************************************************************************************************
 # TICKERS
