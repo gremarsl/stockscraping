@@ -10,11 +10,7 @@ output = os.getcwd() + "\\aa.csv"
 df_csvA = pd.read_csv(fileA, sep=';')
 df_csvC = pd.read_csv(fileC, sep=';')
 
-# provided that their lengths match
-# df_csvA['columnD'] = df_csvC['columnD']
-
 # if element is later then in the base array add to array
-
 # get values of column 1
 a_column_dates = df_csvA.iloc[:, 0]
 c_column_dates = df_csvC.iloc[:, 0]
@@ -38,14 +34,14 @@ for dateC in datesC:
         dateC = dateC.strftime("%Y-%m-%d")
         # access row data
         row = df_csvC.loc[df_csvC['index'] == dateC]
-        print(row)
-        print(type(row))
 
         # append row to base row
         concat = pd.concat([row,df_csvA], ignore_index=True)
-        print(concat)
+
         concat.to_csv(output, sep=';')
 
+
+''' 
 # check if quarterly dates are equal
 if df_csvA['index'].equals(df_csvC["index"]):
     # access first value in column named 'index'
@@ -57,3 +53,5 @@ if df_csvA['index'].equals(df_csvC["index"]):
         df_csvA[column] = values
         counter += 1
     df_csvA.to_csv(output, sep=';')
+
+'''
