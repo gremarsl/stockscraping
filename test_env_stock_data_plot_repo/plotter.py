@@ -5,9 +5,14 @@ import pandas as pd
 from matplotlib import pyplot as plt
 
 
+# TODO naming of classes groß?
 class Plotter:
 
-    #TODO class has member plot_list
+    def __init__(self, symbol: str):
+        self.symbol = symbol
+
+
+    # TODO class has member plot_list
 
     # TODO improvements - ohne Leerzeichen
     # Stockholder Equity - StockholdersEquity
@@ -44,12 +49,8 @@ class Plotter:
                           "Research Ratio", "Interest Ratio", "TaxRate", "Free Cashflow Ratio",
                           "Operating Cashflow Ratio"]
 
-
-    def __int__(self,symbol):
-        self.symbol = symbol
-
     def plot_all(self):
-        #TODO improvement possible - improve class style!
+        # TODO improvement possible - improve class style!
         file = os.getcwd() + f"\\total_data_{self.symbol}.csv"
 
         # df = pd.read_csv(file, sep=';', decimal=",")
@@ -59,9 +60,11 @@ class Plotter:
         df = df[::-1]
 
         for idx in range(0, len(self.plot_list)):
-            self.plot(df,idx)
+            self.plot(df, idx)
 
-    def plot(self,df,plot_idx):
+        print("finished plotting")
+
+    def plot(self, df, plot_idx):
         # Create Figure Object
         fig, ax1 = plt.subplots()
         ax2 = ax1.twinx()
@@ -132,4 +135,3 @@ class Plotter:
 
         ax1.legend(loc='center left', bbox_to_anchor=(0, 0.5))
         ax2.legend(loc='center right', bbox_to_anchor=(1, 0.5))
-
