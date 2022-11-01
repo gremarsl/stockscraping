@@ -15,7 +15,7 @@ from matplotlib import pyplot as plt
 '''
 symbol = "GOOGL"
 
-file = os.getcwd() + f"\\merged_data_{symbol}.csv"
+file = os.getcwd() + f"\\total_data_{symbol}.csv"
 
 
 # df = pd.read_csv(file, sep=';', decimal=",")
@@ -119,21 +119,16 @@ def plot(plot_idx):
 
     # show grid
     ax1.grid(visible=None, which='major', axis='both')
-    print("1")
     plt.xticks(ind + width / 2, rotation="vertical")
-    print("2")
 
     plt.title(f'{symbol} Data')
-    print("3")
 
     ax1.set_ylabel('USD')
     ax2.set_ylabel('Ratio')
     # plot_full_screen()
-    print("4")
 
     ax1.legend(loc='center left', bbox_to_anchor=(0, 0.5))
     ax2.legend(loc='center right', bbox_to_anchor=(1, 0.5))
-    print("5")
 
 
 for idx in range(0, len(plot_list)):
