@@ -6,6 +6,9 @@ from matplotlib import pyplot as plt
 
 
 # TODO naming of classes groß?
+from general_functions import save_figure
+
+
 class Plotter:
 
     def __init__(self, symbol: str):
@@ -135,3 +138,8 @@ class Plotter:
 
         ax1.legend(loc='center left', bbox_to_anchor=(0, 0.5))
         ax2.legend(loc='center right', bbox_to_anchor=(1, 0.5))
+
+
+        #TODO separate method?
+        save_figure(os.getcwd() + f"\\{self.symbol}", plot_idx)
+
