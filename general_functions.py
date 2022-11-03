@@ -210,15 +210,14 @@ def remove_string(line):
     return line[:-2]
 
 
-def pdf_merger():
+def pdf_merger(path):
     merger = PdfFileMerger()
 
-    os.chdir(global_vars.filepath_my_json)
+    os.chdir(path)
     for file in glob.glob("*.pdf"):
-        print(file)
         merger.append(file)
 
-    merger.write(global_vars.filepath_my_json + "\\result.pdf")
+    merger.write(path + "\\result.pdf")
     merger.close()
 
 
@@ -238,6 +237,7 @@ def convert_list_elements_to_date_instance(dates_as_strings):
     dates_as_dates = [dt.datetime.strptime(d, '%Y-%m-%d').date() for d in dates_as_strings]
 
     return dates_as_dates
+
 
 def convert_to_date(dates_as_string):
     date_as_dates = dt.datetime.strptime(dates_as_string, '%Y-%m-%d').date()
@@ -314,17 +314,15 @@ def add_file_to_main_html_file(indicator, complete_string):
     pass
 
 
-def save_figure(indicator):
-    path = global_vars.filepath_my_json + "\\financial_grafics\\"
-
-    complete_string_svg = path + indicator + ".svg"
-    complete_string_pdf = path + indicator + ".pdf"
+def save_figure(path, indicator):
+    complete_string_svg = path + f"\\plot_{indicator}" + ".svg"
+    complete_string_pdf = path + f"\\plot_{indicator}" + ".pdf"
 
     plt.tight_layout()
     plt.savefig(complete_string_svg, dpi=300, bbox_inches="tight")
     plt.savefig(complete_string_pdf, dpi=300, bbox_inches="tight")
 
-    add_file_to_main_html_file(indicator, complete_string_svg)
+    #add_file_to_main_html_file(indicator, complete_string_svg)
     pass
 
 
@@ -380,7 +378,7 @@ def merge_csv_file_list(file_list, symbol_list):
         dest_file = global_vars.filepath_yahoo + "yahoo_df_total_data_" + symbol + ".csv"
 
         frames = [pd.read_csv(f) for f in file_list]
-        combined_csv = pd.concat(frames,axis="columns")
+        combined_csv = pd.concat(frames, axis="columns")
         combined_csv.to_csv(dest_file, index=True, encoding='utf-8-sig')
 
 
